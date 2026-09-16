@@ -1,0 +1,58 @@
+﻿@*@Scripts.Render("~/Scripts/Models/Campanias/SectionCampania/TipoCampania/CampaniaQR.js")*@
+
+
+<div class="panel h-100 mb-0" style="display: none !important;" id="CampaniaQR" data-bind="visible:visibleTipoCampania()">
+    
+
+    <div class="row">
+        <div class="col-12">
+            <div class="m-2">
+                <h3 class="col-12">
+                    <strong>
+                        <i class="fal mr-2 fs-xxl fa-qrcode blue"></i>
+                        QR
+                    </strong>
+                    <small>Generá un QR, redirigelo a la web que necesites y sabràs cuantas veces fue scanneado.</small>
+                </h3>
+
+                <div class="col-12 mt-1">
+                    <button class="btn btn-success m-0 divVisibleFalse" data-bind="visible:!visibleAgregar(), click:botonAgregar" style="display:none;"><i class="fal fa-plus mr-2"></i>Agregar campaña</button>
+                    <button class="btn btn-danger m-0 divVisibleFalse" data-bind="visible:visibleAgregar(), click:botonCancelar" style="display:none;"><i class="fal fa-trash-alt mr-2"></i>Quitar campaña</button>
+
+                    <button class="btn btn-outline-info mr-1 float-right disabled">Personalizable</button>
+                    <button class="btn btn-outline-info mr-1 float-right disabled">Integración automática</button>
+                    <button class="btn btn-outline-info mr-1 float-right disabled">QR</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="panel-container" style="display: none !important;" data-bind="visible:visibleAgregar()">
+        <form id="formValidarCampaniaQR" role="form">
+            <div class="panel-content h-100 border-top">
+                <div class="form-row">
+                    <div class="col-12 mb-2">
+                        <label class="form-label" for="txtURLredirigir">URL a redirigir <span class="text-danger">*</span> </label>
+                        <input type="text" id="txtURLredirigir" class="form-control" required="required" placeholder="URL a redirigir" data-bind="value: urlRedirigir" />
+                        <div class="invalid-feedback">Campo obligatorio.</div>
+                        <div class="valid-feedback">
+                            Correcto!
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" data-bind="visible: urlCodigoQR() != '' && urlCodigoQR() != null">
+                    <div class="col-12 mb-2">
+                        <label class="form-label w-100" for="txtQRasociado">QR Asociado</label>
+                        <i id="inputPrintQR" class="print-input fal fa-print" title="Imprimir QR" data-toggle="tooltip" data-placament="top" data-bind="visible: urlCodigoQR() != '' && urlCodigoQR() != null, click: botonImprimirQR"></i>
+                        <img id="imgQRCodeGrande" class="imgImagenQR" data-bind="visible: urlCodigoQR() != '' && urlCodigoQR() != null, attr: { src:  urlCodigoQR() }" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,236 @@
+﻿<div id="SectionCampanias">
+    <div class="row">
+        <div class="col-12">
+            <label class="float-right" data-bind="text: 'Ultima actualización: ' + moment().format('hh') + ':' + moment().format('ss') "></label>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-md navbar-light p-0 mb-3">
+        <button class="navbar-toggler mt-1 mb-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li>
+                    <input type="text" class="form-control" id="txtFechaFiltroCampanias" data-bind="value:fechaFiltro,event:{ change: changeFechaFiltro}">
+                </li>
+                <li class="nav-item hidden-md-down">
+                    <a class="nav-link fs-xl text-truncate text-truncate-lg text-info" style="color: #e0e0e0 !important;">|</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle fs-xl text-truncate text-truncate-lg text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Campañas
+                    </a>
+                    <div class="dropdown-menu fadeindown p-0" data-bind="foreach:campaniasList()">
+                        <div class="dropdown-item">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" data-bind="checked: Check,click: $root.buttonCampaniaCheck.bind($data, CampaniaId()), attr: { id: CampaniaId() },disable:Check() && CampaniaId() == Guid.Empty + '_Campanias'">
+                                <label class="custom-control-label cursor-pointer" data-bind="text:Nombre(), attr: { for: CampaniaId()  }"></label>
+                            </div>
+                        </div>
+                        <!-- ko if: $index() == 0 -->
+                        <div class="dropdown-divider m-0"></div>
+                        <span class="chevron"></span>
+                        <!-- /ko -->
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item mx-1">
+                    <button type="button" class="btn btn-outline-success h-100">
+                        <i class="fa fa-download" aria-hidden="true"></i> Descargar
+                    </button>
+                </li>
+                <li>
+                    <i class="fa fa-filter fa-2x mx-1"></i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="text-center" data-bind="visible:visibleLoadingCampanias()">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div style="display:none;" data-bind="visible:!visibleLoadingCampanias()">
+        <div class="row mt-4 mb-4">
+            <div class="col-md-12 col-lg-4">
+                <div class="pl-0 pr-0 pt-3 pb-2 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g" style="min-height: 105px;">
+                    <h3 class="l-h-n display-4 fw-500 text-center" data-bind="text:campaniasActivas()" style="min-height: 40px;"></h3>
+                    <h3 class="mb-0 ml-2"><small class="m-0 l-h-n">Campañas activas</small></h3>
+                    <hr class="mb-1 mt-1">
+                    <small class="ml-2">Cantidad total de campañas.</small>
+                    <i class="fa fa-megaphone position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="pl-0 pr-0 pt-3 pb-2 bg-success-300 rounded overflow-hidden position-relative text-white mb-g" style="min-height: 105px;">
+                    <h3 class="l-h-n display-4 fw-500 text-center" data-bind="text:canalesHabilitados()" style="min-height: 40px;"></h3>
+                    <h3 class="mb-0 ml-2"><small class="m-0 l-h-n">Canales habilitados</small></h3>
+                    <hr class="mb-1 mt-1">
+                    <small class="ml-2">Cantidad total de canales habilitados en campañas.</small>
+                    <i class="fa fa-link position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size: 6rem;"></i>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="pl-0 pr-0 pt-3 pb-2 bg-warning-500 rounded overflow-hidden position-relative text-white mb-g" style="min-height: 105px;">
+                    <h3 class="l-h-n display-4 fw-500 text-center" data-bind="text:personasConectadas()" style="min-height: 40px;"></h3>
+                    <h3 class="mb-0 ml-2"><small class="m-0 l-h-n">Personas conectadas</small></h3>
+                    <hr class="mb-1 mt-1">
+                    <small class="ml-2">Cantidad total de personas conectadas.</small>
+                    <i class="fa fa-users position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size: 6rem;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="panel mb-3 panel-shadows">
+            <div class="panel-container">
+                <div class="panel-content pb-5">
+                    <div class="row">
+                        <h3 class="m-0 font-weight-bold color-primary-400 mb-2 ml-3">Canales conectados</h3>
+                        <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+                            <!-- ko foreach: { data: campaniasPublicidadesList(), as: 'tipoCampania' }  -->
+                            <div class="divCardTipoCampanias mb-2 mx-6 float-left" data-bind="css: tipoCampania.Validar() ? 'campania-activa' : 'campania-disable'">
+                                <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaWhatsappTemplate' || tipoCampania.TipoCampaniaId() == 'CampaniaWhatsappButton'   -->
+                                <em class="fab fa-whatsapp fa-4x"></em>
+                                <!-- /ko -->
+                                <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaFormulario' -->
+                                <em class="fa fa-file-alt fa-4x"></em>
+                                <!-- /ko -->
+                                <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaBanner' -->
+                                <span>&lt;/&gt;</span>
+                                <!-- /ko -->
+                                <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaQR' -->
+                                <em class="fas fa-qrcode fa-4x"></em>
+                                <!-- /ko -->
+                                <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaMail' -->
+                                <em class="fas fa-envelope fa-4x"></em>
+                                <!-- /ko -->
+                                <h3 class="mt-4" data-bind="text:tipoCampania.Nombre()"></h3>
+                            </div>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel mb-3 panel-shadows">
+            <div class="panel-container">
+                <div class="panel-content pb-5">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <h3 class="m-0 font-weight-bold color-primary-400 mb-2 ml-3">Indicadores</h3>
+                            <div class="d-flex align-items-center justify-content-center h-100 bg-white">
+                                <div class="text-center">
+                                    <div class="m-2">
+                                        <h2 class="color-black">Inicio de sesiónes</h2>
+                                        <h3><strong data-bind="text:inicioSesion()"></strong></h3>
+                                    </div>
+                                    <div class="m-2">
+                                        <h2 class="color-black">Cantidad de usuarios</h2>
+                                        <h3><strong data-bind="text:cantidadUsuarios()"></strong></h3>
+                                    </div>
+                                    <div class="m-2">
+                                        <h2 class="color-black">No Enviadas</h2>
+                                        <h3><strong data-bind="text:noEnviadas()"></strong></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="m-0 font-weight-bold color-primary-400 mb-2 ml-3">Embudo</h3>
+                            <div id="funnelChart" style="height: 250px;display:none;" data-bind="visible: viewCampaniasEmbudoVentasList().length"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel mb-3 panel-shadows">
+            <div class="panel-container">
+                <div class="panel-content pb-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="panel">
+                                <div class="m-3 row">
+                                    <h3 class="m-0 font-weight-bold color-primary-400 mb-2 col-11"><i class="fas fa-envelope mr-2 "></i>Detalle de envios</h3>
+
+                                </div>
+                                <div class="panel-container">
+                                    <div class="panel-content text-center" data-bind="visible:visibleLoadingViewCampaniasDetallesEnvios()">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-content text-center" data-bind="visible: !visibleLoadingViewCampaniasDetallesEnvios() && !pageViewCampaniasDetallesEnvios().list().length" style="display:none;">
+                                        <label>
+                                            No se encontraron resultados.
+                                        </label>
+                                    </div>
+
+                                    <div class="overflow-auto TableReport" data-bind="visible: !visibleLoadingViewCampaniasDetallesEnvios() && pageViewCampaniasDetallesEnvios().list().length" style="display:none;">
+                                        <table class="table table-bordered table-hover table-striped w-100 mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sorting cursor-pointer" data-bind="click: sort.bind($data, 'FechaEnvio')"><span>Fecha envío</span></th>
+                                                    <th class="sorting col-1 cursor-pointer" data-bind="click: sort.bind($data, 'Contacto')"><span>Contacto</span></th>
+                                                    <th class="sorting cursor-pointer" data-bind="click: sort.bind($data, 'Canal')"><span>Canal</span></th>
+                                                    <th class="sorting cursor-pointer" data-bind="click: sort.bind($data, 'Respondida')"><span>Respondida</span></th>
+                                                    <th class="sorting cursor-pointer" data-bind="click: sort.bind($data, 'Chat')"><span>Chat</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: pageViewCampaniasDetallesEnvios().list()">
+                                                <tr>
+                                                    <td>
+                                                        <label data-bind="text:moment(FechaEnvio()).format('DD/MM/YYYY')"></label>
+                                                    </td>
+                                                    <td>
+                                                        <label class="multiline-ellipsis" data-bind="text: Contacto()"></label>
+                                                    </td>
+                                                    <td>
+                                                        <label data-bind="text: Canal()"></label>
+                                                    </td>
+                                                    <td>
+                                                        <div class="custom-control custom-switch text-center">
+                                                            <input type="checkbox" class="custom-control-input" data-bind="checked: Respondida(),disable:true">
+                                                            <label class="custom-control-label cursor-pointer"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label data-bind="text: Chat()"></label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel-footer" style="height:50px;display: none;" data-bind="visible: !visibleLoadingViewCampaniasDetallesEnvios() && pageViewCampaniasDetallesEnvios().list().length">
+                                        <div class="float-left">
+                                            <!-- ko if: (pageViewCampaniasDetallesEnvios().activePage() != null) -->
+                                            <p class="pt-1" data-bind="html: '<b>Mostrando ' + pageViewCampaniasDetallesEnvios().activePage().from().toString() + ' a ' + (pageViewCampaniasDetallesEnvios().totalRows() > pageViewCampaniasDetallesEnvios().activePage().to() ? pageViewCampaniasDetallesEnvios().activePage().to().toString() : pageViewCampaniasDetallesEnvios().totalRows().toString()) + ' - Total registros: ' + pageViewCampaniasDetallesEnvios().totalRows().toString() + '</b>'"></p>
+                                            <!-- /ko -->
+                                        </div>
+                                        <ul class="pagination float-right cursor-pointer" style="margin-bottom:0px;">
+                                            <li class="paginate_button page-item previous" data-bind="css: pageViewCampaniasDetallesEnvios().getCssPreviusState"><a class="page-link" data-bind="click: firstPage, css: pageViewCampaniasDetallesEnvios().getCssPreviusState" aria-label="Previous"><span aria-hidden="true">Primera página</span></a></li>
+                                            <li class="paginate_button page-item previous" data-bind="css: pageViewCampaniasDetallesEnvios().getCssPreviusState"><a class="page-link" data-bind="click: previusPage, css: pageViewCampaniasDetallesEnvios().getCssPreviusState" aria-label="Previous"><i class="fal fa-chevron-left"></i></a></li>
+
+                                            <!-- ko foreach: {data: pageViewCampaniasDetallesEnvios().pages, as: 'p'}-->
+                                            <!-- ko if: ($root.pageViewCampaniasDetallesEnvios().activePage() != null) && (p.number() >= $root.pageViewCampaniasDetallesEnvios().activePage().number() - 5 &&  p.number() <= $root.pageViewCampaniasDetallesEnvios().activePage().number() + 5)-->
+                                            <li class="paginate_button page-item" data-bind="css: p.getCssActive,css: p.getCssDisabled"><a class="page-link" data-bind="text: p.number, click: $root.changePage"></a></li>
+                                            <!-- /ko -->
+                                            <!-- /ko -->
+
+                                            <li class="paginate_button page-item next" data-bind="css: pageViewCampaniasDetallesEnvios().getCssNextState"><a class="page-link" data-bind="click: nextPage, css: pageViewCampaniasDetallesEnvios().getCssNextState" aria-label="Next"><i class="fal fa-chevron-right"></i></a></li>
+                                            <li class="paginate_button page-item next" data-bind="css: pageViewCampaniasDetallesEnvios().getCssNextState"><a class="page-link" data-bind="click: lastPage, css: pageViewCampaniasDetallesEnvios().getCssNextState" aria-label="Next"><span aria-hidden="true">Última página</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

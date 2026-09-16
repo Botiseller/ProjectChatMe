@@ -1,0 +1,102 @@
+﻿@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Segmentos";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(".subheader-icon.fal").addClass("fal fa-users");
+    </script>
+
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Segmentos/Segmentos.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Segmentos/CrearSegmentos.js")
+}
+
+<div id="Segmentos">
+    <div class="panel mb-0">
+        <div class="panel-container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom">
+                <ul class="navbar-nav mr-auto col-lg-4">
+                    <li class="nav-item w-100">
+                        <div class="input-group rounded">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre campañia..." role="search" id="txtBuscar" maxlength="120">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button"><i class="fal fa-search"></i></button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <button class="navbar-toggler mt-1 mb-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="ml-auto">
+                </div>
+            </nav>
+            <div class="overflow-auto" style="height: calc(100vh - calc(150px + 100px))">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-3 mb-2" data-bind="click:buttonCrearSegmento">
+                            <div class="divCard">
+                                <em class="fa fa-users fa-4x"></em>
+                                <h3>Crear segmento</h3>
+                                <span>Segmenta tu cartera y asi poder realizar campañas de marketing mas precisas.</span>
+                            </div>
+                        </div>
+                        <!-- ko foreach: { data: segmentosList(), as: 'campaniaSegmento' }  -->
+                        <div class="col-sm-6 col-xl-3 mb-2" data-bind="click:campaniaSegmento.ButtonCrearSegmento,visible:$root.segmentosList().length" style="display:none;">
+                            <div class="divCard divCardEdit">
+                                <h2>
+                                    <em class="fa fa-users float-left mr-1"></em>
+                                    <span data-bind="text:campaniaSegmento.Nombre()"></span>
+                                </h2>
+                                <span class="pl-4">Cantidad de campañas activas:&nbsp;<span data-bind="text:campaniaSegmento.CampaniasActivas()"></span></span>
+
+                                <div class="position-absolute pos-bottom mb-2" style="display:none;" data-bind="visible:campaniaSegmento.CampaniasPublicidadesList().length">
+                                    <h1 class="text-left" style="font-size:14px;">Medios conectados</h1>
+                                    <!-- ko foreach: { data: campaniaSegmento.CampaniasPublicidadesList(), as: 'tipoCampania' }  -->
+                                    <div class="mx-4 float-left has-tooltip" data-bind="attr: { title:  tipoCampania.NombreStr() }">
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappTemplate || tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappButton -->
+                                        <i class="fab fa-whatsapp fa-2x color-whatsapp"></i>
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaFormulario -->
+                                        <i class="fa fa-file-alt fa-2x color-form"></i>
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaBanner -->
+                                        <span class="fa-2x color-banner" style="min-height:inherit !important;">&lt;/&gt;</span>
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaQR -->
+                                        <i class="fas fa-qrcode fa-2x color-qr"></i>
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaMail -->
+                                        <i class="fas fa-envelope fa-2x color-mail"></i>
+                                        <!-- /ko -->
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section modalshtml
+{
+    @{
+        Html.RenderPartial("~/Views/Segmentos/CrearSegmentosModal.cshtml");
+    }
+}

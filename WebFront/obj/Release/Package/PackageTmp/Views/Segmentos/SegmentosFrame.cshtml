@@ -1,0 +1,444 @@
+﻿@using System.Web.Optimization
+@using Common.Utility
+
+@model JsonResult
+
+@{
+    Layout = "~/Views/_BaseFrameLayout.cshtml";
+    ViewBag.Title = "Segmentos";
+    ViewBag.SubTitle = "Segmenta a tus contactos y leads para mejorar la estrategia de marketing";
+
+}
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(".subheader-icon.fal").addClass("fal fa-users");
+    </script>
+
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Segmentos/Segmentos.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Segmentos/CrearSegmentos.js")
+}
+<style>
+    /* Card container */
+    .boti-seg-card {
+        background: #ffffff;
+        border: 1px solid rgba(120, 80, 190, .18);
+        border-radius: 16px;
+        padding: 16px 16px 14px;
+        box-shadow: 0 10px 24px rgba(20, 16, 40, .06);
+        transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+        position: relative;
+        overflow: hidden;
+        height: 195px;
+    }
+
+        .boti-seg-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(20, 16, 40, .10);
+            border-color: rgba(120, 80, 190, .28);
+        }
+
+    /* Header */
+    .boti-seg-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .boti-seg-title {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        min-width: 0;
+    }
+
+    .boti-seg-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(111,75,216,.10);
+        color: #6f4bd8;
+        flex: 0 0 auto;
+        font-size: 18px;
+    }
+
+    .boti-seg-titletext {
+        min-width: 0;
+    }
+
+    .boti-seg-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1f1d2b;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .boti-seg-desc {
+        font-size: 12.5px;
+        color: #6b6a77;
+        margin-top: 2px;
+        line-height: 1.35;
+        max-height: 34px;
+        overflow: hidden;
+    }
+
+    /* Actions */
+    .boti-seg-actions {
+        flex: 0 0 auto;
+    }
+
+    .boti-icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        border: 1px solid rgba(120, 80, 190, .18);
+        background: #fff;
+        color: #6b6a77;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background .15s ease, border-color .15s ease, color .15s ease;
+    }
+
+        .boti-icon-btn:hover {
+            background: rgba(121, 77, 191, .06);
+            border-color: rgba(120, 80, 190, .28);
+            color: #5a35c9;
+        }
+
+    /* Meta pills */
+    .boti-seg-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    .boti-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .boti-pill-soft {
+        background: rgba(121, 77, 191, .08);
+        color: #5130ba;
+        border: 1px solid rgba(121, 77, 191, .16);
+    }
+
+    .boti-pill i {
+        font-size: 12px;
+    }
+
+    /* Section */
+    .boti-seg-section {
+        margin-top: 12px;
+    }
+
+    .boti-seg-section-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: #3b3a46;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .boti-seg-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* Chips */
+    .boti-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid rgba(20, 16, 40, .08);
+        background: #fbfbfe;
+        color: #3b3a46;
+    }
+
+    .boti-chip-state {
+        background: rgba(0, 197, 168, .06);
+        border-color: rgba(0, 197, 168, .18);
+    }
+
+    .boti-chip-group {
+        background: rgba(121, 77, 191, .06);
+        border-color: rgba(121, 77, 191, .18);
+        color: #5130ba;
+    }
+
+    .boti-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 99px;
+        display: inline-block;
+    }
+
+    .boti-dot-green {
+        background: #21c38f;
+    }
+
+    .boti-dot-amber {
+        background: #f0b429;
+    }
+
+    .boti-dot-red {
+        background: #ef4e4e;
+    }
+
+    /* Footer */
+    .boti-seg-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .boti-muted {
+        font-size: 12px;
+        color: #6b6a77;
+        font-weight: 600;
+    }
+
+    /* Channels */
+    .boti-seg-channels {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .boti-chan {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        border: 1px solid rgba(121, 77, 191, .16);
+        background: rgba(121, 77, 191, .05);
+        color: #5a35c9;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+        .boti-chan i {
+            font-size: 16px;
+        }
+
+        .boti-chan .boti-chan-sub {
+            position: absolute;
+            right: 6px;
+            bottom: 6px;
+            font-size: 9px;
+            color: rgba(31, 29, 43, .70);
+            background: #fff;
+            border-radius: 8px;
+            padding: 2px;
+            border: 1px solid rgba(20, 16, 40, .08);
+        }
+</style>
+
+
+<div id="Segmentos">
+    <div class="mb-0">
+        <div class="" data-bind="visible:showPanel()" style="display:none;">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav mr-auto col-lg-4">
+                    <li class="nav-item w-100">
+                        <div class="input-group rounded">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre campañia..." role="search" id="txtBuscar" maxlength="120">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button"><i class="fal fa-search"></i></button>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+                <button class="navbar-toggler mt-1 mb-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"></button>
+
+                <ul class="navbar-nav d-flex flex-row align-items-center w-100">
+                    <li class="nav-item ml-auto">
+                        <button class="btn btn-outline-success waves-effect waves-themed" data-bind="click:buttonCrearSegmento"><i class="fas fa-plus mr-2"></i>Crear segmento</button>
+                    </li>
+
+                </ul>
+
+
+                @*<div class="navbar-collapse collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item dropdown">
+                            </li>
+                        </ul>
+                    </div>*@
+
+                <div class="ml-auto">
+                </div>
+            </nav>
+            <div class="overflow-auto" style="height: calc(100vh - calc(115px)); overflow-x: hidden !important;">
+                <div class="mt-2">
+                    <div class="row">
+                        @*<div class="col-sm-6 col-xl-3 mb-2" data-bind="click:buttonCrearSegmento">
+                                <div class="divCard">
+                                    <em class="fa fa-users fa-4x"></em>
+                                    <h3>Crear segmento</h3>
+                                    <span>Segmenta tu cartera y asi poder realizar campañas de marketing mas precisas.</span>
+                                </div>
+                            </div>*@
+
+
+                        <!-- ko foreach: { data: segmentosList(), as: 'campaniaSegmento' }  -->
+                        <div class="col-sm-4 col-xl-3 mb-2" data-bind="click:campaniaSegmento.ButtonCrearSegmento,visible:$root.segmentosList().length" style="display:none;">
+                            <!-- SEGMENT CARD -->
+                            <div class="boti-seg-card cursor-pointer">
+                                <div class="boti-seg-head">
+                                    <div class="boti-seg-title">
+                                        <div class="boti-seg-icon">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="boti-seg-titletext">
+                                            <div class="boti-seg-name" data-bind="text:campaniaSegmento.Nombre()"></div>
+                                            <div class="boti-seg-desc" data-bind="text:campaniaSegmento.Descripcion()">Personas con alto interés y perfil premium.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="boti-seg-meta">
+
+                                    <!-- ko if: campaniaSegmento.IncluyeLead -->
+                                    <span class="boti-pill boti-pill-soft">
+                                        <i class="fas fa-user-tag"></i> Incluye Lead
+                                    </span>
+                                    <!-- /ko -->
+                                    <!-- ko if: campaniaSegmento.IncluyeContacto -->
+                                    <span class="boti-pill boti-pill-soft">
+                                        <i class="fas fa-address-book"></i> Incluye Contacto
+                                    </span>
+                                    <!-- /ko -->
+                                </div>
+
+                                <div class="boti-seg-section">
+                                    @*<div class="boti-seg-section-title">
+                                            <i class="fas fa-filter"></i> Filtros
+                                        </div>*@
+
+                                    <div class="boti-seg-chips content-break-1">
+
+                                        <!-- ko foreach: { data: Filtros(), as: 'filtro' }  -->
+                                        <span class="boti-chip boti-chip-state">
+                                            <i class="fas fa-filter"></i>
+                                            <span class="" data-bind="html: filtro"></span>
+                                        </span>
+                                        <!-- /ko -->
+
+
+                                    </div>
+                                </div>
+
+                                <div class="boti-seg-footer">
+                                    <div class="boti-seg-footer-left">
+                                        <span class="boti-muted mt-1 ml-2 row">Usado en campañas:</span>
+                                    </div>
+
+                                    <div class="boti-seg-channels">
+                                        <!-- ko foreach: { data: campaniaSegmento.CampaniasPublicidadesList(), as: 'tipoCampania' }  -->
+                                        <div class="ml-2 float-left has-tooltip" data-bind="attr: { title:  tipoCampania.NombreStr() }">
+                                            <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappTemplate -->
+                                            <span class="boti-chan" title="WhatsApp Template"><i class="fab fa-whatsapp"></i></span>
+                                            <!-- /ko -->
+                                            <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappButton -->
+                                            <span class="boti-chan" title="WhatsApp Button"><i class="fab fa-whatsapp"></i><i class="fas fa-mouse-pointer boti-chan-sub"></i></span>
+                                            <!-- /ko -->
+                                            <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaFormulario -->
+                                            <span class="boti-chan" title="Formulario"><i class="fas fa-file-alt"></i></span>
+                                            <!-- /ko -->
+                                            <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaBanner -->
+                                            <span class="boti-chan" title="Banner"><i class="fas fa-code"></i></span>
+                                            <!-- /ko -->
+                                            <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaQR -->
+                                            <span class="boti-chan" title="QR"><i class="fas fa-qrcode"></i></span>
+                                            <!-- /ko -->
+                                            <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaMail -->
+                                            <span class="boti-chan" title="Mail"><i class="fas fa-envelope"></i></span>
+                                            <!-- /ko -->
+                                        </div>
+                                        <!-- /ko -->
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko foreach: { data: segmentosList(), as: 'campaniaSegmento' }  -->
+                        <!--<div class="col-sm-6 col-xl-3 mb-2" data-bind="click:campaniaSegmento.ButtonCrearSegmento,visible:$root.segmentosList().length" style="display:none;">
+                            <div class="divCard divCardEdit">
+                                <h2>
+                                    <em class="fa fa-users float-left mr-1"></em>
+                                    <span data-bind="text:campaniaSegmento.Nombre()"></span>
+                                </h2>
+                                <span class="pl-4">Cantidad de campañas activas:&nbsp;<span data-bind="text:campaniaSegmento.CampaniasActivas()"></span></span>
+
+                                <div class="position-absolute pos-bottom mb-2" style="display:none;" data-bind="visible:campaniaSegmento.CampaniasPublicidadesList().length">
+                                    <h1 class="text-left" style="font-size:14px;">Medios conectados</h1>-->
+                        <!-- ko foreach: { data: campaniaSegmento.CampaniasPublicidadesList(), as: 'tipoCampania' }  -->
+                        <!--<div class="mx-4 float-left has-tooltip" data-bind="attr: { title:  tipoCampania.NombreStr() }">-->
+                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappTemplate || tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappButton -->
+                        <!--<i class="fab fa-whatsapp fa-2x color-whatsapp"></i>-->
+                        <!-- /ko -->
+                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaFormulario -->
+                        <!--<i class="fa fa-file-alt fa-2x color-form"></i>-->
+                        <!-- /ko -->
+                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaBanner -->
+                        <!--<span class="fa-2x color-banner" style="min-height:inherit !important;">&lt;/&gt;</span>-->
+                        <!-- /ko -->
+                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaQR -->
+                        <!--<i class="fas fa-qrcode fa-2x color-qr"></i>-->
+                        <!-- /ko -->
+                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaMail -->
+                        <!--<i class="fas fa-envelope fa-2x color-mail"></i>-->
+                        <!-- /ko -->
+                        <!--</div>-->
+                        <!-- /ko -->
+                        <!--</div>
+                            </div>
+                        </div>-->
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section modalshtml
+{
+    @{
+        Html.RenderPartial("~/Views/Segmentos/CrearSegmentosModal.cshtml");
+    }
+}

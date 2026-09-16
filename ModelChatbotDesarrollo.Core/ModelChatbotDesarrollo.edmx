@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Chatbot_DesarrolloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChatsExample">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Chatbot_DesarrolloModelStoreContainer">
+          <EntitySet Name="ChatsExample" EntityType="Self.ChatsExample" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Chatbot_DesarrolloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Chatbot_DesarrolloEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="fn_Negocios_EstadoNegocios" IsComposable="true" ReturnType="Collection(Chatbot_DesarrolloModel.fn_Negocios_EstadoNegocios_Result)">
+            <Parameter Name="fechaDesde" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaHasta" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_IA_BoxNoEntendidos" ReturnType="Collection(Chatbot_DesarrolloModel.sp_IA_BoxNoEntendidos_Result)" />
+          <FunctionImport Name="sp_IA_FunnelByFlujoId" ReturnType="Collection(Chatbot_DesarrolloModel.sp_IA_FunnelByFlujoId_Result)">
+          <Parameter Name="FlujoId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="ChatsExample" EntityType="Chatbot_DesarrolloModel.ChatsExample" />
+          </EntityContainer>
+        <ComplexType Name="fn_Negocios_EstadoNegocios_Result">
+          <Property Type="Guid" Name="NegocioId" Nullable="true" />
+          <Property Type="Guid" Name="EtapaId" Nullable="true" />
+          <Property Type="DateTime" Name="FechaAltaNegocio" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_IA_BoxNoEntendidos_Result">
+          <Property Type="Int32" Name="padre" Nullable="true" />
+          <Property Type="String" Name="palabra" Nullable="true" />
+          <Property Type="Int32" Name="hijo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_IA_FunnelByFlujoId_Result">
+          <Property Type="Guid" Name="FlujoId" Nullable="true" />
+          <Property Type="Int32" Name="intent" Nullable="true" />
+          <Property Type="Int32" Name="cantidad" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="ChatsExample">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Chatbot_DesarrolloModelStoreContainer" CdmEntityContainer="Chatbot_DesarrolloEntities">
+          <EntitySetMapping Name="ChatsExample">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.ChatsExample">
+              <MappingFragment StoreEntitySet="ChatsExample">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

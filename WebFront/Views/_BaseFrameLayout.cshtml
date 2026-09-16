@@ -1,0 +1,414 @@
+﻿@using System.Web.UI.WebControls;
+
+@*@{
+        if (Session["Bloqueo"] != null && bool.Parse(Session["Bloqueo"].ToString()))
+        {
+            Response.RedirectToRoute(new { controller = "Authentication", action = "Block" });
+        }
+    }*@
+
+<!DOCTYPE html>
+<!--
+Template Name:  SmartAdmin Responsive WebApp - Template build with Twitter Bootstrap 4
+Version: 4.4.5
+Author: Sunnyat Ahmmed
+Website: http://gootbootstrap.com
+Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
+License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
+-->
+<html lang="en" class="root-text-sm">
+<head>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    @*<meta name="google-signin-client_id" content="@Business.Dto.ValoresPorDefectoEnum.clientGoogleId">*@
+
+    <meta charset="utf-8">
+    <title>Botiseller - Campaigns</title>
+    <meta name="description" content="Page Title">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+    <!-- Call App Mode on ios devices -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- base css -->
+    @Styles.Render("~/estilo/site")
+
+    @RenderSection("styles", required: false)
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon.ico">
+    <link rel="mask-icon" href="~/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vLrBiz6igbL41HiNWUEt1Ohzr2jX10o&libraries=places"></script>
+</head>
+<body class="mod-bg-1 nav-function-fixed header-function-fixed mod-nav-link mod-nav-dark nav-function-minify">
+    <!-- DOC: script to save and load page settings -->
+    <script>
+        /**
+         *	This script should be placed right after the body tag for fast execution
+         *	Note: the script is written in pure javascript and does not depend on thirdparty library
+         **/
+        //'use strict';
+
+        //var classHolder = document.getElementsByTagName("BODY")[0],
+        //    /**
+        //     * Load from localstorage
+        //     **/
+        //    themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
+        //        {},
+        //    themeURL = themeSettings.themeURL || '',
+        //    themeOptions = themeSettings.themeOptions || '';
+        ///**
+        // * Load theme options
+        // **/
+        //if (themeSettings.themeOptions) {
+        //    classHolder.className = themeSettings.themeOptions;
+        //    console.log("%c✔ Theme settings loaded", "color: #148f32");
+        //}
+        //else {
+        //    console.log("Heads up! Theme settings is empty or does not exist, loading default settings...");
+        //}
+        //if (themeSettings.themeURL && !document.getElementById('mytheme')) {
+        //    var cssfile = document.createElement('link');
+        //    cssfile.id = 'mytheme';
+        //    cssfile.rel = 'stylesheet';
+        //    cssfile.href = themeURL;
+        //    document.getElementsByTagName('head')[0].appendChild(cssfile);
+        //}
+        ///**
+        // * Save to localstorage
+        // **/
+        //var saveSettings = function () {
+        //    themeSettings.themeOptions = String(classHolder.className).split(/[^\w-]+/).filter(function (item) {
+        //        return /^(nav|header|mod|display)-/i.test(item);
+        //    }).join(' ');
+        //    if (document.getElementById('mytheme')) {
+        //        themeSettings.themeURL = document.getElementById('mytheme').getAttribute("href");
+        //    };
+        //    localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+        //}
+        ///**
+        // * Reset settings
+        // **/
+        //var resetSettings = function () {
+        //    localStorage.setItem("themeSettings", "");
+        //}
+
+        @{
+            var sessionData = Session["SessionData"];
+            var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(sessionData);
+        }
+
+        var sessionData = @Html.Raw(serializedData);
+    </script>
+
+    <!-- BEGIN Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <!-- BEGIN Left Aside -->
+            @*@Html.Partial("_MenuIzquierda")*@
+            <!-- END Left Aside -->
+
+            <div class="page-content-wrapper" style="padding: 0px;">
+                <!-- BEGIN Page Header -->
+                @*@Html.Partial("_Header")*@
+                <!-- END Page Header -->
+                <!-- BEGIN Page Content -->
+                <!-- the #js-page-content id is needed for some plugins to initialize -->
+                <main id="js-page-content" role="main" class="page-content" style="padding: 0px; margin: 0px;">
+                    @if (ViewBag.Title != null)
+                    {
+                        <div class="subheader ml-4 my-3">
+                            <h1 class="subheader-title ">
+                                <i class='subheader-icon fal'></i>  <span id="titlePanel">@ViewBag.Title  </span>
+                                <small>
+                                    @if (ViewBag.Subtitle != null)
+                                    {
+                                        @ViewBag.Subtitle
+                                    }
+                                </small>
+                            </h1>
+                        </div>
+                    }
+                    @RenderBody()
+                </main>
+
+                <!-- this overlay is activated only when mobile menu is triggered -->
+                <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+                <!-- END Page Content -->
+                <!-- BEGIN Page Footer -->
+                @*@Html.Partial("_Footer")*@
+                <!-- END Page Footer -->
+                <!-- BEGIN Color profile -->
+                <!-- this area is hidden and will not be seen on screens or screen readers -->
+                <!-- we use this only for CSS color refernce for JS stuff -->
+                <p id="js-color-profile" class="d-none">
+                    <span class="color-primary-50"></span>
+                    <span class="color-primary-100"></span>
+                    <span class="color-primary-200"></span>
+                    <span class="color-primary-300"></span>
+                    <span class="color-primary-400"></span>
+                    <span class="color-primary-500"></span>
+                    <span class="color-primary-600"></span>
+                    <span class="color-primary-700"></span>
+                    <span class="color-primary-800"></span>
+                    <span class="color-primary-900"></span>
+                    <span class="color-info-50"></span>
+                    <span class="color-info-100"></span>
+                    <span class="color-info-200"></span>
+                    <span class="color-info-300"></span>
+                    <span class="color-info-400"></span>
+                    <span class="color-info-500"></span>
+                    <span class="color-info-600"></span>
+                    <span class="color-info-700"></span>
+                    <span class="color-info-800"></span>
+                    <span class="color-info-900"></span>
+                    <span class="color-danger-50"></span>
+                    <span class="color-danger-100"></span>
+                    <span class="color-danger-200"></span>
+                    <span class="color-danger-300"></span>
+                    <span class="color-danger-400"></span>
+                    <span class="color-danger-500"></span>
+                    <span class="color-danger-600"></span>
+                    <span class="color-danger-700"></span>
+                    <span class="color-danger-800"></span>
+                    <span class="color-danger-900"></span>
+                    <span class="color-warning-50"></span>
+                    <span class="color-warning-100"></span>
+                    <span class="color-warning-200"></span>
+                    <span class="color-warning-300"></span>
+                    <span class="color-warning-400"></span>
+                    <span class="color-warning-500"></span>
+                    <span class="color-warning-600"></span>
+                    <span class="color-warning-700"></span>
+                    <span class="color-warning-800"></span>
+                    <span class="color-warning-900"></span>
+                    <span class="color-success-50"></span>
+                    <span class="color-success-100"></span>
+                    <span class="color-success-200"></span>
+                    <span class="color-success-300"></span>
+                    <span class="color-success-400"></span>
+                    <span class="color-success-500"></span>
+                    <span class="color-success-600"></span>
+                    <span class="color-success-700"></span>
+                    <span class="color-success-800"></span>
+                    <span class="color-success-900"></span>
+                    <span class="color-fusion-50"></span>
+                    <span class="color-fusion-100"></span>
+                    <span class="color-fusion-200"></span>
+                    <span class="color-fusion-300"></span>
+                    <span class="color-fusion-400"></span>
+                    <span class="color-fusion-500"></span>
+                    <span class="color-fusion-600"></span>
+                    <span class="color-fusion-700"></span>
+                    <span class="color-fusion-800"></span>
+                    <span class="color-fusion-900"></span>
+                </p>
+                <!-- END Color profile -->
+            </div>
+        </div>
+    </div>
+    <!-- END Page Wrapper -->
+    <!-- BEGIN Page Settings -->
+    @*@Html.Partial("_MenuDerecha")*@
+    <!-- END Page Settings -->
+    <!-- base vendor bundle:
+         DOC: if you remove pace.js from core please note on Internet Explorer some CSS animations may execute before a page is fully loaded, resulting 'jump' animations
+                    + pace.js (recommended)
+                    + jquery.js (core)
+                    + jquery-ui-cust.js (core)
+                    + popper.js (core)
+                    + bootstrap.js (core)
+                    + slimscroll.js (extension)
+                    + app.navigation.js (core)
+                    + ba-throttle-debounce.js (core)
+                    + waves.js (extension)
+                    + smartpanels.js (extension)
+                    + src/../jquery-snippets.js (core) -->
+
+    @Scripts.Render("~/javascripts/site")
+    @Scripts.Render("~/javascripts/factoryAndShared")
+    @Scripts.Render("~/javascripts/sammy")
+    @Scripts.Render("~/javascripts/linq")
+    @Scripts.Render("~/javascripts/knockout")
+
+    <!--This page contains the basic JS and CSS files to get started on your project. If you need aditional addon's or plugins please see scripts located at the bottom of each page in order to find out which JS/CSS files to add.-->
+
+    <script>
+        $(document).ready(function () {
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+
+            var getMessage = function () {
+                var msgs = [
+                    'My name is Inigo Montoya. You killed my father. Prepare to die!',
+                    'Are you the six figured man?',
+                    'Inconceivable!',
+                    'I do not think that means what you think it means.',
+                    'Have fun storming the castle!'
+                ];
+                i++;
+                if (i === msgs.length) {
+                    i = 0;
+                }
+
+                return msgs[i];
+            };
+
+            var getMessageWithClearButton = function (msg) {
+                msg = msg ? msg : 'Clear itself?';
+                msg += '<br /><br /><button type="button" class="btn clear">Yes</button>';
+                return msg;
+            };
+
+            $('#closeButton').click(function () {
+                if ($(this).is(':checked')) {
+                    $('#addBehaviorOnToastCloseClick').prop('disabled', false);
+                }
+                else {
+                    $('#addBehaviorOnToastCloseClick').prop('disabled', true);
+                    $('#addBehaviorOnToastCloseClick').prop('checked', false);
+                }
+            });
+
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                var addClear = $('#addClear').prop('checked');
+
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    newestOnTop: $('#newestOnTop').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    rtl: $('#rtl').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    preventDuplicates: $('#preventDuplicates').prop('checked'),
+                    onclick: null
+                };
+
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+
+                if ($('#addBehaviorOnToastCloseClick').prop('checked')) {
+                    toastr.options.onCloseClick = function () {
+                        alert('You can perform some custom action when the close button is clicked');
+                    };
+                }
+
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = parseInt($showDuration.val());
+                }
+
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = parseInt($hideDuration.val());
+                }
+
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = addClear ? 0 : parseInt($timeOut.val());
+                }
+
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = addClear ? 0 : parseInt($extendedTimeOut.val());
+                }
+
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+
+                if (addClear) {
+                    msg = getMessageWithClearButton(msg);
+                    toastr.options.tapToDismiss = false;
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+
+                $('#toastr-log').text('Command: toastr["' +
+                    shortCutFunction +
+                    '"]("' +
+                    msg +
+                    (title ? '", "' + title : '') +
+                    '")\n\ntoastr.options = ' +
+                    JSON.stringify(toastr.options, null, 2)
+                );
+
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+
+                if (typeof $toast === 'undefined') {
+                    return;
+                }
+
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+                if ($toast.find('.clear').length) {
+                    $toast.delegate('.clear', 'click', function () {
+                        toastr.clear($toast,
+                            {
+                                force: true
+                            });
+                    });
+                }
+            });
+
+            function getLastToast() {
+                return $toastlast;
+            };
+
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+        });
+    </script>
+
+
+    @RenderSection("scripts", required: false)
+    @RenderSection("modalshtml", required: false)
+
+    <!-- View Modals-->
+    @{Html.RenderPartial("~/Views/Shared/Modal/ModalSubirArchivo.cshtml");}
+</body>
+</html>

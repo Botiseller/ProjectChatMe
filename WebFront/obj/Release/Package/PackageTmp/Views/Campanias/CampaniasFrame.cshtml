@@ -1,0 +1,456 @@
+﻿@using System.Web.Optimization
+@using Common.Utility
+
+@model JsonResult
+
+@{
+    Layout = "~/Views/_BaseFrameLayout.cshtml";
+    ViewBag.Title = "Campañas";
+    ViewBag.SubTitle = "Crea campañas de comnicación para generar mas trafico por whatsap, afianzar tus clientes y generar nuevos";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(".subheader-icon.fal").addClass("fal fa-megaphone");
+    </script>
+
+
+
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/SectionCampania.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/TipoCampania/CampaniaBanner.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/TipoCampania/CampaniaFormulario.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/TipoCampania/CampaniaMail.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/TipoCampania/CampaniaQR.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/TipoCampania/CampaniaWhatsappButton.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionCampania/TipoCampania/CampaniaWhatsappTemplate.js")
+
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionDatosGenerales/SectionDatosGenerales.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionSegmentos/SectionSegmentos.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Segmentos/CrearSegmentos.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/CrearCampanias.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/Campanias.js")
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Campanias/SectionFin/SectionFin.js")
+
+}
+
+<style>
+    .boti-campaign-card {
+        background: #ffffff;
+        border-radius: 16px;
+        /* BORDE */
+        border: 1px solid #e9e6f2;
+        /* SOMBRA SUAVE */
+        box-shadow: 0 6px 18px rgba(111, 75, 216, 0.08);
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        height: 204px;
+    }
+
+        /*.boti-campaign-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 8px 24px rgba(111, 75, 216, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: transform .2s, box-shadow .2s;
+    }*/
+
+        .boti-campaign-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(111, 75, 216, 0.14);
+        }
+
+    /* HEADER */
+    .boti-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .boti-campaign-title {
+        font-weight: 600;
+        font-size: 16px;
+        color: #2f2f3b;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .boti-campaign-title i {
+            color: #6f4bd8;
+        }
+
+    /* STATUS */
+    .boti-status {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+        .boti-status.active {
+            background: #e9f8f3;
+            color: #15a77f;
+        }
+
+        .boti-status.paused {
+            background: #fff7e6;
+            color: #b7791f;
+        }
+
+        .boti-status.finished {
+            background: #f1f1f5;
+            color: #6b6b80;
+        }
+
+    .boti-campaign-card.paused {
+        border-color: #f0d9b5;
+        background: #fffdf7;
+    }
+
+    .boti-campaign-card.finished {
+        opacity: .75;
+        background: #fafafa;
+        border-color: #e4e4eb;
+    }
+
+
+    /* HIGHLIGHTS */
+    .boti-highlights {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .boti-segment {
+        background: #f2edff;
+        color: #6f4bd8;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        max-width: 250px;
+    }
+
+    .boti-days {
+        background: #fff3cd;
+        color: #8a6d3b;
+        padding: 6px 12px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* FECHAS */
+    .boti-dates {
+        font-size: 13px;
+        color: #6c6c80;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* CHANNELS */
+    .boti-channels {
+        display: flex;
+        gap: 10px;
+        font-size: 18px;
+    }
+
+        .boti-channels .whatsapp {
+            color: #25d366;
+        }
+
+        .boti-channels .mail {
+            color: #7b5cff;
+        }
+
+        .boti-channels .form {
+            color: #00bfa6;
+        }
+
+    /* AUDIENCE */
+    .boti-audience {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .audience-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .audience-badge.segment {
+            background: #edf7ff;
+            color: #2176ff;
+        }
+
+        .audience-badge.file {
+            background: #fef2f2;
+            color: #c53030;
+        }
+</style>
+
+<div id="Campanias">
+    <div class="mb-0">
+        <div class="" data-bind="visible:showPanel()" style="display:none;">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <ul class="navbar-nav mr-auto col-lg-4">
+                    <li class="nav-item w-100">
+                        <div class="input-group rounded">
+                            <input type="text" class="form-control" placeholder="Buscar por nombre campañia..." role="search" id="txtBuscar" maxlength="120">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button"><i class="fal fa-search"></i></button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <button class="navbar-toggler mt-1 mb-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex flex-row align-items-center w-100">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fs-xl text-truncate text-truncate-lg text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Estados
+                                <!-- ko if: Enumerable.From(estadosList()).Where(function(x){return x.Check()}).ToArray().length > 0 -->
+                                <span class="badge badge-icon" style="font-size: 10px;bottom: 22px;" data-bind="text: Enumerable.From(estadosList()).Where(function(x){return x.Check()}).ToArray().length"></span>
+                                <!-- /ko -->
+                            </a>
+                            <div class="dropdown-menu fadeindown" data-bind="foreach: estadosList">
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" data-bind="checked: Check, click: $root.buttonCheckEstado, attr:{ id: 'checkEstado' + $index() }">
+                                        <label class="custom-control-label cursor-pointer" data-bind="text: Nombre, attr:{ for: 'checkEstado' + $index() }"></label>
+                                    </div>
+                                </div>
+                                <!-- ko if: $index() == 0 -->
+                                <div class="dropdown-divider m-0"></div>
+                                <!-- /ko -->
+                                <span class="chevron"></span>
+                            </div>
+                        </li>
+                        <li class="nav-item hidden-md-down">
+                            <a class="nav-link fs-xl text-truncate text-truncate-lg text-info" style="color: #e0e0e0 !important;">|</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fs-xl text-truncate text-truncate-lg text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Canales
+                                <!-- ko if: Enumerable.From(tipoCampaniasList()).Where(function(x){return x.Check()}).ToArray().length > 0 -->
+                                <span class="badge badge-icon" style="font-size: 10px;bottom: 22px;" data-bind="text: Enumerable.From(tipoCampaniasList()).Where(function(x){return x.Check()}).ToArray().length"></span>
+                                <!-- /ko -->
+                            </a>
+                            <div class="dropdown-menu fadeindown" data-bind="foreach:tipoCampaniasList">
+                                <div class="dropdown-item">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" data-bind="checked: Check,click: $root.buttonCheck, attr:{ id: TipoCampaniaId()}">
+                                        <label class="custom-control-label cursor-pointer" data-bind="text:Nombre(), attr:{ for: TipoCampaniaId()}"></label>
+                                    </div>
+                                </div>
+                                <span class="chevron"></span>
+                            </div>
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <button class="btn btn-outline-success" data-bind="click:buttonCrearCampania"><i class="fas fa-plus mr-2"></i>Crear campaña</button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="ml-auto">
+                </div>
+            </nav>
+            <div class="overflow-auto" style="height: calc(100vh - calc(115px)); overflow-x: hidden !important;">
+                <div class="mt-3">
+                    <div class="row">
+
+                        <!-- ko foreach: { data: campaniasList(), as: 'c' }  -->
+                        <div class="col-sm-6 col-xl-3 mb-2 cursor-pointer" data-bind="click: c.ButtonCrearCampania">
+                            <div class="boti-campaign-card">
+
+                                <!-- Header -->
+                                <div class="boti-card-header">
+                                    <div class="boti-campaign-title">
+                                        <i class="fas fa-bullhorn"></i>
+                                        <span class="text-break-1" data-bind="text:c.Nombre()"></span>
+                                    </div>
+
+
+
+                                    <!-- ko if: c.Habilitado() && moment(c.FechaInicio(), 'DD/MM/YYYY').isAfter(moment(), 'day') -->
+                                    <span class="boti-status active" data-bind="click:c.ButtonHabilitar">
+                                        Por comenzar
+                                    </span>
+                                    <!-- /ko -->
+                                    <!-- ko if: c.Habilitado() && moment(c.FechaInicio(), 'DD/MM/YYYY').isBefore(moment(), 'day') && (!c.FechaFin() || moment(c.FechaFin(), 'DD/MM/YYYY').isSameOrAfter(moment(), 'day')) -->
+                                    <span class="boti-status active" data-bind="click:c.ButtonHabilitar">
+                                        Activa
+                                    </span>
+                                    <!-- /ko -->
+                                    <!-- ko if: c.Habilitado() && c.FechaFin() && moment(c.FechaFin(), 'DD/MM/YYYY').isBefore(moment(), 'day') -->
+                                    <span class="boti-status finished">
+                                        Completa
+                                    </span>
+                                    <!-- /ko -->
+                                    <!-- ko if: !c.Habilitado() -->
+                                    <span class="boti-status paused" data-bind="click:c.ButtonHabilitar">
+                                        Pausada
+                                    </span>
+                                    <!-- /ko -->
+
+
+                                </div>
+
+                                <!-- Segmento + Días -->
+
+                                <div class="boti-highlights">
+                                    <!-- ko if: c.CampaniasSegmentosNombre -->
+                                    <span class="boti-segment">
+                                        <i class="fas fa-users"></i>
+                                        <span class="text-break-1" data-bind="text: c.CampaniasSegmentosNombre()"></span>
+
+                                    </span>
+                                    <!-- /ko -->
+                                    <!-- ko if: c.FechaFin() && moment(c.FechaFin(), 'DD/MM/YYYY').isAfter(moment(), 'day') -->
+                                    <span class="boti-days">
+                                        <i class="fas fa-clock"></i>
+                                        <span data-bind="text: moment(c.FechaFin(), 'DD/MM/YYYY').startOf('day').diff(moment().startOf('day'), 'days') + ' días restantes'"></span>
+                                    </span>
+                                    <!-- /ko -->
+                                    <!-- ko if: !c.FechaFin() -->
+                                    <span class="boti-days">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Sin fin</span>
+                                    </span>
+                                    <!-- /ko -->
+
+                                </div>
+                                <!-- Fechas -->
+                                <div class="boti-dates">
+                                    <i class="fa fa-calendar"></i>
+                                    <span data-bind="text: c.FechaFin() ? c.FechaInicio() + ' - ' + c.FechaFin() : c.FechaInicio()"></span>
+
+                                </div>
+
+                                <!-- Canales -->
+                                <div class="boti-channels">
+
+                                    <!-- ko foreach: { data: c.CampaniasPublicidadesList(), as: 'tipoCampania' }  -->
+                                    <div class="has-tooltip" data-bind="attr: { title:  tipoCampania.NombreStr() }">
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappTemplate || tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaWhatsappButton -->
+                                        <i class="fab fa-whatsapp whatsapp"></i>
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaFormulario -->
+                                        <i class="fas fa-file-alt form"></i>
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaBanner -->
+                                        <i class="fas fa-code form"></i>
+
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaQR -->
+                                        <i class="fas fa-qrcode color-qr"></i>
+
+                                        <!-- /ko -->
+                                        <!-- ko if: tipoCampania.TipoCampania() == new Enums().TipoCampania.CampaniaMail -->
+                                        <i class="fas fa-envelope mail"></i>
+                                        <!-- /ko -->
+                                    </div>
+                                    <!-- /ko -->
+
+                                </div>
+
+                                <!-- Audiencia -->
+                                <div class="boti-audience">
+
+                                    <!-- ko if: c.CampaniasSegmentosImportado -->
+                                    <span class="audience-badge file">
+                                        <i class="fas fa-file-excel"></i>
+                                        <span data-bind="text: c.CampaniasSegmentosImportado() + ' contactos importados'"></span>
+                                    </span>
+                                    <!-- /ko -->
+
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    <!--ko if:cargandoLote()-->
+                    <div class="d-flex justify-content-center py-3">
+                        @{ Html.RenderPartial("~/Views/Shared/_Loading.cshtml");}
+                    </div>
+                    <!-- /ko -->
+                    <!--ko if:showPanel() && !cargandoLote() && campaniasList().length == 0-->
+                    <div class="bs-row">
+                        <div class="bs-empty-row" style="padding:16px">
+
+                            <div class="col-12 text-center">
+
+                                <div class="bs-empty-icon">
+                                    <i class="fa fa-search"></i>
+                                </div>
+
+                                <div class="bs-empty-title">
+                                    No encontramos campañas
+                                </div>
+
+                                <div class="bs-empty-desc">
+                                    No hay resultados que coincidan con los filtros o términos de búsqueda aplicados.
+                                </div>
+
+                                <div class="bs-empty-hints">
+                                    <span><i class="fas fa-filter"></i> Revisá los filtros activos</span>
+                                    <span><i class="fas fa-star"></i> Probá con otra canal o estado</span>
+                                    <span><i class="fas fa-tag"></i> Agrega una nueva campañas</span>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /ko -->
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section modalshtml
+{
+    @{
+        Html.RenderPartial("~/Views/Campanias/CrearCampanias.cshtml");
+    }
+}
+

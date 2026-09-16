@@ -1,0 +1,57 @@
+﻿@*@Scripts.Render("~/Scripts/Models/Campanias/SectionCampania/TipoCampania/CampaniaBanner.js")*@
+
+<div class="panel h-100 mb-0" style="display: none !important;" id="CampaniaBanner" data-bind="visible:visibleTipoCampania()">
+    
+
+    <div class="row">
+        <div class="col-12">
+            <div class="m-2">
+                <h3 class="col-12">
+                    <strong>
+                        <i class="fal mr-2 fs-xxl fa-address-card orange"></i>
+                        Banner
+                    </strong>
+                    <small>Crea un banner en tu web e identifica cuantas veces es visualizado.</small>
+                </h3>
+
+                <div class="col-12 mt-1">
+                    <button class="btn btn-success m-0 divVisibleFalse" data-bind="visible:!visibleAgregar(), click:botonAgregar" style="display:none;"><i class="fal fa-plus mr-2"></i>Agregar campaña</button>
+                    <button class="btn btn-danger m-0 divVisibleFalse" data-bind="visible:visibleAgregar(), click:botonCancelar" style="display:none;"><i class="fal fa-trash-alt mr-2"></i>Quitar campaña</button>
+
+                    <button class="btn btn-outline-info mr-1 float-right disabled">Personalizable</button>
+                    <button class="btn btn-outline-info mr-1 float-right disabled">Integración automática</button>
+                    <button class="btn btn-outline-info mr-1 float-right disabled">Visualizaciones</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="panel-container" style="display: none !important;" data-bind="visible:visibleAgregar()">
+        <form id="formValidarCampaniaBanner" role="form">
+            <div class="panel-content h-100 border-top">
+                <div class="form-row">
+                    <div class="col-12 mb-2">
+                        <label class="form-label" for="eg-dark-theme-banner">Generar banner <span class="text-danger">*</span></label>
+                        <div id="eg-dark-theme-banner" data-bind="froala: ''"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12 mb-2">
+                        <label class="form-label" for="txtURL">URL <span class="text-danger">*</span> </label>
+                        <input type="text" id="txtURL" class="form-control" required="required" placeholder="URL" data-bind="value: url" disabled />
+                        <div class="invalid-feedback">Campo obligatorio.</div>
+                        <div class="valid-feedback">
+                            Correcto!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

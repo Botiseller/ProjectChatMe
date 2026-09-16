@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "WebApiMiddelware\\WebApiMiddelware.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "WebFront\\WebFront.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

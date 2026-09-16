@@ -1,0 +1,85 @@
+﻿<div id="ModalSubirArchivo" tabindex="-1" aria-hidden="true" class="modal fade BodyDisable" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fal fa-file mr-2" style="margin-right:5px;"></i><span>Archivos</span>
+                    <small class="m-0" style="font-size:12px">
+                        Importa todos los archivos que necesites!
+                    </small>
+                </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="display:none;" data-bind="visible:$root.VisbleAgregarArchivo();">
+                    <div class="col-lg-9 hidden-md-down">
+                        <blockquote class="box-placeholder text-center">Arrastre el documento para agregar.</blockquote>
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="btn-success fileinput-button">
+                            <i class="fal fa-fw fa-plus"></i>
+                            <span>Agregar un nuevo archivo</span>
+                            <input id="inputFileImgModalSubirArchivo" type="file" data-bind="attr:{ accept : $root.AcceptTipoArchivo() }" name="files" class="addFile has-tooltip">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row" data-bind="visible:$root.ArchivosNuevos().files().length || $root.Archivos().length;">
+                    <div class="table-responsive col-12 col-sm-12 col-md-12 col-lg-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre del archivo</th>
+                                    <th data-bind="visible:$root.VisbleFechaAlta();">Fecha alta</th>
+                                    <th>Descargar</th>
+                                    <th data-bind="visible:$root.VisbleEliminarArchivo();">Eliminar</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="files" data-bind="foreach: $root.ArchivosNuevos().files();visible: $root.ArchivosNuevos().files().length;">
+                                <tr>
+                                    <th class="name">
+                                        <!-- ko if: !isNaN(src()) -->
+                                        <em class="fa fa-file" style="font-size:15px;margin-left:9px;margin-right: 7px;"></em>
+                                        <!-- /ko -->
+                                        <!-- ko ifnot:  !isNaN(src()) -->
+                                        <img class="profile-image-md rounded-circle imgImagenSmall" data-bind="attr: { src: src() }" style="display:block;width:30px !important;height:30px !important;" />
+                                        <!-- /ko -->
+                                        <label data-bind="text: name()" class="ml-3"></label>
+                                    </th>
+                                    <th class="size" data-bind="text: uploadDate,visible:$root.VisbleFechaAlta();"></th>
+                                    <th><a data-bind="attr: { href: href, download: name }" class="has-tooltip"><em class="fa fa-cloud-download" style="color:lightblue;"></em></a></th>
+                                    <th><a data-bind="click: $root.EliminarArchivoNuevo.bind($data, guid());" class="cursor-pointer"><em class="fa fa-trash" style="color:red;"></em></a></th>
+                                </tr>
+                            </tbody>
+
+                            <tbody class="files" data-bind="foreach: $root.Archivos();visible: $root.Archivos().length;">
+                                <tr>
+                                    <th class="name">
+                                        <!-- ko if: !isNaN(ArchivoPath()) -->
+                                        <em class="fa fa-file" style="font-size:15px;margin-left:9px;margin-right: 7px;"></em>
+                                        <!-- /ko -->
+                                        <!-- ko ifnot:  !isNaN(ArchivoPath()) -->
+                                        <img class="profile-image-md rounded-circle imgImagenSmall" data-bind="attr: { src: ArchivoPath() }" style="display:block;width:30px !important;height:30px !important;" />
+                                        <!-- /ko -->
+                                        <label data-bind="text: Nombre()" class="ml-3"></label>
+                                    </th>
+                                    <th class="size" data-bind="text:FechaAlta(),visible:$root.VisbleFechaAlta();"></th>
+                                    <th><i class="fa fa-cloud-download cursor-pointer has-tooltip" style="color:lightblue;" data-bind="click:$root.ButtonDescargarArchivo.bind($data, ArchivoId());"></i></th>
+                                    <th data-bind="visible:$root.VisbleEliminarArchivo();"><a data-bind="click: $root.EliminarArchivo.bind($data, ArchivoId());" class="cursor-pointer"><em class="fa fa-trash" style="color:red;"></em></a></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary ml-3 waves-effect waves-themed" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

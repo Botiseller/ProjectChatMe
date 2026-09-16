@@ -1,0 +1,259 @@
+﻿@*@Scripts.Render("~/Scripts/Models/Campanias/SectionFin/SectionFin.js")*@
+
+
+<style>
+    /* ===== CONTENEDOR GENERAL ===== */
+    .campaign-finish {
+        padding: 24px;
+    }
+
+    /* ===== TITULO ===== */
+    .campaign-finish-title {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 14px;
+        color: #2e2e3a;
+    }
+
+    /* ===== CARD BASE ===== */
+    .campaign-summary-card,
+    .campaign-channels-card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        border: 1px solid #e6e3f0;
+        -webkit-box-shadow: 0px 0px 13px 0px rgba(74, 53, 107, 0.08);
+        box-shadow: 0px 0px 13px 0px rgba(74, 53, 107, 0.08);
+    }
+
+        /* ===== DATOS GENERALES ===== */
+        .campaign-summary-card label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: #4a4a65;
+        }
+
+        .campaign-summary-card i {
+            color: #6f4bd8;
+        }
+
+    /* ===== SWITCH ===== */
+    .custom-switch .custom-control-label {
+        font-size: 13px;
+        color: #6b6b80;
+    }
+
+    /* ===== COMUNICACION ===== */
+    .campaign-summary-card h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .custom-checkbox .custom-control {
+        background: #faf9ff;
+        border-radius: 8px;
+        padding: 8px 12px;
+    }
+
+    /* ===== CANALES HABILITADOS ===== */
+    .campaign-channels-card h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* ===== TARJETAS DE CANAL ===== */
+    .divCardTipoCampanias {
+        width: 140px;
+        height: 140px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: .2s;
+        text-align: center;
+    }
+
+    /* Activa */
+    .campania-activa {
+        box-shadow: 0 8px 24px rgba(111,75,216,.25);
+        color:white;
+    }
+
+    /* Inactiva */
+    .campania-disable {
+        background: #eae8f3;
+        opacity: .45;
+    }
+
+    /* Iconos */
+    .divCardTipoCampanias em,
+    .divCardTipoCampanias span {
+        color: white;
+    }
+
+    /* Texto */
+    .divCardTipoCampanias h3 {
+        margin-top: 12px;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    /* Hover */
+    .divCardTipoCampanias:hover {
+        transform: translateY(-4px);
+    }
+
+
+</style>
+
+<div id="SectionFin" class="campaign-finish pb-1">
+    <form id="formValidarSectionFin">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="campaign-finish-title" data-bind="text: 'Campaña: ' + masterSectionDatosGeneralesVM.nombre()"></h2>
+            </div>
+        </div>
+        <div class="row campaign-summary-card">
+
+            <div class="col-6" style="font-size:13px;">
+                <div class="form-row">
+                    <div class="col-lg-10 col-xs-12 mb-2">
+                        <label class="form-label">
+                            <i class="fal fa-calendar-alt mr-2"></i>
+                            <span> Fecha:  </span>
+                            <span data-bind="text: masterSectionDatosGeneralesVM.fechaInicio()"></span>
+                            <span data-bind="visible:  masterSectionDatosGeneralesVM.conFechaFin"> al </span>
+                            <span data-bind="visible:  masterSectionDatosGeneralesVM.conFechaFin, text:masterSectionDatosGeneralesVM.fechaFin()"></span>
+                        </label>
+                    </div>
+                    <div class="col-lg-2 col-xs-12 mb-2">
+                        <div class="custom-control custom-switch AligneCenter">
+                            <input type="checkbox" class="custom-control-input" disabled data-bind="checked: masterSectionDatosGeneralesVM.habilitado">
+                            <label class="custom-control-label">Habilitado</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" data-bind="visible: masterSectionDatosGeneralesVM.descripcion() != null && masterSectionDatosGeneralesVM.descripcion() != ''">
+                    <div class="col-12 mb-2">
+                        <label class="form-label">
+                            <i class="fal fa-sticky-note mr-2"></i>
+                            <span> Descripción:  </span>
+                            <span data-bind="text:masterSectionDatosGeneralesVM.descripcion"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row" data-bind="visible: masterSectionSegmentosVM.campaniaSegmentoId() != null">
+                    <div class="col-12 mb-2">
+                        <label class="form-label">
+                            <i class="fal fa-user-alt mr-2"></i>
+                            <span> Segmeno:  </span>
+                            <span data-bind="text:Enumerable.From(masterSectionSegmentosVM.segmentosList()).Where(function (x) { return x.CampaniaSegmentoId() ==  masterSectionSegmentosVM.campaniaSegmentoId(); }).Select(function (x) { return x.Nombre(); }).FirstOrDefault()"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row" data-bind="visible: masterSectionSegmentosVM.datosImportacionList().length">
+                    <div class="col-12 mb-2">
+                        <label class="form-label">
+                            <i class="fal fa-user-alt mr-2"></i>
+                            <span data-bind="text:masterSectionSegmentosVM.datosImportacionList().length"></span>
+                            <span> personas importadas </span>
+                        </label>
+                       
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h3 class="border-bottom">
+                    <strong>Comunicación</strong>
+                </h3>
+                <div class="custom-checkbox ml-3" style="font-size:13px;">
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacion" value="1" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacion">
+                        <label class="custom-control-label">Novedades</label>
+                    </div>
+
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacion" value="2" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacion">
+                        <label class="custom-control-label">Promociones</label>
+                    </div>
+
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacion" value="3" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacion">
+                        <label class="custom-control-label">Cross selling</label>
+
+                        <div class="form-row" data-bind="visible: masterSectionDatosGeneralesVM.tipoComunicacion() == '3'">
+                            <div class="col-12">
+                                <div class="custom-checkbox custom-checkbox-circle ml-3">
+                                    <div class="custom-control custom-checkbox custom-checkbox-circle mb-2">
+                                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacionDetalle" value="1" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacionDetalle">
+                                        <label class="custom-control-label">Compras pendientes</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox custom-checkbox-circle mb-2">
+                                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacionDetalle" value="2" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacionDetalle">
+                                        <label class="custom-control-label">Compras realizadas</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox custom-checkbox-circle mb-2">
+                                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacionDetalle" value="3" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacionDetalle">
+                                        <label class="custom-control-label">Otros</label>
+                                        <div class="form-row" data-bind="visible: masterSectionDatosGeneralesVM.tipoComunicacionDetalle() == '3'">
+                                            <div class="col-12">
+                                                <input type="text" class="form-control" disabled data-bind="value: masterSectionDatosGeneralesVM.compraOtrosTexto" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="radio" class="custom-control-input" disabled name="rdTipoComunicacion" value="4" data-bind="checked: masterSectionDatosGeneralesVM.tipoComunicacion">
+                        <label class="custom-control-label">Otros</label>
+                        <div class="form-row" data-bind="visible: masterSectionDatosGeneralesVM.tipoComunicacion() == '4'">
+                            <div class="col-12">
+                                <input type="text" id="txtOtrosTexto" class="form-control" disabled data-bind="value: masterSectionDatosGeneralesVM.otrosTexto" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5 campaign-channels-card">
+            <div class="col-12">
+                <h2 class="border-bottom">
+                    <strong>Campañas habilitadas</strong>
+                </h2>
+            </div>
+            <div class="col-12">
+                <!-- ko foreach: { data: masterSectionCampaniaVM.tipoCampaniasList(), as: 'tipoCampania' }  -->
+                <div class="divCardTipoCampanias mb-2 mx-4 float-left" data-bind="css: tipoCampania.Validar() ? 'campania-activa' : 'campania-disable'">
+                    <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaWhatsappTemplate' || tipoCampania.TipoCampaniaId() == 'CampaniaWhatsappButton'   -->
+                    <em class="fab fa-whatsapp fa-4x"></em>
+                    <!-- /ko -->
+                    <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaFormulario' -->
+                    <em class="fa fa-file-alt fa-4x"></em>
+                    <!-- /ko -->
+                    <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaBanner' -->
+                    <em style="font-size:30px;">&lt;/&gt;</em>
+                    <!-- /ko -->
+                    <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaQR' -->
+                    <em class="fas fa-qrcode fa-4x"></em>
+                    <!-- /ko -->
+                    <!-- ko if: tipoCampania.TipoCampaniaId() == 'CampaniaMail' -->
+                    <em class="fas fa-envelope fa-4x"></em>
+                    <!-- /ko -->
+                    <h3 class="mt-4" style="font-size:13px;" data-bind="text:tipoCampania.Nombre()"></h3>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+       
+    </form>
+</div>

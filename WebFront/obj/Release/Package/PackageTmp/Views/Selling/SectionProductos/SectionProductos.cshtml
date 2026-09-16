@@ -1,0 +1,264 @@
+﻿@Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Selling/SectionProductos/SectionProductos.js")
+
+<div id="SectionProductos" class="pb-2 h-100">
+    <form id="formValidarSectionProductos" role="form" class="h-100">
+        <div class="form-row h-100" >
+            <div id="Catalogo" class="col-sm-12 col-lg-6">
+                <div class="panel mb-0 h-100">
+                    <nav class="navbar navbar-expand-lg navbar-light border-bottom">
+                        <ul class="navbar-nav mr-auto col-lg-6">
+                            <li class="nav-item w-100">
+                                <div class="input-group rounded">
+                                    <input type="text" class="form-control" placeholder="Escriba el producto a buscar..." role="search" id="txtBuscarProductos" maxlength="120">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button"><i class="fal fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <button class="navbar-toggler mt-1 mb-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle fs-xl text-truncate text-truncate-lg text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Categorías
+                                    </a>
+                                    <div class="dropdown-menu fadeindown" data-bind="foreach:productosClasificacionesList()">
+                                        <div class="dropdown-item">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" data-bind="checked: Check,click: $root.buttonProductosCheck, attr: { id: ProductoClasificacionId() + '_Productos'}">
+                                                <label class="custom-control-label cursor-pointer" data-bind="text:Nombre(),attr: { for:ProductoClasificacionId() + '_Productos' }"></label>
+                                            </div>
+                                        </div>
+                                        <!-- ko if: $index() == 0 -->
+                                        <span class="chevron"></span>
+                                        <!-- /ko -->
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" data-bind="checked: checkVinculados,click: buttonProductosCheck" id="checkVinculados">
+                                        <label class="custom-control-label cursor-pointer" for="checkVinculados">Vinculados</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="ml-auto">
+                            <div class="btn-group mr-2 float-right">
+                                <button id="expand-all-btn" type="button" class="btn btn-outline-primary has-tooltip" title="Expandir" data-action="expand-all"><i data-action="expand-all" class="fal fa-expand-arrows"></i></button>
+                                <button id="collapse-all-btn" type="button" class="btn btn-outline-primary has-tooltip" title="Contraer" data-action="collapse-all"><i data-action="collapse-all" class="fal fa-compress-arrows-alt"></i></button>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="panel-content">
+                        <!-- No Results Found Alert -->
+                        <div class="p-3 text-center w-100" data-bind="visible: !fullCatalogosList().length" style="display: none;">
+                            <div class="alert alert-danger text-center m-0">
+                                <span class="h5">No se encontraron resultados.</span>
+                            </div>
+                        </div>
+                        <!-- Catalogos Accordion -->
+                        <div class="accordion accordion-hover overflow-auto" id="main-accordion" data-bind="visible: fullCatalogosList().length, foreach:{ data: fullCatalogosList(), as:'catalogo'}" style="display: none; height: calc(100vh - 344px);">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" aria-expanded="false" data-bind="attr: {'data-target': '#catalogo-' + catalogo.CatalogoId()}">
+                                        <label data-bind="text: catalogo.Nombre()"></label>
+                                        <span class="ml-auto">
+                                            <span class="collapsed-hidden">
+                                                <i class="fal fa-chevron-down fs-xl"></i>
+                                            </span>
+                                            <span class="collapsed-reveal">
+                                                <i class="fal fa-chevron-up fs-xl"></i>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="collapse" data-bind="attr: { id: 'catalogo-' + catalogo.CatalogoId() }, foreach:{ data:catalogo.GrupoProductos(), as:'grupoProducto'}">
+                                    <div class="card-body">
+                                        <!-- GrupoProductos Accordion -->
+                                        <div class="accordion">
+                                            <div class="d-flex ml-1">
+                                                <a href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" data-bind="attr: {'data-target': '#grupo-' + grupoProducto.GrupoProductoId()}">
+                                                    <h3 class="font-weight-bold">
+                                                        <span data-bind="text: grupoProducto.Nombre()" class="ml-2"></span>
+                                                        <span class="ml-auto fa-pull-left">
+                                                            <span class="collapsed-hidden">
+                                                                <i class="fal fa-chevron-down fs-xl"></i>
+                                                            </span>
+                                                            <span class="collapsed-reveal">
+                                                                <i class="fal fa-chevron-up fs-xl"></i>
+                                                            </span>
+                                                        </span>
+                                                    </h3>
+                                                </a>
+                                            </div>
+                                            <div class="row no-gutters row-grid ml-3 collapse" data-bind="attr: { id: 'grupo-' + grupoProducto.GrupoProductoId() }, foreach: { data:grupoProducto.Productos(), as:'producto'}">
+                                                <div class="col-12 cursor-pointer">
+                                                    <div class="d-flex align-items-center justify-content-between p-2 p-md-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <!-- ko if: !isNaN(Imagen()) -->
+                                                            <span data-bind="attr: { class: 'iconoAvatar iconoAvatarSmall ' + Nombre().charAt(0).toLocaleLowerCase() }, text:Nombre().charAt(0).toLocaleUpperCase()" style="display: block; width: 30px !important; height: 30px !important; "></span>
+                                                            <!-- /ko -->
+                                                            <!-- ko ifnot:  !isNaN(Imagen()) -->
+                                                            <img class="profile-image-md rounded-circle imgImagenSmall" data-bind="attr: { src: Imagen() }" style="display: block; width: 30px !important; height: 30px !important; " />
+                                                            <!-- /ko -->
+                                                            <label class="mb-0 ml-2" data-bind="text: producto.Nombre(),visible:!producto.ProductoVinculadoPrincipal()" style="display:none;"></label>
+                                                            <label class="mb-0 ml-2 font-weight-bold text-success" data-bind="text: producto.Nombre() + ' (Vinculado)',visible:producto.ProductoVinculadoPrincipal()" style="display:none;"></label>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <!-- Additional Content -->
+                                                            <input type="radio" class="custom-control cursor-pointer" name="rbProductos" data-bind="checked:producto.CheckedRadioProductos,click:ButtonRadio, attr: { id: 'rbProductos-' + producto.ProductoId(), value:producto.ProductoId() }">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End GrupoProductos Accordion -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Catalogos Accordion -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="CatalogoSincronizar" class="col-sm-12 col-lg-6">
+                <div class="panel mb-0 h-100" style="display:none" data-bind="visible:visibleCatalogosSincronizar()">
+                    <nav class="navbar navbar-expand-lg navbar-light border-bottom">
+                        <ul class="navbar-nav mr-auto col-lg-6">
+                            <li class="nav-item w-100">
+                                <div class="input-group rounded">
+                                    <input type="text" class="form-control" placeholder="Escriba el producto a buscar..." role="search" id="txtBuscarProductosSincronizar" maxlength="120">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button"><i class="fal fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <button class="navbar-toggler mt-1 mb-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContentSincronizar" aria-controls="navbarSupportedContentSincronizar" aria-expanded="true" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="navbar-collapse collapse" id="navbarSupportedContentSincronizar">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle fs-xl text-truncate text-truncate-lg text-info" href="#" id="navbarDropdownSincronizar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Categorías
+                                    </a>
+                                    <div class="dropdown-menu fadeindown" data-bind="foreach:productosSincronizarClasificacionesList()">
+                                        <div class="dropdown-item">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" data-bind="checked: Check,click: $root.buttonProductosSincronizarCheck, attr: { id: ProductoClasificacionId() + '_ProductosSincronizar'}">
+                                                <label class="custom-control-label cursor-pointer" data-bind="text:Nombre(),attr: { for:ProductoClasificacionId() + '_ProductosSincronizar' }"></label>
+                                            </div>
+                                        </div>
+                                        <!-- ko if: $index() == 0 -->
+                                        <span class="chevron"></span>
+                                        <!-- /ko -->
+                                    </div>
+                                </li>
+                                <li class="d-flex align-items-center">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" data-bind="checked: checkSincronizados,click: buttonProductosSincronizarCheck" id="checkSincronizados">
+                                        <label class="custom-control-label cursor-pointer" for="checkSincronizados">Sincronizados</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="ml-auto">
+                            <div class="js-nestable-action">
+                                <div class="btn-group mr-2 float-right">
+                                    <button id="expand-all-btn-sincronizar" type="button" class="btn btn-outline-primary has-tooltip" title="Expandir" data-action="expand-all"><i data-action="expand-all" class="fal fa-expand-arrows"></i></button>
+                                    <button id="collapse-all-btn-sincronizar" type="button" class="btn btn-outline-primary has-tooltip" title="Contraer" data-action="collapse-all"><i data-action="collapse-all" class="fal fa-compress-arrows-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <div class="panel-content">
+                        <!-- No Results Found Alert -->
+                        <div class="p-3 text-center w-100" data-bind="visible: !fullCatalogosSincronizarList().length" style="display: none;">
+                            <div class="alert alert-danger text-center m-0">
+                                <span class="h5">No se encontraron resultados.</span>
+                            </div>
+                        </div>
+                        <!-- Catalogos Accordion -->
+                        <div class="accordion accordion-hover overflow-auto" id="main-accordion-sincronizar" data-bind="visible: fullCatalogosSincronizarList().length, foreach:{ data: fullCatalogosSincronizarList(), as:'catalogoSincronizar'}" style="display: none; height: calc(100vh - 344px);">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" aria-expanded="false" data-bind="attr: {'data-target': '#catalogoSincronizar-' + catalogoSincronizar.CatalogoId()}">
+                                        <label data-bind="text: catalogoSincronizar.Nombre()"></label>
+                                        <span class="ml-auto">
+                                            <span class="collapsed-hidden">
+                                                <i class="fal fa-chevron-down fs-xl"></i>
+                                            </span>
+                                            <span class="collapsed-reveal">
+                                                <i class="fal fa-chevron-up fs-xl"></i>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="collapse" data-bind="attr: { id: 'catalogoSincronizar-' + catalogoSincronizar.CatalogoId() }, foreach: { data: catalogoSincronizar.GrupoProductos(), as:'grupoProductoSincronizar'}">
+                                    <div class="card-body">
+                                        <!-- GrupoProductos Accordion -->
+                                        <div class="accordion">
+                                            <div class="d-flex ml-1">
+                                                <a href="javascript:void(0);" data-toggle="collapse" aria-expanded="false" data-bind="attr: {'data-target': '#grupoSincronizar-' + grupoProductoSincronizar.GrupoProductoId()}">
+                                                    <h3 class="font-weight-bold">
+                                                        <span data-bind="text: grupoProductoSincronizar.Nombre()" class="ml-2"></span>
+                                                        <span class="ml-auto fa-pull-left">
+                                                            <span class="collapsed-hidden">
+                                                                <i class="fal fa-chevron-down fs-xl"></i>
+                                                            </span>
+                                                            <span class="collapsed-reveal">
+                                                                <i class="fal fa-chevron-up fs-xl"></i>
+                                                            </span>
+                                                        </span>
+                                                    </h3>
+                                                </a>
+                                            </div>
+                                            <div class="row no-gutters row-grid ml-3 collapse" data-bind="attr: { id: 'grupoSincronizar-' + grupoProductoSincronizar.GrupoProductoId() }, foreach:{ data: grupoProductoSincronizar.Productos(), as:'productoSincronizar'}">
+                                                <div class="col-12 cursor-pointer">
+                                                    <div class="d-flex align-items-center justify-content-between p-2 p-md-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <!-- ko if: !isNaN(Imagen()) -->
+                                                            <span data-bind="attr: { class: 'iconoAvatar iconoAvatarSmall ' + Nombre().charAt(0).toLocaleLowerCase() }, text:Nombre().charAt(0).toLocaleUpperCase()" style="display: block; width: 30px !important; height: 30px !important; "></span>
+                                                            <!-- /ko -->
+                                                            <!-- ko ifnot:  !isNaN(Imagen()) -->
+                                                            <img class="profile-image-md rounded-circle imgImagenSmall" data-bind="attr: { src: Imagen() }" style="display: block; width: 30px !important; height: 30px !important; " />
+                                                            <!-- /ko -->
+                                                            <label class="mb-0 ml-2" data-bind="text: productoSincronizar.Nombre(), css:productoSincronizar.CheckedRadioProductos() != undefined ? 'mb-0 font-weight-bold' : 'mb-0' "></label>
+                                                        </div>
+                                                        <div class="d-flex">
+                                                            <!-- Additional Content -->
+                                                            <label class="mb-0 font-weight-bold" data-bind="visible:productoSincronizar.CheckedRadioProductos() != undefined" style="display:none;">Producto seleccionado</label>
+                                                            <button class="btn btn-outline-success btn-pills" data-bind="click: productoSincronizar.ButtonSincronizar, visible:productoSincronizar.CheckedRadioProductos() == undefined && !productoSincronizar.ProductoSincronizado()" type="button">
+                                                                <span class="fal fa-check-circle mr-1"></span>Sincronizar
+                                                            </button>
+                                                            <button class="btn btn-outline-danger btn-pills" data-bind="click: productoSincronizar.ButtonDesincronizar, visible:productoSincronizar.CheckedRadioProductos() == undefined && productoSincronizar.ProductoSincronizado()" type="button">
+                                                                <span class="fal fa-times-circle mr-1"></span>Desincronizar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End GrupoProductos Accordion -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Catalogos Accordion -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

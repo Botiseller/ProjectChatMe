@@ -1,0 +1,57 @@
+﻿@*@Scripts.Render("~/Scripts/Models/Campanias/SectionCampania/SectionCampania.js")*@
+
+<div class="row">
+
+    <div class="col-12">
+        <h2 class="h2 font-weight-bold">
+            Elegí por donde queres enviar tu campaña
+            <small class="">
+                Podes comenzar con un solo canal y luego agregar más
+            </small>
+        </h2>
+    </div>
+
+    <div class="col-12">
+
+        <div id="SectionCampania" class="col-xl-3 col-md-3 col-sm-12 mb-2 float-left" style="height: calc(100vh - calc(150px + 250px));">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border h-100" style="-webkit-box-shadow: 0px 0px 13px 0px rgba(74, 53, 107, 0.08) !important; box-shadow: 0px 0px 13px 0px rgba(74, 53, 107, 0.08) !impor">
+                        <div class="card-header bg-white">
+                            <div class="row no-gutters text-center">
+                                <div class="col">
+                                    <h2 class="h6 font-weight-bold text-uppercase">
+                                        Canales disponibles
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body p-0 overflow-auto" style="overflow-x:hidden !important;">
+                            <div class="row no-gutters campañasCanales" data-bind="foreach:tipoCampaniasList">
+                                <div class="col-12 cursor-pointer seleccionarFilaHover fadeindown canal" data-bind="click:ButtonSeleccionar,css: SeleccionarFila()">
+                                    <div class="canal-row py-4 px-2 border-bottom">
+                                        <i class="fal mr-3 fs-xxl" data-bind="css:Icono()"></i>
+                                        <span class="text-capitalize font-weight-bold color-black" style="font-size:13px;" data-bind="text:Nombre()"></span>
+
+                                        <button class="btn btn-outline-success float-right has-tooltip disabled" disabled data-toggle="tooltip" style="display:none;" data-bind="visible:Validar()">Activa</button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-md-9 col-sm-12 mb-2 float-right">
+            @{ Html.RenderPartial("~/Views/Campanias/SectionCampania/TipoCampania/CampaniaWhatsappTemplate.cshtml"); }
+            @{ Html.RenderPartial("~/Views/Campanias/SectionCampania/TipoCampania/CampaniaWhatsappButton.cshtml"); }
+            @{ Html.RenderPartial("~/Views/Campanias/SectionCampania/TipoCampania/CampaniaFormulario.cshtml"); }
+            @{ Html.RenderPartial("~/Views/Campanias/SectionCampania/TipoCampania/CampaniaBanner.cshtml"); }
+            @{ Html.RenderPartial("~/Views/Campanias/SectionCampania/TipoCampania/CampaniaQR.cshtml"); }
+            @{ Html.RenderPartial("~/Views/Campanias/SectionCampania/TipoCampania/CampaniaMail.cshtml"); }
+        </div>
+    </div>
+</div>
+
