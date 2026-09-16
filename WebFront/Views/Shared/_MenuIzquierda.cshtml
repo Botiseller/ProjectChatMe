@@ -12,14 +12,7 @@
             </div>
         </div>
         <div class="info-card">
-            @*@if (string.IsNullOrEmpty(Helper.GetSessionData(Session)?.Usuario?.Imagen))
-            {
-                <span data-bind="attr: { class: 'iconoAvatar ' + sessionData.Usuario.Nombre.charAt(0).toLocaleLowerCase() }, text:sessionData.Usuario.Nombre.charAt(0).toLocaleUpperCase() + sessionData.Usuario.Apellido.charAt(0).toLocaleUpperCase()" style="display:block;"></span>
-            }
-            else
-            {
-                <img class="profile-image-md rounded-circle imgImagen" src="@(Helper.GetSessionData(Session)?.Usuario?.Imagen)" style="display:block;" />
-            }*@
+  
             <div class="info-card-text">
                 <a href="#" class="d-flex align-items-center text-white">
                     <span class="text-truncate text-truncate-sm d-inline-block" data-bind="text:sessionData.Usuario.Nombre + ' ' + sessionData.Usuario.Apellido">
@@ -27,14 +20,9 @@
                 </a>
                 <span class="d-inline-block text-truncate text-truncate-sm" data-bind="text:sessionData.Usuario.Mail"></span>
             </div>
-            @if (Helper.GetSessionData(Session)?.Empresa?.Imagen == null)
-            {
+      
                 <img src="/../img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
-            }
-            else
-            {
-                <img src="@(Helper.GetSessionData(Session)?.Empresa?.Imagen)" class="cover" alt="cover" style="width: 100%;height: 100%;" />
-            }
+        
             <a href="#" onclick="return false;" class="pull-trigger-btn has-tooltip" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input" title="Filtro menú">
                 <i class="fal fa-angle-down"></i>
             </a>

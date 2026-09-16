@@ -50,27 +50,17 @@
         <!-- app user menu -->
         <div>
             <a href="#" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2 cursor-pointer has-tooltip">
-                @if (string.IsNullOrEmpty(Helper.GetSessionData(Session)?.Usuario?.Imagen))
-                {
-                    <span data-bind="attr: { class: 'iconoAvatar iconoAvatarSmall ' + sessionData.Usuario.Nombre.charAt(0).toLocaleLowerCase() }, text:sessionData.Usuario.Nombre.charAt(0).toLocaleUpperCase() + sessionData.Usuario.Apellido.charAt(0).toLocaleUpperCase()" style="display:block;line-height:normal;"></span>
-                }
-                else
-                {
-                    <img class="profile-image-md rounded-circle imgImagenSmall" src="@(Helper.GetSessionData(Session)?.Usuario?.Imagen)" style="display:block;" />
-                }
+             
+                    <img class="profile-image-md rounded-circle imgImagenSmall" style="display:block;" />
+                
             </a>
             <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
                 <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
                     <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                         <span class="mr-2">
-                            @if (string.IsNullOrEmpty(Helper.GetSessionData(Session)?.Usuario?.Imagen))
-                            {
-                                <span data-bind="attr: { class: 'iconoAvatar ' + sessionData.Usuario.Nombre.charAt(0).toLocaleLowerCase() }, text:sessionData.Usuario.Nombre.charAt(0).toLocaleUpperCase() + sessionData.Usuario.Apellido.charAt(0).toLocaleUpperCase()" style="display:block;"></span>
-                            }
-                            else
-                            {
-                                <img class="profile-image-md rounded-circle imgImagen" src="@(Helper.GetSessionData(Session)?.Usuario?.Imagen)" style="display:block;" />
-                            }
+                        
+                            <img class="profile-image-md rounded-circle imgImagen"  style="display:block;" />
+                            
                         </span>
                         <div class="info-card-text">
                             <div class="fs-lg text-truncate text-truncate-lg" data-bind="text:sessionData.Usuario.Nombre + ' ' + sessionData.Usuario.Apellido"></div>

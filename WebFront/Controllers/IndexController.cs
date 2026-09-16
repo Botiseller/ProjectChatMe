@@ -3,13 +3,13 @@ using System.Web.Mvc;
 
 namespace WebFront.Controllers
 {
-    public class AuthenticationController : BaseController
+    public class IndexController : BaseController
     {
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Authentication()
+        public ActionResult Index()
         {
-            return View("Authentication");
+            return View();
         }
 
   

@@ -237,6 +237,7 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Antlr3.Runtime.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Business.Contracts.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Business.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Business.Dto.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Castle.Core.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Common.Services.Interceptor.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Common.Utility.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Framework.FrontApplication.dll
@@ -268,6 +269,7 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Threading.Tasks.Extens
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\RESPite.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Memory.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Threading.Channels.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.IO.Pipelines.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.IO.Hashing.dll
@@ -280,6 +282,8 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\UglyToad.PdfPig.Core.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\UglyToad.PdfPig.Fonts.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\UglyToad.PdfPig.Tokenization.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Bcl.HashCode.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Diagnostics.DiagnosticSource.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Business.Contracts.pdb
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Business.Contracts.dll.config
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Business.Dto.pdb
@@ -290,6 +294,7 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Common.Utility.pdb
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Common.Utility.dll.config
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Framework.FrontApplication.pdb
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Framework.FrontApplication.dll.config
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Castle.Core.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\log4net.pdb
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\log4net.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
@@ -316,6 +321,7 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\DocumentFormat.OpenXml.Framew
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Threading.Tasks.Extensions.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Memory.xml
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Extensions.Logging.Abstractions.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Threading.Channels.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.IO.Pipelines.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.IO.Hashing.xml
@@ -331,6 +337,8 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\UglyToad.PdfPig.Fonts.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\UglyToad.PdfPig.Tokenization.pdb
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\UglyToad.PdfPig.Tokenization.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Bcl.HashCode.xml
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\es\System.Web.Helpers.resources.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\es\System.Web.Mvc.resources.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\es\System.Web.Razor.resources.dll
@@ -343,3 +351,14 @@ C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\obj\Debug\WebFront.csproj.CoreCom
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\obj\Debug\WebFront.csproj.Up2Date
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\obj\Debug\WebFront.dll
 C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\obj\Debug\WebFront.pdb
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Google.Protobuf.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Google.Protobuf.pdb
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Google.Protobuf.xml
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Extensions.Options.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\Microsoft.Extensions.Options.xml
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\obj\Debug\WebFront.csproj.SuggestedBindingRedirects.cache
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\obj\Debug\WebFront.dll.config
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Text.Encodings.Web.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Text.Encodings.Web.xml
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Text.Json.dll
+C:\Workspaces\IBot\GIT\Project-ChatMe\WebFront\bin\System.Text.Json.xml

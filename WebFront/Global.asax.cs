@@ -172,18 +172,9 @@ namespace WebFront
 
                                 if (newSessionIdCookieValue != string.Empty)
                                 {
-                                    HttpCookie CookiSessionAbierta = Request.Cookies["recordarSessionCookie"];
-                                    if (CookiSessionAbierta != null)
-                                    {
-                                        var user = CookiSessionAbierta.Value.Split(',')[0];
-                                        var empresa = CookiSessionAbierta.Value.Split(',')[1];
-
-                                        Response.Redirect("/Authentication/Authentication#authentication/" + user + "/" + empresa);
-                                    }
-                                    else
-                                    {
-                                        Response.Redirect("/Authentication/Authentication");
-                                    }
+                                    
+                                        Response.Redirect("/Index/Index");
+                                    
 
                                 }
                             }

@@ -81,18 +81,7 @@ namespace WebFront
             ));
 
             bundles.Add(new ScriptBundle("~/javascripts/factoryAndShared").Include(
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/Modal/ModalSubirArchivo.js",
-                        //"~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/_MenuIzquierda.js",
-                        //"~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/_Footer.js",
-                        //"~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/_Header.js",
-                        //"~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/_MenuDerecha.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryShared.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryCrm.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryIA.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryArchivos.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryCampanias.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactorySegmentos.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactorySelling.js",
+
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryAuthentication.js",
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/Controles/Controles.js"
 
