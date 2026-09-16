@@ -128,11 +128,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MiddelwareBaseService.cs" />
+    <Compile Include="Services\MiddlewareChatMeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business.Dto\Business.Dto.csproj">
       <Project>{2d97555a-0aa8-43f6-a330-631625709683}</Project>
       <Name>Business.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.CallApi\Common.CallApi.csproj">
+      <Project>{46AF43EE-71AE-482C-89C1-5A17526E835B}</Project>
+      <Name>Common.CallApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

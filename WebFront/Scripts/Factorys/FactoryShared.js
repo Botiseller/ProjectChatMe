@@ -1,12 +1,15 @@
-﻿function FactoryAuthentication() {
+﻿function FactoryShared() {
     var self = this;
 
+    //GET
     self.ConseguirUniqueString = function () {
         return $.ajax({
             dataType: 'json',
             type: 'GET',
-            url: '/Authentication/ConseguirUniqueString'
+            url: '/Shared/ConseguirUniqueString'
         });
     };
-
 };
+
+
+

@@ -4,5 +4,14 @@
     Layout = "~/Views/_BaseEmptyLayout.cshtml";
 }
 
-<h3>Bienvenido a ChatMe</h3>
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Index/Index.js")
+}
+
+<div id="Index">
+    <h3>Bienvenido a ChatMe</h3>
+</div>
+
 

@@ -23,60 +23,14 @@ namespace Common.CallApi
             _urlApi = urlApi;
         }
 
-        public void CreateApiProject()
+     
+
+        public void CreateApiChatMe()
         {
-            _urlApi = Helper.GetWebSetingValue("WebApiProjectUrl");
+            _urlApi = Helper.GetWebSetingValue("WebApiUrlChatMe");
         }
 
-        public void CreateApiLogistica()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiLogisticaUrl");
-        }
-
-        public void CreateApiIntegration()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlIntegration");
-        }
-
-        public void CreateApiWorkflow()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlWorkflow");
-        }
-
-        public void CreateApiCRM()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlCRM");
-        }
-
-        public void CreateApiChat()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlChat");
-        }
-
-        public void CreateApiCampaigne()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlCampaigne");
-        }
-
-        public void CreateApiChatMessage()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlChatMessage");
-        }
-
-        public void CreateApiIA()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlIA");
-        }
-
-        public void CreateApiReporting()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiUrlReporting");
-        }
-
-        public void CreateApiHighPerformance()
-        {
-            _urlApi = Helper.GetWebSetingValue("WebApiHPUrl");
-        }
+        
 
 
         private  string _urlApi;

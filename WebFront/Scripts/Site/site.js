@@ -44,14 +44,7 @@ $(document).ready(function () {
             $(control.target).val("");
     });
 
-    window.setInterval(ConectToServer, 1000 * 60 * 5);
-
-    function ConectToServer() {
-        var facAuthentication = new FactoryAuthentication();
-        facAuthentication.Ping().done(function (result) {
-            console.log(moment().format('HH:mm:SS') + ' - Chat conect: Ping ' + result)
-        });
-    }
+    
 
 });
 

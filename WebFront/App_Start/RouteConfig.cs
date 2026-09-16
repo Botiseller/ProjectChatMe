@@ -10,7 +10,7 @@ namespace WebFront
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("Login", "{controller}/{action}/{id}",
-                new { controller = "Index", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Authentication", action = "Authentication", id = UrlParameter.Optional }
                 );
         }
     }

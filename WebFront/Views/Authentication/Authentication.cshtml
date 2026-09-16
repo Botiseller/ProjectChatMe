@@ -4,5 +4,10 @@
     Layout = "~/Views/_LoginLayout.cshtml";
 }
 
+@section scripts
+{
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Authentication/Authentication.js")
+}
 
-
+<div id="Login" >
+    </div>

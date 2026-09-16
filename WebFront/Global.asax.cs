@@ -172,9 +172,9 @@ namespace WebFront
 
                                 if (newSessionIdCookieValue != string.Empty)
                                 {
-                                    
-                                        Response.Redirect("/Index/Index");
-                                    
+
+                                    Response.Redirect("/Authentication/Authentication");
+
 
                                 }
                             }

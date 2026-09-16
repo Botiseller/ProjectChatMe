@@ -140,8 +140,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -657,6 +660,9 @@
     <Content Include="Media\video\cc.mp4" />
     <Content Include="Scripts\Enums\Enums.js" />
     <Content Include="Scripts\Factorys\FactoryAuthentication.js" />
+    <Content Include="Scripts\Factorys\FactoryShared.js" />
+    <Content Include="Scripts\Models\Authentication\Authentication.js" />
+    <Content Include="Scripts\Models\Index\Index.js" />
     <Content Include="Scripts\Sammy\Main.Sammy.js" />
     <Content Include="Scripts\Site\site.js" />
     <Content Include="Src\custom\demo-data\demo-c3.js" />
@@ -1000,7 +1006,6 @@
     <Content Include="Views\Index\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\Models\" />
     <Folder Include="Src\custom\plugins\slider-revolution\" />
     <Folder Include="Views\Inicio\" />
   </ItemGroup>
@@ -1553,6 +1558,10 @@
     <Content Include="Webfonts\summernote.woff2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business.CallAPI\Business.CallAPI.csproj">
+      <Project>{e3d64881-e28a-4a5b-8edd-9ddfbf505186}</Project>
+      <Name>Business.CallAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Business.Contracts\Business.Contracts.csproj">
       <Project>{ef1291ac-3e14-4039-a411-48229593cbe9}</Project>
       <Name>Business.Contracts</Name>

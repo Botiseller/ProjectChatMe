@@ -1,6 +1,9 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy2;
+using Business.Contracts.Service;
 using Business.Models;
 using Business.Models.Validators;
+using Business.Service;
 using FluentValidation;
 
 namespace Business
@@ -11,7 +14,8 @@ namespace Business
         {
             builder.RegisterType<ConnectionValidator>().As<IValidator<Connection>>().InstancePerRequest();
 
-            
+            builder.RegisterType<SharedBusinessService>().As<ISharedBusinessService>().EnableInterfaceInterceptors();
+
         }
     }
 }

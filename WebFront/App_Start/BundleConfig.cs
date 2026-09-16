@@ -19,7 +19,8 @@ namespace WebFront
                         "~/Js/cookie.js",
                         "~/Js/refreshCache.js",
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Enums/Enums.js",
-                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryAuthentication.js"
+                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryAuthentication.js",
+                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryShared.js"
             ));
 
             bundles.Add(new StyleBundle("~/estilo/login").Include(
@@ -83,6 +84,7 @@ namespace WebFront
             bundles.Add(new ScriptBundle("~/javascripts/factoryAndShared").Include(
 
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryAuthentication.js",
+                       "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryShared.js",
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/Controles/Controles.js"
 
             ));

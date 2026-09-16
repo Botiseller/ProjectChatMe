@@ -64,7 +64,10 @@
   <ItemGroup>
     <Compile Include="Facade\ChatbotDesarrolloServicesFacade.cs" />
     <Compile Include="Injection\EntityContextManagerChatbotDesarrollo.cs" />
+    <Compile Include="Logic\SharedLogic.cs" />
+    <Compile Include="Manager\SharedManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SharedServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -77,6 +80,10 @@
       <Project>{ef1291ac-3e14-4039-a411-48229593cbe9}</Project>
       <Name>Business.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common.BusinessException\Common.BusinessException.csproj">
+      <Project>{782bba9a-5b56-4110-bc1b-79b5ae1eb24c}</Project>
+      <Name>Common.BusinessException</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Framework.Core\Framework.Core.csproj">
       <Project>{c9e0fd5b-c43a-4f11-b46f-38b95b459c99}</Project>
       <Name>Framework.Core</Name>
@@ -86,11 +93,7 @@
       <Name>ModelChatbotDesarrollo.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\" />
-    <Folder Include="Manager\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

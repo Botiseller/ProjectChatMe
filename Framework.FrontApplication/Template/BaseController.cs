@@ -1,10 +1,8 @@
 ﻿using Business.CallAPI.Services;
-
 using Framework.FrontApplication.Result;
 using Newtonsoft.Json;
 using System;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,11 +10,11 @@ namespace Framework.FrontApplication.Template
 {
     public abstract class BaseController : Controller, IDisposable
     {
-
+        public MiddlewareChatMeService middlewareChatMeService = null;
 
         public BaseController()
         {
-
+            middlewareChatMeService = new MiddlewareChatMeService();
         }
 
         protected static JsonResult JsonNet(object data)

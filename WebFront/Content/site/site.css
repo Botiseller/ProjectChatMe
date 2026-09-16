@@ -2132,46 +2132,8 @@ footer {
 
 
 
-.divCardTipoCampanias {
-    align-items: center;
-    display: flex;
-    flex: 1 1;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 125px;
-    height: 125px;
-    max-height: 125px;
-    min-width: 125px;
-    width: 125px;
-    max-width: 125px;
-    padding: 20px;
-    color: black;
-    text-align: center;
-    border-radius: 10%;
-}
 
-    .divCardTipoCampanias em {
-        color: white;
-    }
 
-    .divCardTipoCampanias span {
-        font-size: 30px !important;
-        font-weight: bold;
-    }
-
-@media (max-width: 900px) {
-    .divCardTipoCampanias h3 {
-        font-size: 14px !important;
-    }
-
-    .divCardTipoCampanias em {
-        font-size: 35px !important;
-    }
-
-    .divCardTipoCampanias span {
-        font-size: 35px !important;
-    }
-}
 
 
 
