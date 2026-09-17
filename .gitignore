@@ -1,35 +1,13 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Business/obj
-/Business.CallAPI/bin
-/Business.CallAPI/obj/Debug
-/Business.CallAPI/obj/Release
-/Business/bin
-/Business.Contracts/bin
-/Business.Dto/bin
-/Business.Dto/obj/Debug
-/Business.Dto/obj/Release
-/ChatbotDesarrollo.Core/bin
-/ChatbotDesarrollo.Core/obj
-/Common.BusinessException/bin
-/Common.BusinessException/obj
-/Common.CallApi/bin
-/Common.CallApi/obj
-/Common.Services.Interceptor/bin
-/Common.Services.Interceptor/obj
-/Common.Utility/bin/Debug
-/Common.Utility/bin/Release
-/Framework.Core/bin
-/Framework.FrontApplication/bin
-/Framework.FrontApplication/obj
-/ModelChatbotDesarrollo.Core/bin
-/ModelChatbotDesarrollo.Core/obj
+# Build outputs (every .csproj generates these; none of it is source)
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio local cache/workspace state
+.vs/
+
+# Restored NuGet packages (packages.config style)
 /packages
-/WebApiMiddelware/bin
-/WebApiMiddelware/obj/Debug
-/WebApiMiddelware/obj/Release
-/WebFront/bin
-/.vs/ProjectChatMe/v18/fileList.bin
-/.vs/ProjectChatMe/FileContentIndex/56005e40-0ac6-4864-a8fc-b1ae3b7cbafd.vsidx

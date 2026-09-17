@@ -5,7 +5,7 @@ using ModelChatbotDesarrollo.Core;
 
 namespace ChatbotDesarrollo.Core.Services
 {
-    public sealed class SharedServices : EntityServices<ChatsExample, SharedManager, SharedLogic, Chatbot_DesarrolloEntities>
+    public class SharedServices : EntityServices<ChatsExample, SharedManager, SharedLogic, Chatbot_DesarrolloEntities>
     {
         
         public string ConseguirUniqueString()

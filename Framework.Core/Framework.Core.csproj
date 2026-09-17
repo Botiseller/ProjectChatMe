@@ -151,7 +151,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resource.resx" />
+    <EmbeddedResource Include="Resource.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Services.Interceptor\Common.Services.Interceptor.csproj">

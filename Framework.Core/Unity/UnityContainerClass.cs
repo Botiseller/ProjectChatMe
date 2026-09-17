@@ -22,8 +22,12 @@ namespace Framework.Core.Unity
         /// </summary>
         private void InitializeUnityContainer()
         {
-            var section = (UnityConfigurationSection)ConfigurationManager.GetSection(Resource.UnitySection);
-            Instance = new UnityContainer().LoadConfiguration(section);
+            // Resource.UnitySection = "moduleCRM": es el NOMBRE DEL CONTENEDOR dentro de la
+            // sección de config "unity" (ver Web.config: <section name="unity" .../> y
+            // <unity configSource="Unity.config" />), no el nombre de la sección.
+            // Este overload internamente hace ConfigurationManager.GetSection("unity") y
+            // carga el contenedor "moduleCRM" desde ahí.
+            Instance = new UnityContainer().LoadConfiguration(Resource.UnitySection);
         }
     }
 }
