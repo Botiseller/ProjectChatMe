@@ -1570,6 +1570,10 @@
       <Project>{2d97555a-0aa8-43f6-a330-631625709683}</Project>
       <Name>Business.Dto</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Business.Entities\Business.Entities.csproj">
+      <Project>{1ad07fc4-0783-401b-8538-a6d00698923d}</Project>
+      <Name>Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Business\Business.csproj">
       <Project>{d54b58d9-b9c5-413a-ab4d-b51008b956a6}</Project>
       <Name>Business</Name>

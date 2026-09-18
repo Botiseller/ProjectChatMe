@@ -12,9 +12,19 @@ namespace ModelChatbotDesarrollo.Core
     using System;
     using System.Collections.Generic;
     
-    public partial class ChatsExample
+    public partial class Usuarios
     {
-        public int ID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuarios()
+        {
+            this.Chats = new HashSet<Chats>();
+        }
+    
+        public int UsuarioId { get; set; }
         public string Nombre { get; set; }
+        public string Usuario { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Chats> Chats { get; set; }
     }
 }

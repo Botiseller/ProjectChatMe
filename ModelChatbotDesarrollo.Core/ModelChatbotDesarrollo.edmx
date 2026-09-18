@@ -5,15 +5,150 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Chatbot_DesarrolloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ChatsExample">
+        <EntityType Name="Chats">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ChatId" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="ChatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="NegocioId" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="UltimoMensaje" Type="varchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="Mensajes">
+          <Key>
+            <PropertyRef Name="MensajeId" />
+          </Key>
+          <Property Name="MensajeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChatId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Origen" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="Mensaje" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Negocios">
+          <Key>
+            <PropertyRef Name="NegocioId" />
+          </Key>
+          <Property Name="NegocioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RubroId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="100" />
+          <Property Name="Negocio" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rubros">
+          <Key>
+            <PropertyRef Name="RubroId" />
+          </Key>
+          <Property Name="RubroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Icono" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubRubros">
+          <Key>
+            <PropertyRef Name="SubRubroId" />
+          </Key>
+          <Property Name="SubRubroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RubroId" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Chats_Negocios">
+          <End Role="Negocios" Type="Self.Negocios" Multiplicity="1" />
+          <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Negocios">
+              <PropertyRef Name="NegocioId" />
+            </Principal>
+            <Dependent Role="Chats">
+              <PropertyRef Name="NegocioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Chats_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Chats" Type="Self.Chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Chats">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mensajes_Chats">
+          <End Role="Chats" Type="Self.Chats" Multiplicity="1" />
+          <End Role="Mensajes" Type="Self.Mensajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chats">
+              <PropertyRef Name="ChatId" />
+            </Principal>
+            <Dependent Role="Mensajes">
+              <PropertyRef Name="ChatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Negocios_Rubros">
+          <End Role="Rubros" Type="Self.Rubros" Multiplicity="1" />
+          <End Role="Negocios" Type="Self.Negocios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubros">
+              <PropertyRef Name="RubroId" />
+            </Principal>
+            <Dependent Role="Negocios">
+              <PropertyRef Name="RubroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubRubros_Rubros">
+          <End Role="Rubros" Type="Self.Rubros" Multiplicity="1" />
+          <End Role="SubRubros" Type="Self.SubRubros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rubros">
+              <PropertyRef Name="RubroId" />
+            </Principal>
+            <Dependent Role="SubRubros">
+              <PropertyRef Name="RubroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Chatbot_DesarrolloModelStoreContainer">
-          <EntitySet Name="ChatsExample" EntityType="Self.ChatsExample" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chats" EntityType="Self.Chats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mensajes" EntityType="Self.Mensajes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Negocios" EntityType="Self.Negocios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rubros" EntityType="Self.Rubros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubRubros" EntityType="Self.SubRubros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Chats_Negocios" Association="Self.FK_Chats_Negocios">
+            <End Role="Negocios" EntitySet="Negocios" />
+            <End Role="Chats" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chats_Usuarios" Association="Self.FK_Chats_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Chats" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensajes_Chats" Association="Self.FK_Mensajes_Chats">
+            <End Role="Chats" EntitySet="Chats" />
+            <End Role="Mensajes" EntitySet="Mensajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Negocios_Rubros" Association="Self.FK_Negocios_Rubros">
+            <End Role="Rubros" EntitySet="Rubros" />
+            <End Role="Negocios" EntitySet="Negocios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubRubros_Rubros" Association="Self.FK_SubRubros_Rubros">
+            <End Role="Rubros" EntitySet="Rubros" />
+            <End Role="SubRubros" EntitySet="SubRubros" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -28,7 +163,32 @@
           <FunctionImport Name="sp_IA_FunnelByFlujoId" ReturnType="Collection(Chatbot_DesarrolloModel.sp_IA_FunnelByFlujoId_Result)">
           <Parameter Name="FlujoId" Mode="In" Type="Guid" />
           </FunctionImport>
-          <EntitySet Name="ChatsExample" EntityType="Chatbot_DesarrolloModel.ChatsExample" />
+          <EntitySet Name="Chats" EntityType="Chatbot_DesarrolloModel.Chats" />
+          <EntitySet Name="Mensajes" EntityType="Chatbot_DesarrolloModel.Mensajes" />
+          <EntitySet Name="Negocios" EntityType="Chatbot_DesarrolloModel.Negocios" />
+          <EntitySet Name="Rubros" EntityType="Chatbot_DesarrolloModel.Rubros" />
+          <EntitySet Name="SubRubros" EntityType="Chatbot_DesarrolloModel.SubRubros" />
+          <EntitySet Name="Usuarios" EntityType="Chatbot_DesarrolloModel.Usuarios" />
+          <AssociationSet Name="FK_Chats_Negocios" Association="Chatbot_DesarrolloModel.FK_Chats_Negocios">
+            <End Role="Negocios" EntitySet="Negocios" />
+            <End Role="Chats" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Chats_Usuarios" Association="Chatbot_DesarrolloModel.FK_Chats_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Chats" EntitySet="Chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mensajes_Chats" Association="Chatbot_DesarrolloModel.FK_Mensajes_Chats">
+            <End Role="Chats" EntitySet="Chats" />
+            <End Role="Mensajes" EntitySet="Mensajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Negocios_Rubros" Association="Chatbot_DesarrolloModel.FK_Negocios_Rubros">
+            <End Role="Rubros" EntitySet="Rubros" />
+            <End Role="Negocios" EntitySet="Negocios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubRubros_Rubros" Association="Chatbot_DesarrolloModel.FK_SubRubros_Rubros">
+            <End Role="Rubros" EntitySet="Rubros" />
+            <End Role="SubRubros" EntitySet="SubRubros" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="fn_Negocios_EstadoNegocios_Result">
           <Property Type="Guid" Name="NegocioId" Nullable="true" />
@@ -47,27 +207,192 @@
           <Property Type="Int32" Name="intent" Nullable="true" />
           <Property Type="Int32" Name="cantidad" Nullable="true" />
         </ComplexType>
-        <EntityType Name="ChatsExample">
+        <EntityType Name="Chats">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ChatId" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UltimoMensaje" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Negocios" Relationship="Chatbot_DesarrolloModel.FK_Chats_Negocios" FromRole="Chats" ToRole="Negocios" />
+          <NavigationProperty Name="Usuarios" Relationship="Chatbot_DesarrolloModel.FK_Chats_Usuarios" FromRole="Chats" ToRole="Usuarios" />
+          <NavigationProperty Name="Mensajes" Relationship="Chatbot_DesarrolloModel.FK_Mensajes_Chats" FromRole="Chats" ToRole="Mensajes" />
         </EntityType>
+        <EntityType Name="Mensajes">
+          <Key>
+            <PropertyRef Name="MensajeId" />
+          </Key>
+          <Property Name="MensajeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Origen" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Chats" Relationship="Chatbot_DesarrolloModel.FK_Mensajes_Chats" FromRole="Mensajes" ToRole="Chats" />
+        </EntityType>
+        <EntityType Name="Negocios">
+          <Key>
+            <PropertyRef Name="NegocioId" />
+          </Key>
+          <Property Name="NegocioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Ubicacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Negocio" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chats" Relationship="Chatbot_DesarrolloModel.FK_Chats_Negocios" FromRole="Negocios" ToRole="Chats" />
+          <NavigationProperty Name="Rubros" Relationship="Chatbot_DesarrolloModel.FK_Negocios_Rubros" FromRole="Negocios" ToRole="Rubros" />
+        </EntityType>
+        <EntityType Name="Rubros">
+          <Key>
+            <PropertyRef Name="RubroId" />
+          </Key>
+          <Property Name="RubroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Icono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Negocios" Relationship="Chatbot_DesarrolloModel.FK_Negocios_Rubros" FromRole="Rubros" ToRole="Negocios" />
+          <NavigationProperty Name="SubRubros" Relationship="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" FromRole="Rubros" ToRole="SubRubros" />
+        </EntityType>
+        <EntityType Name="SubRubros">
+          <Key>
+            <PropertyRef Name="SubRubroId" />
+          </Key>
+          <Property Name="SubRubroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Rubros" Relationship="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" FromRole="SubRubros" ToRole="Rubros" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chats" Relationship="Chatbot_DesarrolloModel.FK_Chats_Usuarios" FromRole="Usuarios" ToRole="Chats" />
+        </EntityType>
+        <Association Name="FK_Chats_Negocios">
+          <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.Chats" Role="Chats" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Chats_Usuarios">
+          <End Type="Chatbot_DesarrolloModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.Chats" Role="Chats" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Mensajes_Chats">
+          <End Type="Chatbot_DesarrolloModel.Chats" Role="Chats" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.Mensajes" Role="Mensajes" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Negocios_Rubros">
+          <End Type="Chatbot_DesarrolloModel.Rubros" Role="Rubros" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_SubRubros_Rubros">
+          <End Type="Chatbot_DesarrolloModel.Rubros" Role="Rubros" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.SubRubros" Role="SubRubros" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Chatbot_DesarrolloModelStoreContainer" CdmEntityContainer="Chatbot_DesarrolloEntities">
-          <EntitySetMapping Name="ChatsExample">
-            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.ChatsExample">
-              <MappingFragment StoreEntitySet="ChatsExample">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+        <EntitySetMapping Name="Chats">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Chats">
+              <MappingFragment StoreEntitySet="Chats">
+                <ScalarProperty Name="UltimoMensaje" ColumnName="UltimoMensaje" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="ChatId" ColumnName="ChatId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Mensajes">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Mensajes">
+              <MappingFragment StoreEntitySet="Mensajes">
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="MensajeId" ColumnName="MensajeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Negocios">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Negocios">
+              <MappingFragment StoreEntitySet="Negocios">
+                <ScalarProperty Name="Negocio" ColumnName="Negocio" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rubros">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Rubros">
+              <MappingFragment StoreEntitySet="Rubros">
+                <ScalarProperty Name="Icono" ColumnName="Icono" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="RubroId" ColumnName="RubroId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubRubros">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.SubRubros">
+              <MappingFragment StoreEntitySet="SubRubros">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="SubRubroId" ColumnName="SubRubroId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Chats_Negocios" TypeName="Chatbot_DesarrolloModel.FK_Chats_Negocios" StoreEntitySet="Chats">
+            <EndProperty Name="Chats">
+              <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+            </EndProperty>
+            <EndProperty Name="Negocios">
+              <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Chats_Usuarios" TypeName="Chatbot_DesarrolloModel.FK_Chats_Usuarios" StoreEntitySet="Chats">
+            <EndProperty Name="Chats">
+              <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+            </EndProperty>
+            <EndProperty Name="Usuarios">
+              <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Mensajes_Chats" TypeName="Chatbot_DesarrolloModel.FK_Mensajes_Chats" StoreEntitySet="Mensajes">
+            <EndProperty Name="Mensajes">
+              <ScalarProperty Name="MensajeId" ColumnName="MensajeId" />
+            </EndProperty>
+            <EndProperty Name="Chats">
+              <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Negocios_Rubros" TypeName="Chatbot_DesarrolloModel.FK_Negocios_Rubros" StoreEntitySet="Negocios">
+            <EndProperty Name="Negocios">
+              <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
+            </EndProperty>
+            <EndProperty Name="Rubros">
+              <ScalarProperty Name="RubroId" ColumnName="RubroId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_SubRubros_Rubros" TypeName="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" StoreEntitySet="SubRubros">
+            <EndProperty Name="SubRubros">
+              <ScalarProperty Name="SubRubroId" ColumnName="SubRubroId" />
+            </EndProperty>
+            <EndProperty Name="Rubros">
+              <ScalarProperty Name="RubroId" ColumnName="RubroId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

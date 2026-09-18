@@ -5,7 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9a65bd8f32c34262b80f3e6f54f617ad" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.ChatsExample" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.Chats" Width="1.5" PointX="7.875" PointY="3.625" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.Mensajes" Width="1.5" PointX="10.125" PointY="3.625" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.Negocios" Width="1.5" PointX="5.625" PointY="3.375" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.Rubros" Width="1.5" PointX="3.375" PointY="2.5" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.SubRubros" Width="1.5" PointX="5.625" PointY="1.125" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.Usuarios" Width="1.5" PointX="5.625" PointY="6.75" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Chats_Negocios" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Chats_Usuarios" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Mensajes_Chats" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Negocios_Rubros" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

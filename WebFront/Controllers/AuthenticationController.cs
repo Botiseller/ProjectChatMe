@@ -27,8 +27,8 @@ namespace WebFront.Controllers
         {
             try
             {
-                
-            
+                var session = new Business.Entities.Security.Session();
+
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                            1, 
                            string.Empty,
@@ -46,7 +46,6 @@ namespace WebFront.Controllers
                 };
 
                 Response.Cookies.Add(cookie);
-
 
                 return View();
             }

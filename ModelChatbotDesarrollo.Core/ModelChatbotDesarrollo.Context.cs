@@ -27,7 +27,12 @@ namespace ModelChatbotDesarrollo.Core
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChatsExample> ChatsExample { get; set; }
+        public virtual DbSet<Chats> Chats { get; set; }
+        public virtual DbSet<Mensajes> Mensajes { get; set; }
+        public virtual DbSet<Negocios> Negocios { get; set; }
+        public virtual DbSet<Rubros> Rubros { get; set; }
+        public virtual DbSet<SubRubros> SubRubros { get; set; }
+        public virtual DbSet<Usuarios> Usuarios { get; set; }
     
         [DbFunction("Chatbot_DesarrolloEntities", "fn_Negocios_EstadoNegocios")]
         public virtual IQueryable<fn_Negocios_EstadoNegocios_Result> fn_Negocios_EstadoNegocios(Nullable<System.DateTime> fechaDesde, Nullable<System.DateTime> fechaHasta)

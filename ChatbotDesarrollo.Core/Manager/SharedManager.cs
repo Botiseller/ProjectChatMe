@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ChatbotDesarrollo.Core.Manager
 {
-    public sealed class SharedManager : EntityManager<ChatsExample, Chatbot_DesarrolloEntities>
+    public sealed class SharedManager : EntityManager<us, Chatbot_DesarrolloEntities>
     {
        
 

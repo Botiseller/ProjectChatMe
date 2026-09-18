@@ -188,6 +188,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\SharedBusinessService.cs" />
+    <Compile Include="Service\NegocioBusinessService.cs" />
+    <Compile Include="Service\ChatBusinessService.cs" />
+    <Compile Include="Service\UsuarioBusinessService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business.Contracts\Business.Contracts.csproj">
