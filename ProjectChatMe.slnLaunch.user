@@ -9,6 +9,10 @@
       {
         "Path": "WebFront\\WebFront.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "WebAPI\\WebAPI.csproj",
+        "Action": "Start"
       }
     ]
   }

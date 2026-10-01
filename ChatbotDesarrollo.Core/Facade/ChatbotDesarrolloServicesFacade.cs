@@ -6,22 +6,18 @@ namespace ChatbotDesarrollo.Core.Facade
 {
     public static class ChatbotDesarrolloServicesFacade
     {
-        public static SharedServices SharedServices
-        {
-            get { return UnityFactoryClass.Resolve<SharedServices>(); }
-        }
-
+        
         public static ChatServices ChatServices
         {
             get { return UnityFactoryClass.Resolve<ChatServices>(); }
         }
-        public static NegocioServices NegocioServices
+        public static ShopServices ShopServices
         {
-            get { return UnityFactoryClass.Resolve<NegocioServices>(); }
+            get { return UnityFactoryClass.Resolve<ShopServices>(); }
         }
-        public static UsuarioServices UsuarioServices
+        public static UserServices UserServices
         {
-            get { return UnityFactoryClass.Resolve<UsuarioServices>(); }
+            get { return UnityFactoryClass.Resolve<UserServices>(); }
         }
     }
 }

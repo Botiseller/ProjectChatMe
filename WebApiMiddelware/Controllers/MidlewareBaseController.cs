@@ -1,5 +1,6 @@
-﻿using Framework.Core.Header;
+﻿using System;
 using System.Web.Http;
+using Framework.Core.Header;
 
 namespace WebApiMiddelware.Controllers
 {
@@ -7,7 +8,8 @@ namespace WebApiMiddelware.Controllers
     {
         public MidlewareBaseController(IInternalHeader header)
         {
-            new InternalHeaderFactory().CreateEnvironmentThred(header);
+            new InternalHeaderFactory().CreateEnvironmentThread(header);
         }
+
     }
 }

@@ -331,16 +331,11 @@ namespace Framework.Core.Entity
         }
 
 
-        public Guid GetUserBySession()
+        public int GetUserBySession()
         {
-            string userId = ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).IdUser;
+            string userId = ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).session.Usuario.UsuarioId.ToString();
 
-            return new Guid(userId);
-        }
-
-        public string GetActiveFamily()
-        {
-            return ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).Family;
+            return int.Parse(userId);
         }
 
        

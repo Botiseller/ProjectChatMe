@@ -81,7 +81,7 @@ namespace Common.CallApi
         {
             var parameters = param.Invoke();
             var url = BuildUrl(parameters.Action, parameters.Controller);
-            
+            AnonymousSetSessions(parameters.Anonymous, parameters.Params);
             T r = default(T);
             switch (parameters.UseUrlEncode)
             {
@@ -264,8 +264,8 @@ namespace Common.CallApi
                 case AnonymousType.CatchCredential:
                     var customIdentity = new Common.Services.Interceptor.CustomIdentity
                     {
-                        Family = GetPropValue(@params, "Empresa").ToString(),
-                        Name = GetPropValue(@params, "Mail").ToString()
+                        Name = GetPropValue(@params, "name").ToString(),
+                        Phone = GetPropValue(@params, "phone").ToString()
                     };
                     GenericPrincipal principal = new GenericPrincipal(customIdentity, null);
                     Thread.CurrentPrincipal = principal;
@@ -275,27 +275,17 @@ namespace Common.CallApi
                 case AnonymousType.WithoutCredential:
                     var ci = new Common.Services.Interceptor.CustomIdentity
                     {
-                        Family = "0",
-                        Name = GetPropValue(@params, "mail").ToString()
+                        Name = GetPropValue(@params, "name").ToString(),
+                        Phone = GetPropValue(@params, "phone").ToString()
                     };
                     GenericPrincipal main = new GenericPrincipal(ci, null);
                     Thread.CurrentPrincipal = main;
                     break;
-                case AnonymousType.WithoutFamily:
-                    var ciwf = new Common.Services.Interceptor.CustomIdentity
-                    {
-                        Family = "0",
-                        Name = "",
-                        IdUser = ""
-                    };
-                    GenericPrincipal principalMainwf = new GenericPrincipal(ciwf, null);
-                    Thread.CurrentPrincipal = principalMainwf;
-                    break;
                 case AnonymousType.RenewCredential:
                     var cii = new Services.Interceptor.CustomIdentity
                     {
-                        Family = GetPropValue(@params, "empresa").ToString(),
-                        IdUser = GetPropValue(@params, "usuarioId").ToString()
+                        Name = ""
+                        //IdUser = GetPropValue(@params, "usuarioId").ToString()
                     };
                     GenericPrincipal principalMain = new GenericPrincipal(cii, null);
                     Thread.CurrentPrincipal = principalMain;
@@ -314,17 +304,5 @@ namespace Common.CallApi
 
         #endregion
 
-
-        public void EscribirCustomIdentity(string familia,string mail)
-        {
-            var customIdentity = new Common.Services.Interceptor.CustomIdentity
-            {
-                Family = familia,
-                Name = mail
-            };
-            GenericPrincipal principal = new GenericPrincipal(customIdentity, null);
-            Thread.CurrentPrincipal = principal;
-            
-        }
     }
 }

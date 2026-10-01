@@ -1,0 +1,223 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = "~/Views/_BaseLayout.cshtml";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Chat/Chat.js")
+}
+
+<div id="Chat" style="display: flex; flex: 1; min-height: 0;">
+    <div class="messaging-layout has-detail">
+
+        <div class="messaging-list">
+            @{ Html.RenderPartial("_Loading", new ViewDataDictionary { { "Visible", "loading" }, { "Text", "Buscando tus conversaciones..." } }); }
+            <div class="empty-state" style="display:none;" data-bind="visible: !loading() && chatList().length === 0">Todavía no tenés conversaciones.</div>
+            <div class="messaging-list__rows scroll-soft" id="ChatListRows" style="display:none;" data-bind="visible: !loading()">
+                <!-- ko foreach: chatList -->
+                <div class="chat-row" data-bind="click: $root.OpenChat, css: { 'is-active': $root.selectedChat() === $data }">
+                    <div class="avatar-circle" style="width:52px;height:52px;border-radius:50%;" data-bind="text: initials, css: { [avatarClass()]: true }"></div>
+                    <div class="chat-row__info">
+                        <div class="chat-row__top">
+                            <span class="chat-row__name" data-bind="text: name"></span>
+                            <span class="chat-row__time" data-bind="text: time"></span>
+                        </div>
+                        <div class="chat-row__preview" data-bind="text: preview"></div>
+                    </div>
+                </div>
+                <!-- /ko -->
+                @{ Html.RenderPartial("_Loading", new ViewDataDictionary { { "Visible", "loadingMoreChats" }, { "Rows", 2 }, { "Text", "Cargando más conversaciones..." } }); }
+            </div>
+        </div>
+
+        <div class="messaging-detail">
+            <div class="messaging-empty" data-bind="visible: !selectedChat()">
+                <div style="font-size:34px">💬</div>
+                <p>Elegí una conversación de la lista para ver los mensajes.</p>
+            </div>
+
+            <div class="chat-screen" style="display:none;" data-bind="visible: !!selectedChat(), event: { dragover: OnDragOver, dragleave: OnDragLeave, drop: OnDrop }">
+                <div class="chat-dropzone" style="display:none;" data-bind="visible: dragOver">
+                    <div class="chat-dropzone__box">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <p>Soltá el archivo para adjuntarlo</p>
+                    </div>
+                </div>
+                <div class="chat-header">
+                    <!-- ko with: selectedChat -->
+                    <div class="avatar-circle" style="width:38px;height:38px;border-radius:50%;" data-bind="text: initials, css: { [avatarClass()]: true }"></div>
+                    <div class="chat-header__info">
+                        <div class="chat-header__name">
+                            <span data-bind="text: name"></span>
+                            <span class="badge-verified" title="Negocio verificado" aria-label="Negocio verificado">✓</span>
+                        </div>
+                        <div class="chat-header__status">Online</div>
+                    </div>
+                    <span class="chat-header__category" data-bind="visible: category">
+                        <i data-bind="css: categoryIcon, visible: categoryIcon" aria-hidden="true"></i>
+                        <span data-bind="text: category"></span>
+                    </span>
+                    <!-- /ko -->
+                </div>
+                <div class="chat-body scroll-soft" id="ChatBody" style="overflow-anchor:none;">
+                    @{ Html.RenderPartial("_Loading", new ViewDataDictionary { { "Visible", "loadingOlder" }, { "Variant", "bubbles" }, { "Rows", 2 }, { "Text", "Cargando mensajes anteriores..." } }); }
+                    @{ Html.RenderPartial("_Loading", new ViewDataDictionary { { "Visible", "loadingMessages" }, { "Variant", "bubbles" }, { "Text", "Cargando mensajes..." } }); }
+                    <div class="empty-state" style="display:none;" data-bind="visible: !loadingMessages() && messages().length === 0">Todavía no hay mensajes en esta conversación.</div>
+                    <!-- ko foreach: messages -->
+                    <div class="bubble-row" data-bind="css: { 'is-mine': mine, 'is-theirs': !mine, 'is-pending': pending }">
+                        <div class="bubble-group">
+                            <!-- ko if: fromName -->
+                            <div class="bubble-sender" data-bind="text: fromName"></div>
+                            <!-- /ko -->
+                            <div class="bubble" data-bind="visible: text || image || video || audio || fileName, css: { 'has-media': image || video }">
+                                <!-- ko if: image || video -->
+                                <div class="bubble-media">
+                                    <!-- ko if: image -->
+                                    <img data-bind="attr: { src: image, alt: text }, click: $root.OpenImage" />
+                                    <!-- /ko -->
+                                    <!-- ko if: video -->
+                                    <video controls data-bind="attr: { src: video }"></video>
+                                    <!-- /ko -->
+                                </div>
+                                <!-- /ko -->
+                                <!-- ko if: audio -->
+                                <div data-bind="audioPlayer: audio"></div>
+                                <!-- /ko -->
+                                <!-- ko if: fileName && !image && !video && !audio -->
+                                <a class="bubble-file" target="_blank" rel="noopener" data-bind="attr: { href: file }">
+                                    <!-- ko if: fileKind === 'pdf' -->
+                                    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="#E5484D"></path><path d="M15 2v5h5" fill="#b93b3f"></path><text x="12" y="17.5" font-size="7" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">PDF</text></svg>
+                                    <!-- /ko -->
+                                    <!-- ko if: fileKind === 'word' -->
+                                    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="#3B82F6"></path><path d="M15 2v5h5" fill="#2f6bd1"></path><text x="12" y="17.5" font-size="7" font-weight="700" fill="#fff" text-anchor="middle" font-family="Arial, sans-serif">DOC</text></svg>
+                                    <!-- /ko -->
+                                    <!-- ko if: fileKind !== 'pdf' && fileKind !== 'word' -->
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                    <!-- /ko -->
+                                    <span data-bind="text: fileName"></span>
+                                </a>
+                                <!-- /ko -->
+                                <!-- ko if: text -->
+                                <span data-bind="text: text"></span>
+                                <!-- /ko -->
+                            </div>
+                            <!-- ko if: buttons && buttons.length -->
+                            <div class="bubble-menu" data-bind="foreach: buttons">
+                                <button type="button" data-bind="text: text, click: $root.SendButtonReply, enable: !$root.sending() && !$root.loadingMessages()"></button>
+                            </div>
+                            <!-- /ko -->
+                            <div class="bubble-time">
+                                <span data-bind="text: time"></span>
+                                @* Los tildes van solo en los mensajes propios: son el acuse de que el negocio los
+                                   recibio y los leyo. En los del negocio no tienen sentido. *@
+                                <!-- ko if: mine && !pending -->
+                                <span class="bubble-ticks" data-bind="css: { 'is-read': read }, attr: { title: read ? 'Leído' : 'Entregado' }">
+                                    <svg width="16" height="11" viewBox="0 0 18 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 6 4.5 9.5 11 2"></polyline><polyline points="7 6 10.5 9.5 17 2"></polyline></svg>
+                                </span>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                        <div class="message-avatar" aria-hidden="true">
+                            <!-- ko if: fromPicture -->
+                            <img data-bind="attr: { src: fromPicture }" />
+                            <!-- /ko -->
+                            <!-- ko ifnot: fromPicture -->
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4.42 3.58-7 8-7s8 2.58 8 7"></path></svg>
+                            <!-- /ko -->
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <div class="emoji-modal-backdrop" style="display:none;" data-bind="visible: showEmojis, click: toggleEmojis"></div>
+                <div class="emoji-modal" style="display:none;" role="dialog" aria-label="Emojis" data-bind="visible: showEmojis">
+                    <ul class="emoji-modal__tabs" data-bind="foreach: emojiCategories">
+                        <li>
+                            <button type="button" data-bind="text: icon, attr: { title: name, 'aria-label': name, 'aria-selected': $root.activeEmojiCategory() === $data ? 'true' : 'false' }, click: $root.selectEmojiCategory, css: { 'is-active': $root.activeEmojiCategory() === $data }"></button>
+                        </li>
+                    </ul>
+                    <!-- ko with: activeEmojiCategory -->
+                    <h3 class="sr-only" data-bind="text: name"></h3>
+                    <div class="emoji-modal__grid scroll-soft" data-bind="foreach: items">
+                        <button type="button" data-bind="text: $data, click: $root.InsertEmoji"></button>
+                    </div>
+                    <!-- /ko -->
+                </div>
+                <div class="chat-attach-preview" style="display:none;" data-bind="visible: attachment">
+                    <!-- ko with: attachment -->
+                    <div class="chat-attach-preview__thumb" data-bind="css: { 'is-file': kind() === 'file' }">
+                        <!-- ko if: kind() === 'image' -->
+                        <img data-bind="attr: { src: previewUrl }" />
+                        <!-- /ko -->
+                        <!-- ko if: kind() === 'video' -->
+                        <video muted data-bind="attr: { src: previewUrl }"></video>
+                        <!-- /ko -->
+                        <!-- ko if: kind() === 'audio' -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg>
+                        <!-- /ko -->
+                        <!-- ko if: kind() === 'file' -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        <!-- /ko -->
+                    </div>
+                    <div class="chat-attach-preview__info">
+                        <span class="chat-attach-preview__name" data-bind="text: name"></span>
+                        <span class="chat-attach-preview__size" data-bind="text: durationLabel() || sizeLabel()"></span>
+                    </div>
+                    <button type="button" class="chat-icon-btn chat-attach-preview__remove" aria-label="Quitar archivo" title="Quitar archivo" data-bind="click: $root.RemoveAttachment">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                    <!-- /ko -->
+                </div>
+                <form class="chat-input-bar" data-bind="submit: Send">
+                    <input type="file" id="ChatFileInput" style="display:none;" aria-hidden="true" tabindex="-1" />
+
+                    <!-- ko ifnot: recording -->
+                    <button type="button" class="chat-icon-btn" aria-label="Adjuntar archivo" title="Adjuntar archivo" data-bind="click: PickFile, enable: !loadingMessages()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                    </button>
+                    <button type="button" class="chat-icon-btn" aria-label="Emojis" title="Emojis" data-bind="click: toggleEmojis, css: { 'is-active': showEmojis }, attr: { 'aria-expanded': showEmojis() ? 'true' : 'false' }, enable: !loadingMessages()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                    </button>
+                    <input type="text" id="ChatInput" maxlength="4000" autocomplete="off" placeholder="Escribí un mensaje" aria-label="Escribir un mensaje" data-bind="textInput: draft, enable: !loadingMessages()" />
+
+                    @* Con algo escrito o adjunto va el boton de enviar; si no, el de microfono ocupa su lugar. *@
+                    <!-- ko if: hasSomethingToSend() || !canRecord() -->
+                    <button type="submit" class="chat-icon-btn send" aria-label="Enviar mensaje" data-bind="enable: canSend">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                    <!-- /ko -->
+                    <!-- ko if: !hasSomethingToSend() && canRecord() -->
+                    <button type="button" class="chat-icon-btn send" aria-label="Grabar nota de voz" title="Grabar nota de voz" data-bind="click: StartRecording, enable: !loadingMessages()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg>
+                    </button>
+                    <!-- /ko -->
+                    <!-- /ko -->
+
+                    @* Grabando: la barra se reemplaza por el cronometro, descartar y listo. *@
+                    <!-- ko if: recording -->
+                    <button type="button" class="chat-icon-btn chat-recording__cancel" aria-label="Descartar grabación" title="Descartar grabación" data-bind="click: CancelRecording">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6M14 11v6"></path></svg>
+                    </button>
+                    <div class="chat-recording">
+                        <span class="chat-recording__dot" aria-hidden="true"></span>
+                        <span class="chat-recording__label">Grabando</span>
+                        <span class="chat-recording__time" data-bind="text: recordingTime"></span>
+                    </div>
+                    <button type="button" class="chat-icon-btn send" aria-label="Listo" title="Listo" data-bind="click: StopRecording">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </button>
+                    <!-- /ko -->
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="image-viewer-backdrop" style="display:none;" data-bind="visible: viewerImage, click: CloseImage">
+        <button type="button" class="image-viewer-close" aria-label="Cerrar" data-bind="click: CloseImage">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <img class="image-viewer-image" data-bind="attr: { src: viewerImage }" />
+    </div>
+</div>

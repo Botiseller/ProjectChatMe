@@ -1,3 +1,4 @@
+using Business.Entities.Security;
 using Common.Services.Interceptor;
 using Common.Utility;
 using System;
@@ -57,16 +58,13 @@ namespace WebFront
 
                 var authTicket = FormsAuthentication.Decrypt(cookie.Value);
 
-                var familyUser = authTicket.UserData.Split(new[] { ':' });
-
+                var familyUser =Common.Utility.Helper.DecodeBase64String(authTicket.UserData);
+                var o = Helper.DeserializeObject<Session>(familyUser);
                 //build a custom identity and custom principal object based on this username
                 CustomIdentity identity = new CustomIdentity
                 {
-                    Name = familyUser[0],
-                    Family = familyUser[1],
-                    IdUser = familyUser[2],
-                    Product = familyUser[3],
-                    Token = familyUser[4]
+                    Name = "Name",
+                    session = o
                 };
 
                 GenericPrincipal principal = new GenericPrincipal(identity, null);
@@ -157,7 +155,7 @@ namespace WebFront
             {
                 string lcReqPath = Request.Path.ToLower();
 
-                if (!lcReqPath.Contains("/authentication") && !lcReqPath.Contains("/error"))
+                if (!lcReqPath.Contains("/authentication") && !lcReqPath.Contains("/error") && !lcReqPath.Contains("/go") )
                 {
                     if (Context.Session != null)
                     {

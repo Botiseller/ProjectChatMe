@@ -25,6 +25,19 @@
           <Property Name="Origen" Type="int" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
           <Property Name="Mensaje" Type="varchar(max)" Nullable="false" />
+          <Property Name="ExternalId" Type="varchar" MaxLength="100" />
+          <Property Name="FechaLeido" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NegocioAuthentication">
+          <Key>
+            <PropertyRef Name="SecretId" />
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="SecretId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NegocioId" Type="int" Nullable="false" />
+          <Property Name="Authentication" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Negocios">
           <Key>
@@ -37,14 +50,25 @@
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
           <Property Name="Ubicacion" Type="varchar" MaxLength="100" />
           <Property Name="Negocio" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ProveedorId" Type="int" />
+        </EntityType>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="ProveedorId" />
+          </Key>
+          <Property Name="ProveedorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="Proveedor" Type="varchar(max)" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Rubros">
           <Key>
             <PropertyRef Name="RubroId" />
           </Key>
           <Property Name="RubroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Icono" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Icono" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="SubRubros">
           <Key>
@@ -52,7 +76,16 @@
           </Key>
           <Property Name="SubRubroId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RubroId" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioProveedor">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="ProveedorId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="ProveedorId" Type="int" Nullable="false" />
+          <Property Name="UsuarioProveedorId" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -61,6 +94,9 @@
           <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Usuario" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mail" Type="varchar" MaxLength="200" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Chats_Negocios">
           <End Role="Negocios" Type="Self.Negocios" Multiplicity="1" />
@@ -98,12 +134,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Negocios_Rubros">
-          <End Role="Rubros" Type="Self.Rubros" Multiplicity="1" />
+        <Association Name="FK_NegocioAuthentication_Negocios">
+          <End Role="Negocios" Type="Self.Negocios" Multiplicity="1" />
+          <End Role="NegocioAuthentication" Type="Self.NegocioAuthentication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Negocios">
+              <PropertyRef Name="NegocioId" />
+            </Principal>
+            <Dependent Role="NegocioAuthentication">
+              <PropertyRef Name="NegocioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Negocios_Proveedores">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
           <End Role="Negocios" Type="Self.Negocios" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Rubros">
-              <PropertyRef Name="RubroId" />
+            <Principal Role="Proveedores">
+              <PropertyRef Name="ProveedorId" />
+            </Principal>
+            <Dependent Role="Negocios">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Negocios_SubRubros">
+          <End Role="SubRubros" Type="Self.SubRubros" Multiplicity="1" />
+          <End Role="Negocios" Type="Self.Negocios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubRubros">
+              <PropertyRef Name="SubRubroId" />
             </Principal>
             <Dependent Role="Negocios">
               <PropertyRef Name="RubroId" />
@@ -122,12 +182,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UsuarioProveedor_Proveedores">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="1" />
+          <End Role="UsuarioProveedor" Type="Self.UsuarioProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="ProveedorId" />
+            </Principal>
+            <Dependent Role="UsuarioProveedor">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioProveedor_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="UsuarioProveedor" Type="Self.UsuarioProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="UsuarioProveedor">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Chatbot_DesarrolloModelStoreContainer">
           <EntitySet Name="Chats" EntityType="Self.Chats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mensajes" EntityType="Self.Mensajes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NegocioAuthentication" EntityType="Self.NegocioAuthentication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Negocios" EntityType="Self.Negocios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rubros" EntityType="Self.Rubros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubRubros" EntityType="Self.SubRubros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioProveedor" EntityType="Self.UsuarioProveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Chats_Negocios" Association="Self.FK_Chats_Negocios">
             <End Role="Negocios" EntitySet="Negocios" />
@@ -141,13 +228,29 @@
             <End Role="Chats" EntitySet="Chats" />
             <End Role="Mensajes" EntitySet="Mensajes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Negocios_Rubros" Association="Self.FK_Negocios_Rubros">
-            <End Role="Rubros" EntitySet="Rubros" />
+          <AssociationSet Name="FK_NegocioAuthentication_Negocios" Association="Self.FK_NegocioAuthentication_Negocios">
+            <End Role="Negocios" EntitySet="Negocios" />
+            <End Role="NegocioAuthentication" EntitySet="NegocioAuthentication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Negocios_Proveedores" Association="Self.FK_Negocios_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Negocios" EntitySet="Negocios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Negocios_SubRubros" Association="Self.FK_Negocios_SubRubros">
+            <End Role="SubRubros" EntitySet="SubRubros" />
             <End Role="Negocios" EntitySet="Negocios" />
           </AssociationSet>
           <AssociationSet Name="FK_SubRubros_Rubros" Association="Self.FK_SubRubros_Rubros">
             <End Role="Rubros" EntitySet="Rubros" />
             <End Role="SubRubros" EntitySet="SubRubros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioProveedor_Proveedores" Association="Self.FK_UsuarioProveedor_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="UsuarioProveedor" EntitySet="UsuarioProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioProveedor_Usuarios" Association="Self.FK_UsuarioProveedor_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="UsuarioProveedor" EntitySet="UsuarioProveedor" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -155,14 +258,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="Chatbot_DesarrolloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Chatbot_DesarrolloEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="fn_Negocios_EstadoNegocios" IsComposable="true" ReturnType="Collection(Chatbot_DesarrolloModel.fn_Negocios_EstadoNegocios_Result)">
-            <Parameter Name="fechaDesde" Mode="In" Type="DateTime" />
-            <Parameter Name="fechaHasta" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="sp_IA_BoxNoEntendidos" ReturnType="Collection(Chatbot_DesarrolloModel.sp_IA_BoxNoEntendidos_Result)" />
-          <FunctionImport Name="sp_IA_FunnelByFlujoId" ReturnType="Collection(Chatbot_DesarrolloModel.sp_IA_FunnelByFlujoId_Result)">
-          <Parameter Name="FlujoId" Mode="In" Type="Guid" />
-          </FunctionImport>
           <EntitySet Name="Chats" EntityType="Chatbot_DesarrolloModel.Chats" />
           <EntitySet Name="Mensajes" EntityType="Chatbot_DesarrolloModel.Mensajes" />
           <EntitySet Name="Negocios" EntityType="Chatbot_DesarrolloModel.Negocios" />
@@ -181,32 +276,34 @@
             <End Role="Chats" EntitySet="Chats" />
             <End Role="Mensajes" EntitySet="Mensajes" />
           </AssociationSet>
-          <AssociationSet Name="FK_Negocios_Rubros" Association="Chatbot_DesarrolloModel.FK_Negocios_Rubros">
-            <End Role="Rubros" EntitySet="Rubros" />
-            <End Role="Negocios" EntitySet="Negocios" />
-          </AssociationSet>
           <AssociationSet Name="FK_SubRubros_Rubros" Association="Chatbot_DesarrolloModel.FK_SubRubros_Rubros">
             <End Role="Rubros" EntitySet="Rubros" />
             <End Role="SubRubros" EntitySet="SubRubros" />
           </AssociationSet>
+          <EntitySet Name="Proveedores" EntityType="Chatbot_DesarrolloModel.Proveedores" />
+          <AssociationSet Name="FK_Negocios_SubRubros" Association="Chatbot_DesarrolloModel.FK_Negocios_SubRubros">
+            <End Role="SubRubros" EntitySet="SubRubros" />
+            <End Role="Negocios" EntitySet="Negocios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Negocios_Proveedores" Association="Chatbot_DesarrolloModel.FK_Negocios_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Negocios" EntitySet="Negocios" />
+          </AssociationSet>
+          <EntitySet Name="UsuarioProveedor" EntityType="Chatbot_DesarrolloModel.UsuarioProveedor" />
+          <AssociationSet Name="FK_UsuarioProveedor_Proveedores" Association="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Proveedores">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="UsuarioProveedor" EntitySet="UsuarioProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioProveedor_Usuarios" Association="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="UsuarioProveedor" EntitySet="UsuarioProveedor" />
+          </AssociationSet>
+          <EntitySet Name="NegocioAuthentication" EntityType="Chatbot_DesarrolloModel.NegocioAuthentication" />
+          <AssociationSet Name="FK_NegocioAuthentication_Negocios" Association="Chatbot_DesarrolloModel.FK_NegocioAuthentication_Negocios">
+            <End Role="Negocios" EntitySet="Negocios" />
+            <End Role="NegocioAuthentication" EntitySet="NegocioAuthentication" />
+          </AssociationSet>
           </EntityContainer>
-        <ComplexType Name="fn_Negocios_EstadoNegocios_Result">
-          <Property Type="Guid" Name="NegocioId" Nullable="true" />
-          <Property Type="Guid" Name="EtapaId" Nullable="true" />
-          <Property Type="DateTime" Name="FechaAltaNegocio" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="Fecha" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="Estado" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_IA_BoxNoEntendidos_Result">
-          <Property Type="Int32" Name="padre" Nullable="true" />
-          <Property Type="String" Name="palabra" Nullable="true" />
-          <Property Type="Int32" Name="hijo" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_IA_FunnelByFlujoId_Result">
-          <Property Type="Guid" Name="FlujoId" Nullable="true" />
-          <Property Type="Int32" Name="intent" Nullable="true" />
-          <Property Type="Int32" Name="cantidad" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Chats">
           <Key>
             <PropertyRef Name="ChatId" />
@@ -228,6 +325,8 @@
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Chats" Relationship="Chatbot_DesarrolloModel.FK_Mensajes_Chats" FromRole="Mensajes" ToRole="Chats" />
+          <Property Name="ExternalId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaLeido" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Negocios">
           <Key>
@@ -240,16 +339,17 @@
           <Property Name="Ubicacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Negocio" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Chats" Relationship="Chatbot_DesarrolloModel.FK_Chats_Negocios" FromRole="Negocios" ToRole="Chats" />
-          <NavigationProperty Name="Rubros" Relationship="Chatbot_DesarrolloModel.FK_Negocios_Rubros" FromRole="Negocios" ToRole="Rubros" />
+          <NavigationProperty Name="SubRubros" Relationship="Chatbot_DesarrolloModel.FK_Negocios_SubRubros" FromRole="Negocios" ToRole="SubRubros" />
+          <NavigationProperty Name="Proveedores" Relationship="Chatbot_DesarrolloModel.FK_Negocios_Proveedores" FromRole="Negocios" ToRole="Proveedores" />
+          <NavigationProperty Name="NegocioAuthentication" Relationship="Chatbot_DesarrolloModel.FK_NegocioAuthentication_Negocios" FromRole="Negocios" ToRole="NegocioAuthentication" />
         </EntityType>
         <EntityType Name="Rubros">
           <Key>
             <PropertyRef Name="RubroId" />
           </Key>
           <Property Name="RubroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Icono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Negocios" Relationship="Chatbot_DesarrolloModel.FK_Negocios_Rubros" FromRole="Rubros" ToRole="Negocios" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Icono" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SubRubros" Relationship="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" FromRole="Rubros" ToRole="SubRubros" />
         </EntityType>
         <EntityType Name="SubRubros">
@@ -257,8 +357,9 @@
             <PropertyRef Name="SubRubroId" />
           </Key>
           <Property Name="SubRubroId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Rubros" Relationship="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" FromRole="SubRubros" ToRole="Rubros" />
+          <NavigationProperty Name="Negocios" Relationship="Chatbot_DesarrolloModel.FK_Negocios_SubRubros" FromRole="SubRubros" ToRole="Negocios" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -268,6 +369,10 @@
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Usuario" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Chats" Relationship="Chatbot_DesarrolloModel.FK_Chats_Usuarios" FromRole="Usuarios" ToRole="Chats" />
+          <Property Name="Mail" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UsuarioProveedor" Relationship="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Usuarios" FromRole="Usuarios" ToRole="UsuarioProveedor" />
         </EntityType>
         <Association Name="FK_Chats_Negocios">
           <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="1" />
@@ -281,13 +386,79 @@
           <End Type="Chatbot_DesarrolloModel.Chats" Role="Chats" Multiplicity="1" />
           <End Type="Chatbot_DesarrolloModel.Mensajes" Role="Mensajes" Multiplicity="*" />
         </Association>
-        <Association Name="FK_Negocios_Rubros">
-          <End Type="Chatbot_DesarrolloModel.Rubros" Role="Rubros" Multiplicity="1" />
-          <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="*" />
-        </Association>
         <Association Name="FK_SubRubros_Rubros">
           <End Type="Chatbot_DesarrolloModel.Rubros" Role="Rubros" Multiplicity="1" />
           <End Type="Chatbot_DesarrolloModel.SubRubros" Role="SubRubros" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="ProveedorId" />
+          </Key>
+          <Property Name="ProveedorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Proveedor" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Negocios" Relationship="Chatbot_DesarrolloModel.FK_Negocios_Proveedores" FromRole="Proveedores" ToRole="Negocios" />
+          <NavigationProperty Name="UsuarioProveedor" Relationship="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Proveedores" FromRole="Proveedores" ToRole="UsuarioProveedor" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Negocios_SubRubros">
+          <End Type="Chatbot_DesarrolloModel.SubRubros" Role="SubRubros" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Negocios_Proveedores">
+          <End Type="Chatbot_DesarrolloModel.Proveedores" Role="Proveedores" Multiplicity="0..1" />
+          <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="*" />
+        </Association>
+        <EntityType Name="UsuarioProveedor">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+            <PropertyRef Name="ProveedorId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="ProveedorId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioProveedorId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Proveedores" Relationship="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Proveedores" FromRole="UsuarioProveedor" ToRole="Proveedores" />
+          <NavigationProperty Name="Usuarios" Relationship="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Usuarios" FromRole="UsuarioProveedor" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK_UsuarioProveedor_Proveedores">
+          <End Type="Chatbot_DesarrolloModel.Proveedores" Role="Proveedores" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.UsuarioProveedor" Role="UsuarioProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="ProveedorId" />
+            </Principal>
+            <Dependent Role="UsuarioProveedor">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioProveedor_Usuarios">
+          <End Type="Chatbot_DesarrolloModel.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.UsuarioProveedor" Role="UsuarioProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="UsuarioProveedor">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NegocioAuthentication">
+          <Key>
+            <PropertyRef Name="SecretId" />
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="SecretId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Authentication" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaVencimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Negocios" Relationship="Chatbot_DesarrolloModel.FK_NegocioAuthentication_Negocios" FromRole="NegocioAuthentication" ToRole="Negocios" />
+        </EntityType>
+        <Association Name="FK_NegocioAuthentication_Negocios">
+          <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="1" />
+          <End Type="Chatbot_DesarrolloModel.NegocioAuthentication" Role="NegocioAuthentication" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -307,6 +478,8 @@
           <EntitySetMapping Name="Mensajes">
             <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Mensajes">
               <MappingFragment StoreEntitySet="Mensajes">
+                <ScalarProperty Name="FechaLeido" ColumnName="FechaLeido" />
+                <ScalarProperty Name="ExternalId" ColumnName="ExternalId" />
                 <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Origen" ColumnName="Origen" />
@@ -347,6 +520,9 @@
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
@@ -377,20 +553,68 @@
               <ScalarProperty Name="ChatId" ColumnName="ChatId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_Negocios_Rubros" TypeName="Chatbot_DesarrolloModel.FK_Negocios_Rubros" StoreEntitySet="Negocios">
-            <EndProperty Name="Negocios">
-              <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
-            </EndProperty>
-            <EndProperty Name="Rubros">
-              <ScalarProperty Name="RubroId" ColumnName="RubroId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="FK_SubRubros_Rubros" TypeName="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" StoreEntitySet="SubRubros">
             <EndProperty Name="SubRubros">
               <ScalarProperty Name="SubRubroId" ColumnName="SubRubroId" />
             </EndProperty>
             <EndProperty Name="Rubros">
               <ScalarProperty Name="RubroId" ColumnName="RubroId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Proveedores">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.Proveedores">
+              <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Proveedor" ColumnName="Proveedor" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Negocios_SubRubros" TypeName="Chatbot_DesarrolloModel.FK_Negocios_SubRubros" StoreEntitySet="Negocios">
+            <EndProperty Name="Negocios">
+              <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
+            </EndProperty>
+            <EndProperty Name="SubRubros">
+              <ScalarProperty Name="SubRubroId" ColumnName="RubroId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Negocios_Proveedores" TypeName="Chatbot_DesarrolloModel.FK_Negocios_Proveedores" StoreEntitySet="Negocios">
+            <EndProperty Name="Negocios">
+              <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
+            </EndProperty>
+            <EndProperty Name="Proveedores">
+              <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+            </EndProperty>
+            <Condition ColumnName="ProveedorId" IsNull="false" />
+          </AssociationSetMapping>
+          <EntitySetMapping Name="UsuarioProveedor">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.UsuarioProveedor">
+              <MappingFragment StoreEntitySet="UsuarioProveedor">
+                <ScalarProperty Name="UsuarioProveedorId" ColumnName="UsuarioProveedorId" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NegocioAuthentication">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.NegocioAuthentication">
+              <MappingFragment StoreEntitySet="NegocioAuthentication">
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="Authentication" ColumnName="Authentication" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="SecretId" ColumnName="SecretId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_NegocioAuthentication_Negocios" TypeName="Chatbot_DesarrolloModel.FK_NegocioAuthentication_Negocios" StoreEntitySet="NegocioAuthentication">
+            <EndProperty Name="NegocioAuthentication">
+              <ScalarProperty Name="Code" ColumnName="Code" />
+              <ScalarProperty Name="SecretId" ColumnName="SecretId" />
+            </EndProperty>
+            <EndProperty Name="Negocios">
+              <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

@@ -17,7 +17,8 @@ namespace Common.Utility.Imagenes
                 i = image.ToByteArray();
             }
 
-            var path = Archivos.Archivos.SaveFile(i, "", "");
+            //SaveFile (FTP) ya no existe, se reemplazo por Archivos.UploadAsync (S3); bloqueante a proposito, este metodo es sincrono.
+            var path = Archivos.Archivos.UploadAsync(i, "image.webp", "images").GetAwaiter().GetResult();
             return path;
         }
 

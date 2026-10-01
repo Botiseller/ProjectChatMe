@@ -1,43 +1,42 @@
 ﻿@using Common.Utility
 
 <aside class="page-sidebar" id="_MenuIzquierda" style="margin-top: 4.125rem;">
-    <!-- BEGIN PRIMARY NAVIGATION -->
-    <nav id="js-primary-nav" class="primary-nav pt-4" role="navigation">
-        <div class="nav-filter">
-            <div class="position-relative">
-                <input type="text" id="nav_filter_input" placeholder="Filtro menu" class="form-control" tabindex="0">
-                <a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar">
-                    <i class="fal fa-chevron-up"></i>
-                </a>
-            </div>
+    <nav class="bottom-nav" role="navigation">
+        <a class="bottom-nav__item" data-filter-tags="inicio" href="/feed">
+            <span class="bottom-nav__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 10.5 12 3l9 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /><path d="M5 9.5V21h14V9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+            <span>Inicio</span>
+        </a>
+        <a class="bottom-nav__item" data-filter-tags="novedades" href="/news">
+            <span class="bottom-nav__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h9A1.5 1.5 0 0 1 16 5.5V18a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" /><path d="M16 9h2.5A1.5 1.5 0 0 1 20 10.5V18a2 2 0 0 1-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" /><path d="M7.5 8h5M7.5 11.5h5M7.5 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+            </span>
+            <span>Novedades</span>
+        </a>
+        <a class="bottom-nav__item" data-filter-tags="mensajes" href="/chats">
+            <span class="bottom-nav__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                <span class="nav-badge hidden" id="nav-messages-badge"></span>
+            </span>
+            <span>Mensajes</span>
+        </a>
+        <div class="download-sidebar">
+            <button class="download-card">
+                <span class="download-card__icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="6" y="2.5" width="12" height="19" rx="2.5" stroke="currentColor" stroke-width="2" /><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+                </span>
+                <span class="download-card__text">
+                    <b>Descargá la app</b>
+                    <span>Enterate al instante cuando te respondan</span>
+                </span>
+            </button>
         </div>
-        <div class="info-card">
-  
-            <div class="info-card-text">
-                <a href="#" class="d-flex align-items-center text-white">
-                    <span class="text-truncate text-truncate-sm d-inline-block" data-bind="text:sessionData.Usuario.Nombre + ' ' + sessionData.Usuario.Apellido">
-                    </span>
-                </a>
-                <span class="d-inline-block text-truncate text-truncate-sm" data-bind="text:sessionData.Usuario.Mail"></span>
-            </div>
-      
-                <img src="/../img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
-        
-            <a href="#" onclick="return false;" class="pull-trigger-btn has-tooltip" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input" title="Filtro menú">
-                <i class="fal fa-angle-down"></i>
-            </a>
-        </div>
-        <ul id="js-nav-menu" class="nav-menu mt-0">
-            <li class="nav-title mt-0">Menú</li>
-            <li pathname="/Inicio/Inicio">
-                <a data-filter-tags="inicio" href="/Inicio/Inicio">
-                    <i class="fas fa-home-alt"></i>
-                    <span class="nav-link-text">Inicio</span>
-                </a>
-            </li>
-           
-        </ul>
-        <div class="filter-message js-filter-message bg-success-600"></div>
+        <a class="bottom-nav__item" data-filter-tags="perfil" href="#">
+            <span class="bottom-nav__icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" /><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+            </span>
+            <span>Perfil</span>
+        </a>
     </nav>
-    <!-- END PRIMARY NAVIGATION -->
 </aside>

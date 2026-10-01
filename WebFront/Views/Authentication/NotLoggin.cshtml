@@ -1,0 +1,53 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = "~/Views/_LoginLayout.cshtml";
+}
+
+@*Se llega acá cuando falla el ingreso por /go (ver AuthenticationController.Go). Para el usuario no es una pantalla
+    de error: no menciona que algo salió mal, explica cómo se entra a Chatme y lo deja volver al link del negocio.*@
+
+<div class="welcome-screen">
+    <div class="welcome-glow" aria-hidden="true"></div>
+
+    <main class="welcome-card">
+        <a class="brand welcome-card__brand" href="/chats" aria-label="Chatme">
+            <span class="brand__mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="34" height="34">
+                    <rect width="32" height="32" rx="9" fill="url(#welcomeBrandBg)"></rect>
+                    <path d="M9 12.5A2.5 2.5 0 0 1 11.5 10h9a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-2.5 2.5h-5.2L11 23.5V20h.5A2.5 2.5 0 0 1 9 17.5v-5Z" fill="#fff"></path>
+                    <circle cx="21.5" cy="21.5" r="3.2" fill="#2EE6B8"></circle>
+                    <defs>
+                        <linearGradient id="welcomeBrandBg" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#7C4DF5"></stop>
+                            <stop offset="1" stop-color="#5B2DDC"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </span>
+            <span class="brand__word">chat<b>me</b></span>
+        </a>
+
+        <div class="welcome-art" aria-hidden="true">
+            <span class="welcome-art__bubble welcome-art__bubble--them"></span>
+            <span class="welcome-art__bubble welcome-art__bubble--me"></span>
+            <span class="welcome-art__bubble welcome-art__bubble--them welcome-art__bubble--short"></span>
+        </div>
+
+        <h1 class="welcome-card__title">Tus conversaciones con los negocios, en un solo lugar</h1>
+
+        <p class="welcome-card__lede">
+            Entrá desde el link que te manda el negocio y todos tus chats aparecen acá.
+        </p>
+
+        <p class="welcome-card__hint">
+            ¿Ya lo tenías abierto? Volvé a la conversación y tocá el link otra vez.
+        </p>
+
+        <ul class="welcome-card__points">
+            <li>Gratis</li>
+            <li>Mensajes cifrados</li>
+            <li>Sin publicidad</li>
+        </ul>
+    </main>
+</div>

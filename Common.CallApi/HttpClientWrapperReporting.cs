@@ -243,24 +243,5 @@ namespace Common.CallApi
 
         #endregion
 
-
-        public  void EscribirCustomIdentity(string familia, string usuarioId)
-        {
-            var customIdentity = new Common.Services.Interceptor.CustomIdentity
-            {
-                Family = familia,
-                IdUser = usuarioId
-            };
-            GenericPrincipal principal = new GenericPrincipal(customIdentity, null);
-            Thread.CurrentPrincipal = principal;
-
-
-
-        }
-
-
-
-
-
     }
 }

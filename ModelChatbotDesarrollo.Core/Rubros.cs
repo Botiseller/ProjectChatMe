@@ -17,7 +17,6 @@ namespace ModelChatbotDesarrollo.Core
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rubros()
         {
-            this.Negocios = new HashSet<Negocios>();
             this.SubRubros = new HashSet<SubRubros>();
         }
     
@@ -25,8 +24,6 @@ namespace ModelChatbotDesarrollo.Core
         public string Nombre { get; set; }
         public string Icono { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Negocios> Negocios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubRubros> SubRubros { get; set; }
     }

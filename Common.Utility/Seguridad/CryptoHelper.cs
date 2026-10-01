@@ -15,6 +15,15 @@ namespace Common.Utility
     {
         private const string _secretKey = "J3ajh3a7";
 
+        public static string EncryptStringToString(string inputString) {
+            return EncryptStringToString(inputString, _secretKey);
+        }
+
+        public static string DecryptStringToString(string inputString)
+        {
+            return DecryptStringToString(inputString, _secretKey);
+        }
+
         public static string EncryptStringToString(string inputString, string secretKey)
         {
             if (string.IsNullOrWhiteSpace(inputString))

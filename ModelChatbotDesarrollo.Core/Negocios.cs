@@ -18,6 +18,7 @@ namespace ModelChatbotDesarrollo.Core
         public Negocios()
         {
             this.Chats = new HashSet<Chats>();
+            this.NegocioAuthentication = new HashSet<NegocioAuthentication>();
         }
     
         public int NegocioId { get; set; }
@@ -29,6 +30,9 @@ namespace ModelChatbotDesarrollo.Core
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chats> Chats { get; set; }
-        public virtual Rubros Rubros { get; set; }
+        public virtual SubRubros SubRubros { get; set; }
+        public virtual Proveedores Proveedores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NegocioAuthentication> NegocioAuthentication { get; set; }
     }
 }

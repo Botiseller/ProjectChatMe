@@ -41,9 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chat.cs" />
+    <Compile Include="Enums\Enumeraciones.cs" />
+    <Compile Include="Provider.cs" />
+    <Compile Include="Rubro.cs" />
+    <Compile Include="Shop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Session.cs" />
-    <Compile Include="Security\Usuario.cs" />
+    <Compile Include="Security\User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

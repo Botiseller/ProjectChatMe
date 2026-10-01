@@ -16,13 +16,13 @@ Website: http://gootbootstrap.com
 Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
 License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
 -->
-<html lang="en" class="root-text-sm">
+<html lang="en" class="root-text-sm" data-theme="dark">
 <head>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     @*<meta name="google-signin-client_id" content="@Business.Dto.ValoresPorDefectoEnum.clientGoogleId">*@
 
     <meta charset="utf-8">
-    <title>Botiseller - Campaigns</title>
+    <title>Chatme — El canal entre las personas y los negocios</title>
     <meta name="description" content="Page Title">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
@@ -32,19 +32,20 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     <meta name="msapplication-tap-highlight" content="no">
     <!-- base css -->
     @Styles.Render("~/estilo/site")
+    <link rel="stylesheet" href="~/Content/site/tokens.css">
 
     @RenderSection("styles", required: false)
     <!-- Place favicon.ico in the root directory -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon.ico">
+    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236D3AF2'/%3E%3Cpath d='M9 12.5A2.5 2.5 0 0 1 11.5 10h9a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-2.5 2.5h-5.2L11 23.5V20h.5A2.5 2.5 0 0 1 9 17.5v-5Z' fill='white'/%3E%3Ccircle cx='21' cy='21' r='3' fill='%232EE6B8'/%3E%3C/svg%3E">
     <link rel="mask-icon" href="~/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    @*<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>*@
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vLrBiz6igbL41HiNWUEt1Ohzr2jX10o&libraries=places"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_vLrBiz6igbL41HiNWUEt1Ohzr2jX10o&libraries=places"></script>*@
 </head>
-<body class="mod-bg-1 nav-function-fixed header-function-fixed mod-nav-link mod-nav-dark nav-function-minify">
+<body class="mod-bg-1 nav-function-fixed header-function-fixed mod-nav-link mod-nav-dark">
     <!-- DOC: script to save and load page settings -->
     <script>
         /**
@@ -100,9 +101,18 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         @{
             var sessionData = Session["SessionData"];
             var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(sessionData);
+
+            //Lo que necesita el websocket para conectarse (ver Scripts/Entities/Websocket.js): a donde, y con que
+            //sesion. El clientCode es el mismo base64 que viaja como header X-ClientCode en las llamadas al API; el
+            //hub lo decodifica igual para saber de que usuario es la conexion, en vez de creerle al cliente.
+            var urlApi = Common.Utility.Helper.GetWebSetingValue("WebApiUrlChatMe");
+            var clientCode = sessionData == null
+                ? string.Empty
+                : Common.Utility.Helper.Base64Encode(Common.Utility.Helper.SerializeObjectSimple(sessionData));
         }
 
         var sessionData = @Html.Raw(serializedData);
+        var websocketConfig = { url: '@Html.Raw(urlApi)', clientCode: '@Html.Raw(clientCode)' };
     </script>
 
     <!-- BEGIN Page Wrapper -->
@@ -231,10 +241,18 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                     + src/../jquery-snippets.js (core) -->
 
     @Scripts.Render("~/javascripts/site")
+    @* Proxy que genera SignalR leyendo los hubs del servidor: es lo que crea $.connection.chatHub, con el que
+       Scripts/Entities/Websocket.js registra la funcion messageRecive. Tiene que ir despues de jquery.signalR (que
+       viene en el bundle de arriba) y vive en el otro host, el del API. *@
+    <script src="@Html.Raw(urlApi)/signalr/hubs"></script>
     @Scripts.Render("~/javascripts/factoryAndShared")
+    @Scripts.Render("~/javascripts/entities")
     @Scripts.Render("~/javascripts/sammy")
     @Scripts.Render("~/javascripts/linq")
     @Scripts.Render("~/javascripts/knockout")
+    @* Va aca, en el layout, para que el aviso de mensajes nuevos funcione en todas las pantallas y no solo en el
+       chat. Despues de los bundles porque necesita WebsocketClass y ChatClass, que vienen en el de entities. *@
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Site/Websocket.Site.js")
 
     <!--This page contains the basic JS and CSS files to get started on your project. If you need aditional addon's or plugins please see scripts located at the bottom of each page in order to find out which JS/CSS files to add.-->
 

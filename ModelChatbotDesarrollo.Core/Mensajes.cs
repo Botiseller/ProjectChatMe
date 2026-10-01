@@ -19,6 +19,8 @@ namespace ModelChatbotDesarrollo.Core
         public int Origen { get; set; }
         public int Estado { get; set; }
         public string Mensaje { get; set; }
+        public string ExternalId { get; set; }
+        public Nullable<System.DateTime> FechaLeido { get; set; }
     
         public virtual Chats Chats { get; set; }
     }

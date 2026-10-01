@@ -3,8 +3,21 @@
 <header class="page-header m-0" role="banner" id="_Header" style="padding-left:0px;">
     <!-- we need this logo when user switches to nav-function-top -->
     <div>
-        <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative pl-4" data-toggle="modal" data-target="#modal-shortcut">
-            <img src="/../img/botiseller_wide.png"  alt="Botiseller" aria-roledescription="logo" style="width: auto;height: auto;">
+        <a href="#" class="page-logo-link press-scale-down d-flex align-items-center position-relative pl-4 brand" data-toggle="modal" data-target="#modal-shortcut" aria-label="Chatme — inicio">
+            <span class="brand__mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="30" height="30">
+                    <rect width="32" height="32" rx="9" fill="url(#headerBrandBg)"></rect>
+                    <path d="M9 12.5A2.5 2.5 0 0 1 11.5 10h9a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-2.5 2.5h-5.2L11 23.5V20h.5A2.5 2.5 0 0 1 9 17.5v-5Z" fill="#fff"></path>
+                    <circle cx="21.5" cy="21.5" r="3.2" fill="#2EE6B8"></circle>
+                    <defs>
+                        <linearGradient id="headerBrandBg" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#7C4DF5"></stop>
+                            <stop offset="1" stop-color="#5B2DDC"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </span>
+            <span class="brand__word">chat<b>me</b></span>
         </a>
     </div>
     <!-- DOC: nav menu layout change shortcut -->
@@ -47,39 +60,5 @@
             </a>
         </div>
 
-        <!-- app user menu -->
-        <div>
-            <a href="#" data-toggle="dropdown" class="header-icon d-flex align-items-center justify-content-center ml-2 cursor-pointer has-tooltip">
-             
-                    <img class="profile-image-md rounded-circle imgImagenSmall" style="display:block;" />
-                
-            </a>
-            <div class="dropdown-menu dropdown-menu-animated dropdown-lg">
-                <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
-                    <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
-                        <span class="mr-2">
-                        
-                            <img class="profile-image-md rounded-circle imgImagen"  style="display:block;" />
-                            
-                        </span>
-                        <div class="info-card-text">
-                            <div class="fs-lg text-truncate text-truncate-lg" data-bind="text:sessionData.Usuario.Nombre + ' ' + sessionData.Usuario.Apellido"></div>
-                            <span class="text-truncate text-truncate-md opacity-80" data-bind="text:sessionData.Usuario.Mail"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdown-divider m-0"></div>
-                <a href="#" class="dropdown-item" data-toggle="modal" data-target=".js-modal-settings">
-                    <i class="fal fa-share-alt mr-2"></i><span data-i18n="drpdwn.settings">Opciones De diseño</span>
-                </a>
-                <div class="dropdown-divider m-0"></div>
-                <a class="dropdown-item d-none" data-bind="click: $root.buttonBloquear">
-                    <i class="fal fa-lock-alt mr-2" mr-2"></i><span data-i18n="drpdwn.page-toblock">Bloquear</span>
-                </a>
-                <a class="dropdown-item fw-500 pt-3 pb-3" data-bind="click: $root.buttonLogout">
-                    <i class="fal fa-sign-out-alt mr-2"></i><span data-i18n="drpdwn.page-logout">Cerrar sesión</span>
-                </a>
-            </div>
-        </div>
     </div>
 </header>

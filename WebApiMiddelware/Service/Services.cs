@@ -1,5 +1,6 @@
-﻿using Framework.Core.Header;
-using System.Threading;
+﻿using System.Threading;
+using Business.Entities.Security;
+using Framework.Core.Header;
 
 namespace WebApiMiddelware.Service
 {
@@ -12,13 +13,15 @@ namespace WebApiMiddelware.Service
         public TBusiness ActionBusiness()
         {
 
-            var dataHeader = _header.ClientCode.Split(new[] { ':' });
+            var dataHeader = _header.ClientCode;
+            var familyUser = Common.Utility.Helper.DecodeBase64String(dataHeader);
+            var s = Common.Utility.Helper.DeserializeObject<Session>(familyUser);
+
             var customIdentity = new Common.Services.Interceptor.CustomIdentity
             {
-                Name = dataHeader[0],
-                Family = dataHeader[1],
-                IdUser = dataHeader[2],
-                Product = dataHeader[3]
+                //Name = dataHeader[0],
+                //IdUser = dataHeader[2],
+                session = s
             };
 
             Thread.CurrentPrincipal = customIdentity;

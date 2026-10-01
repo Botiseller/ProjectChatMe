@@ -10,22 +10,20 @@ namespace WebFront.Controllers
         public MiddlewareChatMeService middlewareChatMeService = new MiddlewareChatMeService();
       
 
-        public void createPrincipalThread(string token)
-        {
-            var customIdentity = new CustomIdentity
-            {
-                Name = string.Empty,
-                IdUser = string.Empty,
-                Family = string.Empty,
-                Product = "ChatMe",
-                Token = token
-            };
+        //public void createPrincipalThread(string token)
+        //{
+        //    var customIdentity = new CustomIdentity
+        //    {
+        //        Name = string.Empty,
+        //        IdUser = string.Empty,
+        //        Token = token
+        //    };
 
-            Thread.CurrentPrincipal = customIdentity;
-            var threadCurrentPrincipal = new GenericPrincipal(customIdentity, null);
-            Thread.CurrentPrincipal = threadCurrentPrincipal;
+        //    Thread.CurrentPrincipal = customIdentity;
+        //    var threadCurrentPrincipal = new GenericPrincipal(customIdentity, null);
+        //    Thread.CurrentPrincipal = threadCurrentPrincipal;
 
-        }
+        //}
 
     }
 }

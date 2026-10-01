@@ -14,8 +14,11 @@ namespace Business
         {
             builder.RegisterType<ConnectionValidator>().As<IValidator<Connection>>().InstancePerRequest();
 
-            builder.RegisterType<SharedBusinessService>().As<ISharedBusinessService>().EnableInterfaceInterceptors();
-
+            //builder.RegisterType<SharedBusinessService>().As<ISharedBusinessService>().EnableInterfaceInterceptors();
+            builder.RegisterType<ChatBusinessService>().As<IChatBusinessService>().EnableInterfaceInterceptors();
+            builder.RegisterType<ShopBusinessService>().As<IShopBusinessService>().EnableInterfaceInterceptors();
+            builder.RegisterType<UserBusinessService>().As<IUserBusinessService>().EnableInterfaceInterceptors();
+            
         }
     }
 }

@@ -65,18 +65,15 @@
     <Compile Include="Facade\ChatbotDesarrolloServicesFacade.cs" />
     <Compile Include="Injection\EntityContextManagerChatbotDesarrollo.cs" />
     <Compile Include="Logic\ChatLogic.cs" />
-    <Compile Include="Logic\NegocioLogic.cs" />
-    <Compile Include="Logic\UsuarioLogic.cs" />
-    <Compile Include="Logic\SharedLogic.cs" />
-    <Compile Include="Manager\NegocioManager.cs" />
-    <Compile Include="Manager\UsuarioManager.cs" />
+    <Compile Include="Logic\ShopLogic.cs" />
+    <Compile Include="Logic\UserLogic.cs" />
+    <Compile Include="Manager\ShopManager.cs" />
+    <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Manager\ChatManager.cs" />
-    <Compile Include="Manager\SharedManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\NegocioServices.cs" />
-    <Compile Include="Services\UsuarioServices.cs" />
+    <Compile Include="Services\ShopServices.cs" />
+    <Compile Include="Services\UserServices.cs" />
     <Compile Include="Services\ChatServices.cs" />
-    <Compile Include="Services\SharedServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -89,9 +86,21 @@
       <Project>{ef1291ac-3e14-4039-a411-48229593cbe9}</Project>
       <Name>Business.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Business.Dto\Business.Dto.csproj">
+      <Project>{2D97555A-0AA8-43F6-A330-631625709683}</Project>
+      <Name>Business.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Business.Entities\Business.Entities.csproj">
+      <Project>{1ad07fc4-0783-401b-8538-a6d00698923d}</Project>
+      <Name>Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.BusinessException\Common.BusinessException.csproj">
       <Project>{782bba9a-5b56-4110-bc1b-79b5ae1eb24c}</Project>
       <Name>Common.BusinessException</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Utility\Common.Utility.csproj">
+      <Project>{c71e06ed-a9b3-45ec-8b25-1093cd65f971}</Project>
+      <Name>Common.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\Framework.Core\Framework.Core.csproj">
       <Project>{c9e0fd5b-c43a-4f11-b46f-38b95b459c99}</Project>

@@ -140,6 +140,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\FeedController.cs" />
+    <Compile Include="Controllers\ChatsController.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\site\styles.css" />
     <Content Include="Content\site\site.css" />
     <Content Include="Css\app.bundle-rtl.css" />
     <Content Include="Css\app.bundle.css" />
@@ -658,10 +662,24 @@
     <Content Include="Media\sound\voice_on.mp3" />
     <Content Include="Media\video\36150715-heavenly-clouds-v2-license.txt" />
     <Content Include="Media\video\cc.mp4" />
+    <Content Include="Scripts\Entities\Archivo.js" />
+    <Content Include="Scripts\Entities\AudioPlayer.js" />
+    <Content Include="Scripts\Entities\Chat.js" />
+    <Content Include="Scripts\Entities\Grabador.js" />
+    <Content Include="Scripts\Entities\Websocket.js" />
+    <Content Include="Scripts\Site\Websocket.Site.js" />
+    <Content Include="Js\signalr\jquery.signalR-2.4.3.js" />
+    <Content Include="Js\signalr\jquery.signalR-2.4.3.min.js" />
+    <Content Include="Scripts\Entities\Emoji.js" />
     <Content Include="Scripts\Enums\Enums.js" />
+    <Content Include="Scripts\Factorys\FactoryArchivo.js" />
+    <Content Include="Scripts\Factorys\FactoryChat.js" />
     <Content Include="Scripts\Factorys\FactoryAuthentication.js" />
     <Content Include="Scripts\Factorys\FactoryShared.js" />
     <Content Include="Scripts\Models\Authentication\Authentication.js" />
+    <Content Include="Scripts\Models\Feed\Feed.js" />
+    <Content Include="Scripts\Models\News\News.js" />
+    <Content Include="Scripts\Models\Chat\Chat.js" />
     <Content Include="Scripts\Models\Index\Index.js" />
     <Content Include="Scripts\Sammy\Main.Sammy.js" />
     <Content Include="Scripts\Site\site.js" />
@@ -1004,6 +1022,10 @@
     <Content Include="Views\_BaseFrameLayout.cshtml" />
     <Content Include="Views\Shared\_Loading.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Authentication\NotLoggin.cshtml" />
+    <Content Include="Views\Chats\chats.cshtml" />
+    <Content Include="Views\Feed\feed.cshtml" />
+    <Content Include="Views\News\news.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src\custom\plugins\slider-revolution\" />
@@ -1562,10 +1584,6 @@
       <Project>{e3d64881-e28a-4a5b-8edd-9ddfbf505186}</Project>
       <Name>Business.CallAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Business.Contracts\Business.Contracts.csproj">
-      <Project>{ef1291ac-3e14-4039-a411-48229593cbe9}</Project>
-      <Name>Business.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Business.Dto\Business.Dto.csproj">
       <Project>{2d97555a-0aa8-43f6-a330-631625709683}</Project>
       <Name>Business.Dto</Name>
@@ -1573,10 +1591,6 @@
     <ProjectReference Include="..\Business.Entities\Business.Entities.csproj">
       <Project>{1ad07fc4-0783-401b-8538-a6d00698923d}</Project>
       <Name>Business.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Business\Business.csproj">
-      <Project>{d54b58d9-b9c5-413a-ab4d-b51008b956a6}</Project>
-      <Name>Business</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common.Services.Interceptor\Common.Services.Interceptor.csproj">
       <Project>{a7bc81f5-8047-43ca-98e2-694d8033cfdd}</Project>

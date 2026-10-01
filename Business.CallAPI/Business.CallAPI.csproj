@@ -135,6 +135,10 @@
       <Project>{2d97555a-0aa8-43f6-a330-631625709683}</Project>
       <Name>Business.Dto</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Business.Entities\Business.Entities.csproj">
+      <Project>{1ad07fc4-0783-401b-8538-a6d00698923d}</Project>
+      <Name>Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.CallApi\Common.CallApi.csproj">
       <Project>{46AF43EE-71AE-482C-89C1-5A17526E835B}</Project>
       <Name>Common.CallApi</Name>

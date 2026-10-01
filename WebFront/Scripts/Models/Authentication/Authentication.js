@@ -6,10 +6,10 @@
 
 
     self.LoadData = function () {
-        facAuthentication.ConseguirUniqueString().done(function (result) {
-            alert("llego");
-            console.log(result);
-        });
+        // facAuthentication.ConseguirUniqueString().done(function (result) {
+        //     alert("llego");
+        //     console.log(result);
+        // });
     };
 };
 

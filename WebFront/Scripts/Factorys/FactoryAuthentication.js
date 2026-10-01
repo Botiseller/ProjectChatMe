@@ -1,11 +1,12 @@
 ﻿function FactoryAuthentication() {
     var self = this;
 
-    self.ConseguirUniqueString = function () {
+    self.ValidateUser = function (obj) {
         return $.ajax({
             dataType: 'json',
-            type: 'GET',
-            url: '/Authentication/ConseguirUniqueString'
+            type: 'POST',
+            url: '/Authentication/ValidateUser',
+            data: obj
         });
     };
 

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Globalization;
 using System.Threading;
+using Common.Services.Interceptor;
 
 namespace Framework.Core.Connection
 {
@@ -20,30 +21,35 @@ namespace Framework.Core.Connection
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
 
-            var customIdentity = Thread.CurrentPrincipal as Common.Services.Interceptor.GenericPrincipal;
-            if (customIdentity != null)
-            {
-                var custom = (Common.Services.Interceptor.CustomIdentity)customIdentity.Identity;
-                var cs = ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad();
-                return ConnectionStringManager.BuildConnectionStringChatbotDesarrollo(cs);
+            //var customIdentity = Thread.CurrentPrincipal as Common.Services.Interceptor.GenericPrincipal;
 
-                //return ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad();
+            //var custom = (Common.Services.Interceptor.CustomIdentity)customIdentity.Identity;
+            var cs = ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad();
+            return ConnectionStringManager.BuildConnectionStringChatbotDesarrollo(cs);
 
-                //var encryptDataSource = ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad(custom.Family);
-                //if (string.IsNullOrEmpty(encryptDataSource))
-                //{
-                //    throw new System.Exception("El cliente " + custom.Family + " no es válido");
-                //}
-                //return encryptDataSource;
-                //var connection = custom.Family != "0" ? ConnectionStringManager.BuildConnectionStringChatbotDesarrollo(encryptDataSource) : encryptDataSource;
-                //return connection;
+            //if (customIdentity != null)
+            //{
+            //  var custom = (Common.Services.Interceptor.CustomIdentity)customIdentity.Identity;
+            //  var cs = ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad();
+            //  return ConnectionStringManager.BuildConnectionStringChatbotDesarrollo(cs);
 
-            }
-            else
-            {
-                return ConfigurationManager.ConnectionStrings["QstomMasterDataContext"].ConnectionString; ;
+            //    //return ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad();
 
-            }
+            //    //var encryptDataSource = ConnectionStringSeguridadManager.BuildConnectionStringQstomSeguridad(custom.Family);
+            //    //if (string.IsNullOrEmpty(encryptDataSource))
+            //    //{
+            //    //    throw new System.Exception("El cliente " + custom.Family + " no es válido");
+            //    //}
+            //    //return encryptDataSource;
+            //    //var connection = custom.Family != "0" ? ConnectionStringManager.BuildConnectionStringChatbotDesarrollo(encryptDataSource) : encryptDataSource;
+            //    //return connection;
+
+            //}
+            //else
+            //{
+            //    return ConfigurationManager.ConnectionStrings["QstomMasterDataContext"].ConnectionString; ;
+
+            //}
 
         }
     }

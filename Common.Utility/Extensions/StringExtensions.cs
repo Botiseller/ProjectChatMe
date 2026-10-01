@@ -63,6 +63,11 @@ namespace Common.Utility.Extensions
             return s.Replace(" ", "");
         }
 
+        public static string Remove(this string s, string caracter)
+        {
+            return s.Replace(caracter, "");
+        }
+
         public static string RemovePreposition(this string s)
         {
             var words = s.Split(' ').ToList();

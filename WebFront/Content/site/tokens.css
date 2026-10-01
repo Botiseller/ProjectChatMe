@@ -1,0 +1,128 @@
+/* ==========================================================================
+   ChatMe — Design tokens
+   Paleta: Moderno / Tech (violeta primario + menta acento)
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --color-primary: #6D3AF2;
+  --color-primary-hover: #5B2DDC;
+  --color-primary-active: #4B23BA;
+  --color-primary-tint: #EFE9FE;
+  --color-primary-tint-strong: #DED0FC;
+
+  --color-accent: #2EE6B8;
+  --color-accent-hover: #22C9A0;
+  --color-accent-tint: #E3FBF4;
+
+  /* Neutrals */
+  --color-bg: #FAF9FE;
+  --color-bg-subtle: #F4F2FB;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FFFFFF;
+  --color-border: #ECE9F7;
+  --color-border-strong: #DCD6F0;
+  --color-text: #161122;
+  --color-text-secondary: #6B6478;
+  --color-text-tertiary: #9A93AC;
+  --color-overlay: rgba(15, 11, 26, 0.6);
+
+  /* Semantic */
+  --color-danger: #F23D5C;
+  --color-danger-tint: #FDE8EC;
+  --color-success: #1FAE7A;
+  --color-warning: #FFB020;
+  --color-sponsored: #9A93AC;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(22, 17, 34, 0.06);
+  --shadow-md: 0 4px 16px rgba(22, 17, 34, 0.08);
+  --shadow-lg: 0 12px 32px rgba(22, 17, 34, 0.14);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Type */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Story ring gradient */
+  --story-ring: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  --story-ring-seen: var(--color-border-strong);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-primary: #8A5CF7;
+    --color-primary-hover: #9C74F9;
+    --color-primary-active: #7B49E8;
+    --color-primary-tint: #241C3D;
+    --color-primary-tint-strong: #322753;
+
+    --color-accent: #35F0C0;
+    --color-accent-hover: #52F5CD;
+    --color-accent-tint: #16332C;
+
+    --color-bg: #120D1E;
+    --color-bg-subtle: #1A1430;
+    --color-surface: #1E1833;
+    --color-surface-raised: #241C3D;
+    --color-border: #2E2748;
+    --color-border-strong: #3B3260;
+    --color-text: #F3F1FA;
+    --color-text-secondary: #B3ABC9;
+    --color-text-tertiary: #7C7495;
+    --color-overlay: rgba(5, 3, 12, 0.7);
+
+    --color-danger: #FF6B85;
+    --color-danger-tint: #3A1A24;
+    --color-success: #3ED99B;
+    --color-warning: #FFC24D;
+    --color-sponsored: #7C7495;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-primary: #8A5CF7;
+  --color-primary-hover: #9C74F9;
+  --color-primary-active: #7B49E8;
+  --color-primary-tint: #241C3D;
+  --color-primary-tint-strong: #322753;
+
+  --color-accent: #35F0C0;
+  --color-accent-hover: #52F5CD;
+  --color-accent-tint: #16332C;
+
+  --color-bg: #120D1E;
+  --color-bg-subtle: #1A1430;
+  --color-surface: #1E1833;
+  --color-surface-raised: #241C3D;
+  --color-border: #2E2748;
+  --color-border-strong: #3B3260;
+  --color-text: #F3F1FA;
+  --color-text-secondary: #B3ABC9;
+  --color-text-tertiary: #7C7495;
+  --color-overlay: rgba(5, 3, 12, 0.7);
+
+  --color-danger: #FF6B85;
+  --color-danger-tint: #3A1A24;
+  --color-success: #3ED99B;
+  --color-warning: #FFC24D;
+  --color-sponsored: #7C7495;
+
+  color-scheme: dark;
+}

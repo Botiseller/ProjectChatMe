@@ -62,9 +62,6 @@
     <Compile Include="Chats.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>
-    <Compile Include="fn_Negocios_EstadoNegocios_Result.cs">
-      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Mensajes.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>
@@ -83,20 +80,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelChatbotDesarrollo.edmx</DependentUpon>
     </Compile>
+    <Compile Include="NegocioAuthentication.cs">
+      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Negocios.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proveedores.cs">
+      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Rubros.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_IA_BoxNoEntendidos_Result.cs">
-      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_IA_FunnelByFlujoId_Result.cs">
-      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
-    </Compile>
     <Compile Include="SubRubros.cs">
+      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioProveedor.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.cs">

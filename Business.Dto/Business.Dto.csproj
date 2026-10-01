@@ -55,6 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\Apis\Authentication.cs" />
+    <Compile Include="Dtos\Apis\GenericResponse.cs" />
+    <Compile Include="Dtos\Authentication\AuthenticationDto.cs" />
+    <Compile Include="Dtos\Chats\SendMessageDto.cs" />
+    <Compile Include="Dtos\Chats\WebhookMessageDto.cs" />
     <Compile Include="Enums\Enumeraciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

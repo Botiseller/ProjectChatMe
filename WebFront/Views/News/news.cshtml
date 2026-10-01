@@ -1,0 +1,14 @@
+﻿@using System.Web.Optimization
+
+@{
+    Layout = "~/Views/_BaseLayout.cshtml";
+}
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/News/News.js")
+}
+
+<div id="News" >
+    News
+    </div>

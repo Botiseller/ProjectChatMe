@@ -156,9 +156,21 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business.Dto\Business.Dto.csproj">
+      <Project>{2d97555a-0aa8-43f6-a330-631625709683}</Project>
+      <Name>Business.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Business.Entities\Business.Entities.csproj">
+      <Project>{1ad07fc4-0783-401b-8538-a6d00698923d}</Project>
+      <Name>Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Services.Interceptor\Common.Services.Interceptor.csproj">
       <Project>{a7bc81f5-8047-43ca-98e2-694d8033cfdd}</Project>
       <Name>Common.Services.Interceptor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Utility\Common.Utility.csproj">
+      <Project>{c71e06ed-a9b3-45ec-8b25-1093cd65f971}</Project>
+      <Name>Common.Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelChatbotDesarrollo.Core\ModelChatbotDesarrollo.Core.csproj">
       <Project>{DA02D62E-A2EB-482B-9266-96AB367F6B62}</Project>

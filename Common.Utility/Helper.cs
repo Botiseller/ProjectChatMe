@@ -149,7 +149,7 @@ namespace Common.Utility
         public static string DecodeBase64String(string input)
         {
             // 1. Limpia caracteres que no deberían estar
-            input = input.Trim().Replace(" ", "").Replace("\r", "").Replace("\n", "");
+            input = input.Trim().Replace(" ", "+").Replace("\r", "").Replace("\n", "");
 
             // 2. Si es base64-url (usado en JWT y algunas APIs), convertirlo a base64 estándar
             input = input.Replace('-', '+').Replace('_', '/');
@@ -180,47 +180,7 @@ namespace Common.Utility
         }
 
 
-        public static string GetTokenBySession()
-        {
-            string token = string.Empty;
-            try
-            {
-                switch (System.Threading.Thread.CurrentPrincipal.Identity) {
-                    case Common.Services.Interceptor.CustomIdentity identity:
-                        token = ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).Token;
-                        break;
-                    case System.Web.Security.FormsIdentity forms:
-                        token = ((System.Web.Security.FormsIdentity)System.Threading.Thread.CurrentPrincipal.Identity).Ticket.UserData.Split(':')[4];
-                        break;
-                }
-
-            }
-            catch { }
-
-            return token;
-        }
-
-        public static string GetFamilyBySession()
-        {
-            string Family = string.Empty;
-            try
-            {
-                switch (System.Threading.Thread.CurrentPrincipal.Identity)
-                {
-                    case Common.Services.Interceptor.CustomIdentity identity:
-                        Family = ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).Family;
-                        break;
-                    case System.Web.Security.FormsIdentity forms:
-                        Family = ((System.Web.Security.FormsIdentity)System.Threading.Thread.CurrentPrincipal.Identity).Ticket.UserData.Split(':')[1];
-                        break;
-                }
-            }
-            catch { }
-
-            return Family;
-        }
-
-        public static Guid GetUserBySession()
+        public static int GetUserBySession()
         {
             string user = string.Empty;
             try
@@ -228,7 +188,7 @@ namespace Common.Utility
                 switch (System.Threading.Thread.CurrentPrincipal.Identity)
                 {
                     case Common.Services.Interceptor.CustomIdentity identity:
-                        user = ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).IdUser;
+                        user = ((Common.Services.Interceptor.CustomIdentity)(System.Threading.Thread.CurrentPrincipal.Identity)).session.Usuario.UsuarioId.ToString();
                         break;
                     case System.Web.Security.FormsIdentity forms:
                         user = ((System.Web.Security.FormsIdentity)System.Threading.Thread.CurrentPrincipal.Identity).Ticket.UserData.Split(':')[2];
@@ -238,7 +198,7 @@ namespace Common.Utility
             }
             catch { }
 
-            return new Guid(user);
+            return int.Parse(user);
         }
 
         public static string  NormalizarCadena(string cadena)
@@ -295,6 +255,16 @@ namespace Common.Utility
             return JsonConvert.SerializeObject(obj);
         }
 
+        //JSON solo ASCII (lo demas sale como \uXXXX). Para guardar en columnas varchar, que cambian por "?" lo que no
+        //entra en su codepage (ej. emojis); al deserializar vuelve el texto original.
+        public static string SerializeObjectAscii(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings
+            {
+                StringEscapeHandling = StringEscapeHandling.EscapeNonAscii
+            });
+        }
+
         public static T DeserializeObject<T>(string obj)
         {
             return JsonConvert.DeserializeObject<T>(obj, new JsonSerializerSettings
@@ -321,63 +291,6 @@ namespace Common.Utility
 
             return html.Trim();
         }
-
-        public static void GuardarImagenEnFtpDirectorio(byte[] imagen, string nombreArchivo, string entidad)
-        {
-
-
-            string[] ftpConnect = GetWebSetingValue("ftpConnectImages").ToString().Split(';');
-            string serverFtp = ftpConnect[0];
-            string puertoFtp = ftpConnect[1];
-            string usuarioFtp = ftpConnect[2];
-            string pwdFtp = ftpConnect[3];
-
-            string ftpRutaArchivo = $"ftp://{serverFtp}:{puertoFtp}/{entidad}/{nombreArchivo}";
-
-            // Verificar si el archivo ya existe
-            bool archivoExiste = false;
-            try
-            {
-                FtpWebRequest checkRequest = (FtpWebRequest)WebRequest.Create(ftpRutaArchivo);
-                checkRequest.Method = WebRequestMethods.Ftp.GetFileSize;
-                checkRequest.Credentials = new NetworkCredential(usuarioFtp, pwdFtp);
-                using (var checkResponse = (FtpWebResponse)checkRequest.GetResponse())
-                {
-                    archivoExiste = true; // Si no lanza excepción, el archivo existe
-                }
-            }
-            catch (WebException ex)
-            {
-                if (((FtpWebResponse)ex.Response).StatusCode == FtpStatusCode.ActionNotTakenFileUnavailable)
-                {
-                    archivoExiste = false; // El archivo no existe
-                }
-                else
-                {
-                    throw; // Otros errores se relanzan
-                }
-            }
-
-            // Si no existe, lo sube
-            if (!archivoExiste)
-            {
-                FtpWebRequest uploadRequest = (FtpWebRequest)WebRequest.Create(ftpRutaArchivo);
-                uploadRequest.Method = WebRequestMethods.Ftp.UploadFile;
-                uploadRequest.Credentials = new NetworkCredential(usuarioFtp, pwdFtp);
-                uploadRequest.UseBinary = true;
-                uploadRequest.ContentLength = imagen.Length;
-
-                using (Stream requestStream = uploadRequest.GetRequestStream())
-                {
-                    requestStream.Write(imagen, 0, imagen.Length);
-                }
-
-            
-            }
-        
-        }
-
-
 
         public static decimal ParseDecimal(string value)
         {

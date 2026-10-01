@@ -6,6 +6,5 @@
         CatchCredential,
         WithoutCredential,
         RenewCredential,
-        WithoutFamily
     }
 }

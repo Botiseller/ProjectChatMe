@@ -12,8 +12,6 @@ namespace ModelChatbotDesarrollo.Core
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class Chatbot_DesarrolloEntities : DbContext
     {
@@ -33,33 +31,8 @@ namespace ModelChatbotDesarrollo.Core
         public virtual DbSet<Rubros> Rubros { get; set; }
         public virtual DbSet<SubRubros> SubRubros { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
-    
-        [DbFunction("Chatbot_DesarrolloEntities", "fn_Negocios_EstadoNegocios")]
-        public virtual IQueryable<fn_Negocios_EstadoNegocios_Result> fn_Negocios_EstadoNegocios(Nullable<System.DateTime> fechaDesde, Nullable<System.DateTime> fechaHasta)
-        {
-            var fechaDesdeParameter = fechaDesde.HasValue ?
-                new ObjectParameter("fechaDesde", fechaDesde) :
-                new ObjectParameter("fechaDesde", typeof(System.DateTime));
-    
-            var fechaHastaParameter = fechaHasta.HasValue ?
-                new ObjectParameter("fechaHasta", fechaHasta) :
-                new ObjectParameter("fechaHasta", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_Negocios_EstadoNegocios_Result>("[Chatbot_DesarrolloEntities].[fn_Negocios_EstadoNegocios](@fechaDesde, @fechaHasta)", fechaDesdeParameter, fechaHastaParameter);
-        }
-    
-        public virtual ObjectResult<sp_IA_BoxNoEntendidos_Result> sp_IA_BoxNoEntendidos()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_IA_BoxNoEntendidos_Result>("sp_IA_BoxNoEntendidos");
-        }
-    
-        public virtual ObjectResult<sp_IA_FunnelByFlujoId_Result> sp_IA_FunnelByFlujoId(Nullable<System.Guid> flujoId)
-        {
-            var flujoIdParameter = flujoId.HasValue ?
-                new ObjectParameter("FlujoId", flujoId) :
-                new ObjectParameter("FlujoId", typeof(System.Guid));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_IA_FunnelByFlujoId_Result>("sp_IA_FunnelByFlujoId", flujoIdParameter);
-        }
+        public virtual DbSet<Proveedores> Proveedores { get; set; }
+        public virtual DbSet<UsuarioProveedor> UsuarioProveedor { get; set; }
+        public virtual DbSet<NegocioAuthentication> NegocioAuthentication { get; set; }
     }
 }

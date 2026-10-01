@@ -30,7 +30,8 @@ namespace WebFront
                 "~/Css" + Common.Utility.Helper.getVersionScript() + "/fa-brands.css",
                 "~/Css" + Common.Utility.Helper.getVersionScript() + "/notifications/toastr/toastr.css",
                 "~/Css" + Common.Utility.Helper.getVersionScript() + "/notifications/sweetalert2/sweetalert2.bundle.css",
-                "~/Content" + Common.Utility.Helper.getVersionScript() + "/site/site.css"
+                "~/Content" + Common.Utility.Helper.getVersionScript() + "/site/tokens.css",
+                "~/Content" + Common.Utility.Helper.getVersionScript() + "/site/styles.css"
             ));
             /* Fin Base JS y CSS */
 
@@ -44,6 +45,8 @@ namespace WebFront
                         "~/Js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js",
                         "~/Js/formplugins/bootstrap-daterangepicker/bootstrap-daterangepicker.js",
                         "~/Js/jquery.base64.js",
+                        //Despues de vendors.bundle.js, que es el que trae jQuery: el cliente de SignalR se cuelga de el.
+                        "~/Js/signalr/jquery.signalR-2.4.3.js",
                         "~/Js/file/File.js",
                         "~/Js/formplugins/select2/select2.bundle.js",
                         "~/Js/datagrid/datatables/datatables.bundle.js",
@@ -78,15 +81,24 @@ namespace WebFront
                 "~/Css" + Common.Utility.Helper.getVersionScript() + "/miscellaneous/reactions/reactions.css",
                 "~/Css" + Common.Utility.Helper.getVersionScript() + "/formplugins/summernote/summernote.css",
                 "~/Css" + Common.Utility.Helper.getVersionScript() + "/formplugins/ion-rangeslider/ion-rangeslider.css",
-                "~/Content" + Common.Utility.Helper.getVersionScript() + "/site/site.css"
+                "~/Content" + Common.Utility.Helper.getVersionScript() + "/site/tokens.css",
+                "~/Content" + Common.Utility.Helper.getVersionScript() + "/site/styles.css"
             ));
 
             bundles.Add(new ScriptBundle("~/javascripts/factoryAndShared").Include(
 
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryAuthentication.js",
                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryShared.js",
+                       "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Factorys/FactoryChat.js",
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Shared/Controles/Controles.js"
 
+            ));
+
+            /* Todas las entidades (Scripts/Entities/*.js) juntas, asi cualquier vista las tiene disponibles
+               sin tener que declararlas una por una. Se cargan despues de factoryAndShared porque cada
+               entidad depende de su Factory correspondiente. */
+            bundles.Add(new ScriptBundle("~/javascripts/entities").IncludeDirectory(
+                        "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Entities", "*.js", true
             ));
             /* Fin Base JS y CSS */
 

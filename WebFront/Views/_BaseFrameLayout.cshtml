@@ -16,7 +16,7 @@ Website: http://gootbootstrap.com
 Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
 License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
 -->
-<html lang="en" class="root-text-sm">
+<html lang="en" class="root-text-sm" data-theme="dark">
 <head>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     @*<meta name="google-signin-client_id" content="@Business.Dto.ValoresPorDefectoEnum.clientGoogleId">*@
@@ -32,6 +32,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     <meta name="msapplication-tap-highlight" content="no">
     <!-- base css -->
     @Styles.Render("~/estilo/site")
+    <link rel="stylesheet" href="~/Content/site/tokens.css">
 
     @RenderSection("styles", required: false)
     <!-- Place favicon.ico in the root directory -->
@@ -231,6 +232,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
 
     @Scripts.Render("~/javascripts/site")
     @Scripts.Render("~/javascripts/factoryAndShared")
+    @Scripts.Render("~/javascripts/entities")
     @Scripts.Render("~/javascripts/sammy")
     @Scripts.Render("~/javascripts/linq")
     @Scripts.Render("~/javascripts/knockout")

@@ -14,12 +14,6 @@ namespace Business.CallAPI.Services
     public class MiddelwareBaseService
     {
         
-
-
-
-       
-
-
         public static GenericRs CalltoApiPost<GenericRs>(string url, string jsonRequest, Dictionary<string, string> headerParams)
         {
             return CalltoApiPost<GenericRs>(url, null, null, jsonRequest, headerParams);

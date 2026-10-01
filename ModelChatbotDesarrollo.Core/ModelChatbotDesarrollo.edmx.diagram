@@ -14,8 +14,15 @@
         <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Chats_Negocios" />
         <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Chats_Usuarios" />
         <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Mensajes_Chats" />
-        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Negocios_Rubros" />
         <AssociationConnector Association="Chatbot_DesarrolloModel.FK_SubRubros_Rubros" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.Proveedores" Width="1.5" PointX="8.375" PointY="7" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Negocios_SubRubros" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_Negocios_Proveedores" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.UsuarioProveedor" Width="1.5" PointX="10.625" PointY="7.125" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Proveedores" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_UsuarioProveedor_Usuarios" />
+        <EntityTypeShape EntityType="Chatbot_DesarrolloModel.NegocioAuthentication" Width="1.5" PointX="7.875" PointY="0.875" />
+        <AssociationConnector Association="Chatbot_DesarrolloModel.FK_NegocioAuthentication_Negocios" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

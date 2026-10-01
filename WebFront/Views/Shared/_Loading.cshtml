@@ -1,9 +1,36 @@
-﻿
-<div class="chat-spinner-wrapper">
-    <div class="chat-spinner-bars">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+@*
+    Indicador de carga reutilizable (esqueleto). Se llama desde cualquier vista:
+
+        @{ Html.RenderPartial("_Loading", new ViewDataDictionary { { "Visible", "loading" } }); }
+
+    Visible (opcional): expresion de Knockout que decide cuando se ve, ej. "loading" para un ko.observable llamado loading
+                        en el ViewModel que envuelve la vista. Sin este dato queda siempre visible.
+    Text    (opcional): texto para lectores de pantalla. Por defecto "Cargando...".
+    Rows    (opcional): cantidad de filas del esqueleto. Por defecto 4.
+    Variant (opcional): "list" (por defecto, filas con avatar como la lista de chats) o "bubbles" (globos, para el cuerpo de un chat).
+*@
+@{
+    var visible = ViewData["Visible"] as string;
+    var text = ViewData["Text"] as string ?? "Cargando...";
+    var rows = ViewData["Rows"] as int? ?? 4;
+    var variant = ViewData["Variant"] as string ?? "list";
+}
+<div class="loading loading--@variant" role="status" aria-live="polite" data-bind="@(string.IsNullOrEmpty(visible) ? null : "visible: " + visible)">
+    <div class="loading__list" aria-hidden="true">
+        @for (var i = 0; i < rows; i++)
+        {
+            if (variant == "bubbles")
+            {
+                <div class="loading__bubble-row @(i % 2 == 0 ? "is-theirs" : "is-mine")"><span></span></div>
+            }
+            else
+            {
+                <div class="loading__row">
+                    <span class="loading__avatar"></span>
+                    <span class="loading__lines"><span></span><span></span></span>
+                </div>
+            }
+        }
     </div>
+    <span class="sr-only">@text</span>
 </div>

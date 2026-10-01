@@ -18,13 +18,19 @@ namespace ModelChatbotDesarrollo.Core
         public Usuarios()
         {
             this.Chats = new HashSet<Chats>();
+            this.UsuarioProveedor = new HashSet<UsuarioProveedor>();
         }
     
         public int UsuarioId { get; set; }
         public string Nombre { get; set; }
         public string Usuario { get; set; }
+        public string Mail { get; set; }
+        public string Telefono { get; set; }
+        public System.DateTime FechaAlta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Chats> Chats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioProveedor> UsuarioProveedor { get; set; }
     }
 }
