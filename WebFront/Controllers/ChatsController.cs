@@ -37,6 +37,16 @@ namespace WebFront.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        //La pantalla avisa que el usuario abrio el chat; el middleware marca leidos los mensajes que le mando el
+        //negocio. Devuelve cuantos cambio, mas que nada para poder verlo al depurar: la pantalla no lo usa.
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult MarkAsRead(int chatId)
+        {
+            var result = middlewareChatMeService.chat.MarkAsRead(chatId);
+            return Json(result);
+        }
+
         //Unico punto de entrada para mandar un mensaje, con o sin adjunto. Viene siempre como multipart/form-data
         //(HttpPostedFileBase, no JSON) porque puede traer binario; file es opcional. ValidateInput(false) porque el
         //texto pasa por Request.Form y la validacion de ASP.NET rechazaria un caracter como "<" escrito por el usuario.

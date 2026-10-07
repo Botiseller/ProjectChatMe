@@ -67,6 +67,13 @@
         return deferred.promise();
     };
 
+    //Avisa que el usuario abrio el chat, para que queden leidos los mensajes que le mando el negocio. Es al pasar:
+    //la pantalla no cambia con esto (los tildes son de los mensajes propios, y esos los marca el negocio), asi que
+    //si falla no se le muestra nada al usuario.
+    me.MarkAsRead = function (chatId) {
+        return facChat.MarkAsRead(chatId);
+    };
+
     //Mensaje que se muestra apenas se envia, hasta que el server confirma y se reemplaza por el guardado. Sin
     //fromName/fromPicture: el mensaje real que lo reemplaza los trae, y la espera es demasiado corta para que se note.
     me.PendingMessage = function (text) {

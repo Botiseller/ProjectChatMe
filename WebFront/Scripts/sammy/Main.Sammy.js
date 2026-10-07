@@ -7,7 +7,13 @@ var sammy = $.sammy(function () {
     };
 
 
+    //Es el hash de "ninguna pantalla en particular", y en el chat eso significa la lista sin conversacion abierta:
+    //aca llega la flecha de volver (ChatVM.CloseChat) y tambien el boton atras del navegador o del telefono saliendo
+    //de #chat/:id. En la primera carga ChatViewModel todavia no existe y no hay nada que cerrar.
     self.get('#Home', function (context) {
+        if (window.ChatViewModel) {
+            window.ChatViewModel.Deselect();
+        }
     });
 
     self.get('#authentication', function (context) {

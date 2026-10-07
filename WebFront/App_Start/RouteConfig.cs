@@ -9,8 +9,6 @@ namespace WebFront
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
-
             routes.MapRoute(name: "go", url: "go",
                 defaults: new { controller = "Authentication", action = "Go" }
             );
@@ -41,6 +39,18 @@ namespace WebFront
 
             routes.MapRoute(name: "ChatSendMessage", url: "Chats/SendMessage",
                 defaults: new { controller = "Chats", action = "SendMessage" }
+            );
+
+            routes.MapRoute(name: "ChatMarkAsRead", url: "Chats/MarkAsRead",
+                defaults: new { controller = "Chats", action = "MarkAsRead" }
+            );
+
+            //Ultima siempre: matchea cualquier cosa, asi que si se pone antes se come a todas las rutas
+            //explicitas de arriba (/go terminaba resolviendo GoController.chats).
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { action = "chats", id = UrlParameter.Optional }
             );
 
 

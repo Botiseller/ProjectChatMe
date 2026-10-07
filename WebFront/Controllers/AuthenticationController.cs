@@ -76,7 +76,7 @@ namespace WebFront.Controllers
                                 File = string.IsNullOrEmpty(h.message.File) ? null : Common.Utility.Archivos.Archivos.UploadAsync(h.message.File, Common.Utility.Helper.GetFileNameFromUrl(h.message.File)).GetAwaiter().GetResult(), //h.message.File,
                                 Video = string.IsNullOrEmpty(h.message.Video) ? null : Common.Utility.Archivos.Archivos.UploadAsync(h.message.Video, Common.Utility.Helper.GetFileNameFromUrl(h.message.Video)).GetAwaiter().GetResult(),
                                 Sticket = h.message.Sticket,
-                                Buttons = h.message.Buttons.Select(b => new ButtonMessageDetailt()
+                                Buttons = h.message.Buttons?.Select(b => new ButtonMessageDetailt()
                                 {
                                     Text = b.Text,
                                     Payload = b.Payload

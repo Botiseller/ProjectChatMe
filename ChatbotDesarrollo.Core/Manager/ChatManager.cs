@@ -227,11 +227,11 @@ namespace ChatbotDesarrollo.Core.Manager
             return message;
         }
 
-        //Marca como leidos los mensajes del chat que todavia no tenian fecha de lectura, y devuelve cuantos cambio.
+        //Marca como leidos los mensajes que el usuario de la sesion todavia no habia leido, y devuelve cuantos cambio.
+        //Solo los que mando el negocio: los propios los lee el negocio, no el usuario, y si se marcaran aca el usuario
+        //terminaria poniendo en "leido" sus propios mensajes con solo abrir el chat, y los tildes azules de la pantalla
+        //(ver bubble-ticks en chats.cshtml) dejarian de significar algo.
         //El chat tiene que ser del usuario de la sesion, igual que en el resto de los metodos de aca.
-        //PENDIENTE: hoy marca todos los del chat sin mirar quien los mando. Cuando se defina quien llama a esto (la
-        //pantalla del usuario, o el negocio por el API publico) va a haber que filtrar por Origen, para marcar solo
-        //los del otro lado; si no, quien lee termina marcando como leidos tambien sus propios mensajes.
         public int MarkAsRead(int chatId)
         {
             int userId = Common.Utility.Helper.GetUserBySession();
@@ -239,6 +239,7 @@ namespace ChatbotDesarrollo.Core.Manager
             var pendientes = Context.Mensajes
                 .Where(x => x.Chats.ChatId == chatId
                          && x.Chats.Usuarios.UsuarioId == userId
+                         && x.Origen != (int)MensajeEnviadoPor.Usuario
                          && x.FechaLeido == null)
                 .ToList();
 

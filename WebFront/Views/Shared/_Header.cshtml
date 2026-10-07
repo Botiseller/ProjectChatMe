@@ -38,12 +38,14 @@
             </li>
         </ul>
     </div>
-    <!-- DOC: mobile button appears during mobile width -->
-    <div class="hidden-lg-up">
+    @* Hamburguesa del menu en mobile. Comentada: con Inicio y Novedades afuera el menu queda con una sola
+       opcion, la pantalla en la que ya estas, asi que el boton solo gasta lugar y tapa la conversacion.
+       En web el menu sigue, como columna fija, que ahi no molesta. *@
+    @*<div class="hidden-lg-up">
         <a href="#" class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
             <i class="ni ni-menu"></i>
         </a>
-    </div>
+    </div>*@
     <div class="search d-none">
         <form class="app-forms hidden-xs-down" role="search" autocomplete="off" method="post" data-bind="submit: $root.buttonBuscadorGeneral">
             <input type="text" id="search-field" placeholder="Buscar Por Nombre, Apellido..." class="form-control" tabindex="1" data-bind="value:buscadorGeneral">

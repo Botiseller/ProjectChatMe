@@ -57,7 +57,7 @@ namespace WebFront
                         "~/Js/loader/loader.js",
                         "~/Js/pagination/Pagination.js",
                         "~/Js/pagination/PaginationDos.js",
-                        "~/Js/excel/jzip.js",
+                        "~/Js/excel/jszip.js",
                         "~/Js/excel/xlsx.full.min.js",
                         "~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Enums/Enums.js",
                         "~/Js/cookie.js",

@@ -14,21 +14,20 @@ namespace Common.Utility.Archivos
 {
     public static class Archivos
     {
-        //Todo lo de AWS sale de los appSettings del host que la este usando (estan en los tres Web.config:
-        //WebApiMiddelware, WebFront y WebAPI). Se leen una sola vez, al cargar la clase.
-        //AWS_BucketData viene compuesto: el nombre del bucket y la region pegados con un guion bajo. Se puede partir
-        //por el ultimo porque los nombres de bucket de S3 no admiten guion bajo, asi que el unico que aparece es ese.
-        private static readonly string BucketData = Helper.GetWebSetingValue("AWS_BucketData") ?? string.Empty;
-        private static readonly int RegionSeparator = BucketData.LastIndexOf('_');
+        //Todo lo de AWS vive aca y no en los Web.config: los usan tres hosts (WebApiMiddelware, WebFront y WebAPI) y
+        //mantener los mismos valores repetidos en los tres era mas facil de desincronizar que de sostener.
+        //El bucket y la region van en claro: no son secretos y el bucket forma parte de la URL publica de cada archivo.
+        private const string Bucket = "chatme-storage-174638372206-us-east-1-an";
+        private const string Region = "us-east-1";
 
-        private static readonly string Bucket = RegionSeparator < 0 ? BucketData : BucketData.Substring(0, RegionSeparator);
-        private static readonly string Region = RegionSeparator < 0 ? string.Empty : BucketData.Substring(RegionSeparator + 1);
+        //Las credenciales van cifradas con CryptoHelper (TripleDES, salida en hex) y se descifran al cargar la clase,
+        //que es el unico lugar que las necesita. Para cambiarlas hay que cifrar el valor nuevo con
+        //CryptoHelper.EncryptStringToString y pegar el resultado aca.
+        private const string AccessKeyEncrypted = "78B192AD4D5AA1436DFAC9F38A014579332D9ED20C515971";
+        private const string SecretKeyEncrypted = "9C7FC7115B91ABC1A649483065EE9626A60C0F3FC3CF87AB8B6FBEABBDEC8CC7EDAA468465E25FF45BB5E8AFB0CE9B76";
 
-        //Las credenciales estan cifradas en el config (CryptoHelper, TripleDES, salida en hex): se guardan cifradas y
-        //se descifran aca, que es el unico lugar que las usa. El bucket no se cifra: no es secreto y ademas forma
-        //parte de la URL publica de cada archivo. El nombre de la clave va escrito tal cual esta en los Web.config.
-        private static readonly string AccessKey = CryptoHelper.DecryptStringToString(Helper.GetWebSetingValue("AWS_AccessKey"));
-        private static readonly string SecretKey = CryptoHelper.DecryptStringToString(Helper.GetWebSetingValue("AWS_SEcretKey"));
+        private static readonly string AccessKey = CryptoHelper.DecryptStringToString(AccessKeyEncrypted);
+        private static readonly string SecretKey = CryptoHelper.DecryptStringToString(SecretKeyEncrypted);
 
         private const string PublicPrefix = "public";
 

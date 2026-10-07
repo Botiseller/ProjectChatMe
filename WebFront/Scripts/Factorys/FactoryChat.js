@@ -25,6 +25,15 @@
         });
     };
 
+    self.MarkAsRead = function (chatId) {
+        return $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            url: '/Chats/MarkAsRead',
+            data: { chatId: chatId }
+        });
+    };
+
     //beforeId: MensajeId desde el cual traer los anteriores; 0 trae los mas recientes.
     self.GetMessages = function (chatId, beforeId) {
         return $.ajax({

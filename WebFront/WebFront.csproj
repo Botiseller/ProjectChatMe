@@ -156,6 +156,7 @@
   <ItemGroup>
     <Content Include="Content\site\styles.css" />
     <Content Include="Content\site\site.css" />
+    <Content Include="Content\site\tokens.css" />
     <Content Include="Css\app.bundle-rtl.css" />
     <Content Include="Css\app.bundle.css" />
     <Content Include="Css\chosen_v1.2.0\chosen-sprite%402x.png" />
@@ -672,7 +673,6 @@
     <Content Include="Js\signalr\jquery.signalR-2.4.3.min.js" />
     <Content Include="Scripts\Entities\Emoji.js" />
     <Content Include="Scripts\Enums\Enums.js" />
-    <Content Include="Scripts\Factorys\FactoryArchivo.js" />
     <Content Include="Scripts\Factorys\FactoryChat.js" />
     <Content Include="Scripts\Factorys\FactoryAuthentication.js" />
     <Content Include="Scripts\Factorys\FactoryShared.js" />
@@ -1026,6 +1026,7 @@
     <Content Include="Views\Chats\chats.cshtml" />
     <Content Include="Views\Feed\feed.cshtml" />
     <Content Include="Views\News\news.cshtml" />
+    <None Include="Properties\PublishProfiles\Production.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src\custom\plugins\slider-revolution\" />

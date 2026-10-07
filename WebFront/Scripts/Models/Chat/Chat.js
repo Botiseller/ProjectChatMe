@@ -98,6 +98,29 @@
         location.hash = '#chat/' + encodeURIComponent($.base64.encode(String(chat.chatId())));
     };
 
+    //Flecha de volver del encabezado (solo se ve en mobile, donde la conversacion tapa la lista). Simetrico a
+    //OpenChat: no deselecciona aca, cambia el hash y deja que la ruta #Home de Sammy llame a Deselect. Asi volver
+    //con el boton del navegador o del telefono hace exactamente lo mismo que tocar la flecha.
+    self.CloseChat = function () {
+        location.hash = '#Home';
+    };
+
+    //Lo llama la ruta #Home de Sammy. Deja la pantalla como antes de elegir un chat: lo que se estaba escribiendo,
+    //grabando o adjuntando pertenecia a esa conversacion y no tiene por que sobrevivir a haberla cerrado.
+    self.Deselect = function () {
+        if (!self.selectedChat()) return;
+
+        self.selectedChat(null);
+        self.draft('');
+        self.showEmojis(false);
+        self.CancelRecording();
+        self.RemoveAttachment();
+        self.messages([]);
+        self.hasMoreMessages(false);
+        self.loadingOlder(false);
+        self.loadingMessages(false);
+    };
+
     //Lo llama la ruta de Sammy con el id ya decodificado. Busca el chat en la lista cargada y lo abre; si todavia no
     //esta (la lista no termino de cargar), Load() reintenta esto mismo al terminar - ver mas abajo, window.PendingChatId.
     self.OpenChatId = function (chatId) {
@@ -129,6 +152,9 @@
 
             self.messages(result);
             self.hasMoreMessages(result.length >= messagesPageSize);
+
+            //Recien con los mensajes en pantalla se da por leido: si la carga falla, el usuario no vio nada.
+            chatClass.MarkAsRead(chat.chatId());
         }).always(function () {
             if (self.selectedChat() !== chat) return;
 
@@ -287,9 +313,16 @@
         window.Websocket.On(WebsocketClass.Funciones.MensajeRecibido, self.OnMessageReceived);
     };
 
+    //Da por leido lo que haya pendiente en el chat abierto. Lo usan el visibilitychange de abajo y la llegada de un
+    //mensaje con la pestana a la vista.
+    self.MarkSelectedAsRead = function () {
+        var chat = self.selectedChat();
+        if (chat) chatClass.MarkAsRead(chat.chatId());
+    };
+
     //Llega un mensaje del negocio por websocket (ver Entities/Websocket.js). Si el chat al que pertenece es el que
-    //esta abierto, se agrega a la conversacion en el momento; si no, solo se actualiza la fila de la lista, para que
-    //se vea el ultimo mensaje y la hora sin tener que recargar.
+    //esta abierto, se agrega a la conversacion en el momento y se da por leido; si no, solo se actualiza la fila de
+    //la lista, para que se vea el ultimo mensaje y la hora sin tener que recargar.
     self.OnMessageReceived = function (notification) {
         if (!notification || !notification.Message) return;
 
@@ -311,6 +344,12 @@
 
         self.messages.push(message);
         scrollChatToBottom();
+
+        //Solo cuenta como leido si ademas esta mirando la pestana: con el chat abierto en segundo plano, el mensaje
+        //esta en pantalla pero el usuario no lo vio. Lo que llegue asi queda pendiente hasta que vuelva, y ahi lo
+        //marca el visibilitychange de abajo.
+        if (document.visibilityState === 'visible')
+            chatClass.MarkAsRead(chatId);
     };
 
     function scrollChatToBottom() {
@@ -411,6 +450,16 @@ $(document).ready(function () {
     //El usuario ya esta logueado cuando llega a esta pantalla (sin sesion, Go redirige a NotLoggin), asi que es el
     //momento de engancharlo a su canal. Si no se puede conectar la pantalla anda igual, solo que sin tiempo real.
     masterChatVM.ConnectWebsocket();
+
+    //El usuario vuelve a la pestana: lo que haya llegado mientras estaba afuera recien ahora lo esta viendo.
+    //Sin esto, un mensaje que entro con la pestana en segundo plano quedaria sin leer aunque el chat siga abierto,
+    //porque no se vuelve a pasar por select.
+    $(document).on('visibilitychange', function () {
+        if (document.visibilityState !== 'visible') return;
+
+        var chat = masterChatVM.selectedChat();
+        if (chat) masterChatVM.MarkSelectedAsRead();
+    });
 
     $('#ChatBody').on('scroll', masterChatVM.LoadOlderMessages);
     $('#ChatListRows').on('scroll', masterChatVM.LoadMoreChats);

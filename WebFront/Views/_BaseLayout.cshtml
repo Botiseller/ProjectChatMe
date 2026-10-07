@@ -105,14 +105,18 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
             //Lo que necesita el websocket para conectarse (ver Scripts/Entities/Websocket.js): a donde, y con que
             //sesion. El clientCode es el mismo base64 que viaja como header X-ClientCode en las llamadas al API; el
             //hub lo decodifica igual para saber de que usuario es la conexion, en vez de creerle al cliente.
-            var urlApi = Common.Utility.Helper.GetWebSetingValue("WebApiUrlChatMe");
+            //Clave propia y NO WebApiUrlChatMe: esa es la direccion servidor a servidor (en produccion, un localhost
+            //que el navegador no puede resolver). Esta la usa el navegador.
+            //Vacia = mismo origen, que es como queda en produccion con /signalr detras del proxy; en desarrollo lleva
+            //el host del middleware, que corre en otro puerto.
+            var urlWebsocket = Common.Utility.Helper.GetWebSetingValue("WebsocketUrlChatMe");
             var clientCode = sessionData == null
                 ? string.Empty
                 : Common.Utility.Helper.Base64Encode(Common.Utility.Helper.SerializeObjectSimple(sessionData));
         }
 
         var sessionData = @Html.Raw(serializedData);
-        var websocketConfig = { url: '@Html.Raw(urlApi)', clientCode: '@Html.Raw(clientCode)' };
+        var websocketConfig = { url: '@Html.Raw(urlWebsocket)', clientCode: '@Html.Raw(clientCode)' };
     </script>
 
     <!-- BEGIN Page Wrapper -->
@@ -242,14 +246,18 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
 
     @Scripts.Render("~/javascripts/site")
     @* Proxy que genera SignalR leyendo los hubs del servidor: es lo que crea $.connection.chatHub, con el que
-       Scripts/Entities/Websocket.js registra la funcion messageRecive. Tiene que ir despues de jquery.signalR (que
-       viene en el bundle de arriba) y vive en el otro host, el del API. *@
-    <script src="@Html.Raw(urlApi)/signalr/hubs"></script>
+       Scripts/Entities/Websocket.js registra la funcion messageRecive. Tiene que ir despues de jquery.signalR, que
+       viene en el bundle de arriba. Con WebsocketUrlChatMe vacia queda "/signalr/hubs", o sea mismo origen. *@
+    <script src="@Html.Raw(urlWebsocket)/signalr/hubs"></script>
+    @* Knockout va ANTES de entities: las entidades lo usan al cargar (Entities/AudioPlayer.js registra su binding en
+       ko.bindingHandlers apenas se ejecuta). Si queda despues, en produccion ese "ko is not defined" corta la ejecucion
+       del bundle entero y se pierde todo lo que viene atras: EmojiCatalog, WebsocketClass.Funciones y el binding del
+       reproductor. En debug no se nota, porque ahi cada entidad es un <script> aparte y el error se come un solo archivo. *@
+    @Scripts.Render("~/javascripts/knockout")
     @Scripts.Render("~/javascripts/factoryAndShared")
     @Scripts.Render("~/javascripts/entities")
     @Scripts.Render("~/javascripts/sammy")
     @Scripts.Render("~/javascripts/linq")
-    @Scripts.Render("~/javascripts/knockout")
     @* Va aca, en el layout, para que el aviso de mensajes nuevos funcione en todas las pantallas y no solo en el
        chat. Despues de los bundles porque necesita WebsocketClass y ChatClass, que vienen en el de entities. *@
     @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Site/Websocket.Site.js")

@@ -15,8 +15,11 @@ function WebsocketClass() {
     //Hay websocket si cargo el proxy generado (si el API esta caido, ese script no llega y $.connection.chatHub no
     //existe) y si la pagina sabe con que sesion conectarse. Sin sesion no tiene sentido: el hub no podria saber de
     //quien es la conexion y no la sumaria a ningun canal.
+    //url no se exige con valor: vacia significa mismo origen, que es como queda en produccion con /signalr detras
+    //del proxy. Lo que no puede faltar es el clientCode.
     me.Disponible = function () {
-        return !!($.connection && $.connection.chatHub && window.websocketConfig && websocketConfig.url && websocketConfig.clientCode);
+        return !!($.connection && $.connection.chatHub && window.websocketConfig
+                  && typeof websocketConfig.url === 'string' && websocketConfig.clientCode);
     };
 
     //Registra que hacer cuando el servidor invoque una funcion. nombre es el mismo string que usa el servidor en

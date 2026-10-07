@@ -133,6 +133,19 @@ namespace Business.CallAPI.Services
 
             }
 
+            //Devuelve cuantos mensajes quedaron marcados. El chatId va como valor suelto en el body, que es lo que
+            //espera Chat/MarkAsRead con su [FromBody].
+            public int MarkAsRead(int chatId)
+            {
+                return webApiChatMe.CallPost<int>(() => new MethodParameters
+                {
+                    Action = "MarkAsRead",
+                    Controller = "Chat",
+                    Params = chatId
+                });
+
+            }
+
             public List<Message> GetMessages(int chatId, int beforeId)
             {
                 return webApiChatMe.Call<List<Message>>(() => new MethodParameters

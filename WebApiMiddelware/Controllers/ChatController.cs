@@ -78,10 +78,12 @@ namespace WebApiMiddelware.Controllers
             }
         }
 
-        //Marca como leidos los mensajes pendientes del chat. Todavia no lo llama nadie: el endpoint queda listo para
-        //cuando se defina desde donde se dispara (ver el PENDIENTE en ChatManager.MarkAsRead).
+        //Marca como leidos los mensajes que el negocio le mando al usuario en este chat. Lo llama la pantalla al abrir
+        //la conversacion (ver select en Scripts/Models/Chat/Chat.js).
+        //El chatId va en el cuerpo y no como query string: CallPost manda los parametros en el body, y para un dato
+        //suelto como este el binder necesita el FromBody explicito.
         [Route("Chat/MarkAsRead"), HttpPost]
-        public IHttpActionResult MarkAsRead(int chatId)
+        public IHttpActionResult MarkAsRead([FromBody] int chatId)
         {
             try
             {

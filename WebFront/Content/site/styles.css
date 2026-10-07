@@ -4770,3 +4770,52 @@ body,
         font-size: 22px;
     }
 }
+
+/* ==========================================================================
+   Mobile: una pantalla a la vez
+   El split de lista + conversacion recien entra en el bloque min-width: 900px
+   de arriba. En un telefono las dos no caben: se ve la lista, al elegir un chat
+   la conversacion la tapa entera, y se vuelve con la flecha del encabezado
+   (.chat-header__back, que arriba de 900px se oculta justamente porque ahi la
+   lista nunca se va). El interruptor es is-thread-open, que pone el data-bind
+   de chats.cshtml segun haya chat elegido.
+   ========================================================================== */
+@media (max-width: 899.98px) {
+    /* Sin el ancho fijo de la version escritorio: la lista es la pantalla */
+    .messaging-list {
+        flex: 1;
+    }
+
+    /* El cartel de "elegi una conversacion" sirve cuando las dos columnas conviven;
+       aca la lista ya esta diciendo lo mismo, asi que el lado del detalle no existe
+       hasta que haya algo que mostrar. */
+    .messaging-detail {
+        display: none;
+    }
+
+    .messaging-layout.is-thread-open .messaging-list {
+        display: none;
+    }
+
+    .messaging-layout.is-thread-open .messaging-detail {
+        display: flex;
+    }
+
+    /* Entre la flecha de volver y la pastilla del rubro, el nombre es lo unico
+       que puede ceder ancho: sin esto un nombre largo empuja la pastilla afuera. */
+    .chat-header__name > span:not(.badge-verified) {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* El menu no se abre en mobile: el boton que lo abria esta comentado en _Header.cshtml y
+   esto cierra la otra puerta, porque el tema lo deja al costado esperando un mobile-nav-on
+   en el body. Desde 992px el tema lo muestra como columna fija y ahi se queda. */
+@media (max-width: 991.98px) {
+    #_MenuIzquierda {
+        display: none;
+    }
+}

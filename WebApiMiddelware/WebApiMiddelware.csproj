@@ -65,6 +65,7 @@
     <None Include="Oracle.ManagedDataAccess.Client.Configuration.Section.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\Chatme-Middleware-Production.pubxml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

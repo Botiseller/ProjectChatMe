@@ -10,7 +10,9 @@
 }
 
 <div id="Chat" style="display: flex; flex: 1; min-height: 0;">
-    <div class="messaging-layout has-detail">
+    @* is-thread-open es el interruptor del mobile: abajo de 900px no caben la lista y la conversacion
+       juntas, asi que se ve una sola y esta clase decide cual (ver styles.css). En web no hace nada. *@
+    <div class="messaging-layout" data-bind="css: { 'is-thread-open': selectedChat }">
 
         <div class="messaging-list">
             @{ Html.RenderPartial("_Loading", new ViewDataDictionary { { "Visible", "loading" }, { "Text", "Buscando tus conversaciones..." } }); }
@@ -46,6 +48,11 @@
                     </div>
                 </div>
                 <div class="chat-header">
+                    @* Vuelve a la lista. Va afuera del with para quedar en el contexto raiz, y en web lo
+                       oculta el media query: con la lista siempre a la vista no tiene sentido. *@
+                    <button type="button" class="chat-header__back" aria-label="Volver a las conversaciones" title="Volver" data-bind="click: CloseChat">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
                     <!-- ko with: selectedChat -->
                     <div class="avatar-circle" style="width:38px;height:38px;border-radius:50%;" data-bind="text: initials, css: { [avatarClass()]: true }"></div>
                     <div class="chat-header__info">
