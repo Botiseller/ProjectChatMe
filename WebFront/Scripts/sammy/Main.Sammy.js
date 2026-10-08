@@ -16,10 +16,8 @@ var sammy = $.sammy(function () {
         }
     });
 
-    self.get('#authentication', function (context) {
-
-        PanelAuthenticationChatMeSammy();
-    });
+    //La pantalla de login ya no pasa por aca: Models/Authentication/Authentication.js se ata solo en su ready,
+    //como hace la del chat. Dejar la ruta llamando a una funcion que ya no existe rompia el hash #authentication.
 
     //Deep link a un chat puntual: #chat/<id en base64, url-encoded>. Lo arma Scripts/Models/Chat/Chat.js (ChatVM.OpenChat)
     //al hacer click en una fila; Sammy decodifica el parametro solo (ver _decode en sammy-0.7.5.js), asi que context.params.id

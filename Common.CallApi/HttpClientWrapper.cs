@@ -273,10 +273,12 @@ namespace Common.CallApi
                 case AnonymousType.None:
                     break;
                 case AnonymousType.WithoutCredential:
+                    //Convert.ToString y no .ToString(): en el login por SMS el nombre todavia no se conoce, y MVC
+                    //convierte el "" que manda la pantalla en null al bindear el DTO.
                     var ci = new Common.Services.Interceptor.CustomIdentity
                     {
-                        Name = GetPropValue(@params, "name").ToString(),
-                        Phone = GetPropValue(@params, "phone").ToString()
+                        Name = Convert.ToString(GetPropValue(@params, "name")),
+                        Phone = Convert.ToString(GetPropValue(@params, "phone"))
                     };
                     GenericPrincipal main = new GenericPrincipal(ci, null);
                     Thread.CurrentPrincipal = main;

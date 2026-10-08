@@ -68,7 +68,13 @@
     <Compile Include="Logic\ShopLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
     <Compile Include="Manager\ShopManager.cs" />
+    <Compile Include="Manager\SmsCodeManager.cs" />
+    <Compile Include="Manager\ProviderManager.cs" />
+    <Compile Include="Logic\ProviderLogic.cs" />
+    <Compile Include="Services\ProviderServices.cs" />
     <Compile Include="Manager\UserManager.cs" />
+    <Compile Include="Logic\SmsCodeLogic.cs" />
+    <Compile Include="Services\SmsCodeServices.cs" />
     <Compile Include="Manager\ChatManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ShopServices.cs" />

@@ -174,8 +174,11 @@ screen, not only the chat; `Models\Chat\Chat.js` subscribes to that same connect
    it if missing, and returns a `Session` (`Init`, `From`, `Usuario`). No token is issued (`TokenId` unused).
 3. `Go` then `Shop/Search`es `businessPhone` and, if found, `Chat/Create`s a chat seeded with `payload.history`.
    Any exception in this block redirects to the `NotLoggin` route.
-4. `CreateState` stores the `Session` in ASP.NET `Session["SessionData"]` **and** in a 30-day FormsAuthentication
-   cookie whose `UserData` is `base64(JSON(Session))`.
+4. `CreateState` stores the `Session` only in a 30-day persistent FormsAuthentication cookie (`Expires` set, so it
+   survives closing the browser) whose `UserData` is `base64(JSON(Session))`. Nothing uses the in-memory ASP.NET
+   session: `_BaseLayout`/`_BaseFrameLayout` read the session (and the websocket `clientCode`, which is that same
+   `UserData`) from the `FormsIdentity` ticket, so a site restart does not log anyone out. `/login` redirects to
+   `/chats` when the request is already authenticated.
 5. On every later front request, `MvcApplication.Application_AuthenticateRequest` decrypts the cookie, rebuilds a
    `CustomIdentity { session }` wrapped in `Common.Services.Interceptor.GenericPrincipal` and assigns
    `Thread.CurrentPrincipal`.
@@ -277,5 +280,5 @@ make is going into git history.
 - `WebFront\App_Start\RouteConfig` has no catch-all: only `go`, `chats`, `news`, `feed`, `NotLoggin`, `Chats/GetLote`
   are mapped, and `MvcApplication.Application_Error` renders `ErrorController` views (NotFound/NotAutorized/Error)
   and logs through log4net.
-- `WebFront` redirects to `/Authentication/Authentication` when an ASP.NET session is new but a session-id cookie
-  already exists (`ValidateSessionState`); `Session.Timeout` is set to 525600 minutes.
+- `Session.Timeout` is set to 525600 minutes in `Session_Start`, but nothing reads the in-memory session any more.
+  The old `ValidateSessionState` (sent everyone to login after every restart even with a valid cookie) was removed.

@@ -9,5 +9,107 @@
     @Scripts.Render("~/Scripts" + Common.Utility.Helper.getVersionScript() + "/Models/Authentication/Authentication.js")
 }
 
-<div id="Login" >
+@* Los tres pasos viven en la misma pantalla y se turnan con el observable step: son el mismo tramite y cambiar de
+   pagina perderia el telefono y el codigo, que los pasos siguientes necesitan. *@
+<div id="Login" class="login-screen">
+    <div class="login-card">
+
+        <div class="login-brand">
+            <span class="login-brand__mark" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="44" height="44">
+                    <rect width="32" height="32" rx="9" fill="url(#loginBrandBg)"></rect>
+                    <path d="M9 12.5A2.5 2.5 0 0 1 11.5 10h9a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-2.5 2.5h-5.2L11 23.5V20h.5A2.5 2.5 0 0 1 9 17.5v-5Z" fill="#fff"></path>
+                    <circle cx="21.5" cy="21.5" r="3.2" fill="#2EE6B8"></circle>
+                    <defs>
+                        <linearGradient id="loginBrandBg" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#7C4DF5"></stop>
+                            <stop offset="1" stop-color="#5B2DDC"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </span>
+            <span class="login-brand__word">chat<b>me</b></span>
+        </div>
+
+        @* ---------- Paso 1: telefono ---------- *@
+        <form class="login-step" style="display:none;" data-bind="visible: step() === 'phone', submit: RequestCode">
+            <h1 class="login-title">Entrá con tu teléfono</h1>
+            <p class="login-hint">Te mandamos un código por SMS para confirmar que sos vos.</p>
+
+            <div class="login-phone">
+                <div class="login-field login-field--country">
+                    <label for="LoginCountry">País</label>
+                    <select id="LoginCountry" data-bind="options: countries, optionsText: 'label', value: country"></select>
+                </div>
+                <div class="login-field login-field--number">
+                    <label for="LoginPhone">Teléfono</label>
+                    <input type="tel" id="LoginPhone" inputmode="numeric" autocomplete="tel-national" maxlength="20"
+                           placeholder="11 5555 5555" data-bind="textInput: phone, enable: !sending()" />
+                </div>
+            </div>
+
+            <p class="login-hint login-hint--small">Sin el 0 ni el 15. Te va a llegar a <span data-bind="text: phonePreview"></span></p>
+
+            <div class="login-error" style="display:none;" data-bind="visible: error, text: error"></div>
+
+            <button type="submit" class="login-button" data-bind="enable: canRequest">
+                <span data-bind="visible: !sending()">Enviarme el código</span>
+                <span style="display:none;" data-bind="visible: sending">Enviando...</span>
+            </button>
+        </form>
+
+        @* ---------- Paso 2: codigo ---------- *@
+        <form class="login-step" style="display:none;" data-bind="visible: step() === 'code', submit: VerifyCode">
+            <button type="button" class="login-back" data-bind="click: BackToPhone">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Cambiar número
+            </button>
+
+            <h1 class="login-title">Escribí el código</h1>
+            <p class="login-hint">Te lo mandamos por SMS a <b data-bind="text: phonePreview"></b>.</p>
+
+            @* Seis casilleros sueltos serian seis inputs que hay que coordinar a mano; con uno solo el teclado
+               numerico del celular y el autocompletado del SMS funcionan sin ayuda. *@
+            <input type="text" class="login-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6"
+                   placeholder="······" data-bind="textInput: code, enable: !sending()" />
+
+            <div class="login-error" style="display:none;" data-bind="visible: error, text: error"></div>
+
+            <button type="submit" class="login-button" data-bind="enable: canVerify">
+                <span data-bind="visible: !sending()">Entrar</span>
+                <span style="display:none;" data-bind="visible: sending">Validando...</span>
+            </button>
+
+            <button type="button" class="login-link" data-bind="click: RequestCode, enable: canResend">
+                <span data-bind="visible: resendIn() === 0">No me llegó, mandámelo de nuevo</span>
+                <span style="display:none;" data-bind="visible: resendIn() > 0">Podés pedir otro en <span data-bind="text: resendIn"></span>s</span>
+            </button>
+        </form>
+
+        @* ---------- Paso 3: datos ---------- *@
+        <form class="login-step" style="display:none;" data-bind="visible: step() === 'profile', submit: CompleteProfile">
+            <h1 class="login-title">Contanos quién sos</h1>
+            <p class="login-hint">Es la primera vez que entrás con este número.</p>
+
+            <div class="login-field">
+                <label for="LoginName">Nombre</label>
+                <input type="text" id="LoginName" maxlength="80" autocomplete="name"
+                       placeholder="Tu nombre" data-bind="textInput: name, enable: !sending()" />
+            </div>
+
+            <div class="login-field">
+                <label for="LoginMail">Mail</label>
+                <input type="email" id="LoginMail" maxlength="120" autocomplete="email"
+                       placeholder="tunombre@mail.com" data-bind="textInput: mail, enable: !sending()" />
+            </div>
+
+            <div class="login-error" style="display:none;" data-bind="visible: error, text: error"></div>
+
+            <button type="submit" class="login-button" data-bind="enable: canComplete">
+                <span data-bind="visible: !sending()">Entrar a mis chats</span>
+                <span style="display:none;" data-bind="visible: sending">Guardando...</span>
+            </button>
+        </form>
+
     </div>
+</div>

@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Deploys\Chatme\WebFront</_PublishTargetUrl>
-    <History>True|2026-10-07T13:14:53.7409328Z||;False|2026-10-01T20:37:24.7907906+00:00||;False|2026-10-01T20:31:15.8265446+00:00||;</History>
+    <History>True|2026-10-08T14:11:41.7307645Z||;True|2026-10-07T18:03:40.5106556+00:00||;True|2026-10-07T13:14:53.7409328+00:00||;False|2026-10-01T20:37:24.7907906+00:00||;False|2026-10-01T20:31:15.8265446+00:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -19,29 +19,32 @@
     <File Include="bin/AWSSDK.S3.dll">
       <publishTime>09/14/2026 19:13:04</publishTime>
     </File>
+    <File Include="bin/AWSSDK.SimpleNotificationService.dll">
+      <publishTime>09/17/2026 18:34:44</publishTime>
+    </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 18:05:32</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.dll.config">
       <publishTime>09/22/2026 14:37:16</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Business.Dto.dll">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Dto.pdb">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Entities.dll">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Entities.pdb">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Castle.Core.dll">
       <publishTime>03/09/2025 21:05:48</publishTime>
@@ -53,28 +56,28 @@
       <publishTime>10/01/2026 20:31:04</publishTime>
     </File>
     <File Include="bin/Common.CallApi.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Common.CallApi.dll.config">
       <publishTime>09/22/2026 14:37:15</publishTime>
     </File>
     <File Include="bin/Common.CallApi.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Common.Services.Interceptor.dll">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Services.Interceptor.pdb">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Utility.dll">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Utility.dll.config">
       <publishTime>09/22/2026 14:37:13</publishTime>
     </File>
     <File Include="bin/Common.Utility.pdb">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>03/18/2026 18:35:06</publishTime>
@@ -104,13 +107,13 @@
       <publishTime>10/20/2023 20:35:08</publishTime>
     </File>
     <File Include="bin/Framework.FrontApplication.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:29</publishTime>
     </File>
     <File Include="bin/Framework.FrontApplication.dll.config">
       <publishTime>09/22/2026 14:37:15</publishTime>
     </File>
     <File Include="bin/Framework.FrontApplication.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:29</publishTime>
     </File>
     <File Include="bin/Google.Protobuf.dll">
       <publishTime>08/31/2026 08:11:14</publishTime>
@@ -362,10 +365,10 @@
       <publishTime>08/22/2026 07:59:40</publishTime>
     </File>
     <File Include="bin/WebFront.dll">
-      <publishTime>10/07/2026 13:14:45</publishTime>
+      <publishTime>10/08/2026 14:11:30</publishTime>
     </File>
     <File Include="bin/WebFront.pdb">
-      <publishTime>10/07/2026 13:14:45</publishTime>
+      <publishTime>10/08/2026 14:11:30</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -374,7 +377,7 @@
       <publishTime>09/17/2026 02:41:34</publishTime>
     </File>
     <File Include="Content/site/styles.css">
-      <publishTime>10/01/2026 14:37:14</publishTime>
+      <publishTime>10/07/2026 15:47:56</publishTime>
     </File>
     <File Include="Content/site/tokens.css">
       <publishTime>09/21/2026 18:35:36</publishTime>
@@ -2126,7 +2129,7 @@
       <publishTime>09/16/2026 13:43:19</publishTime>
     </File>
     <File Include="Scripts/Factorys/FactoryAuthentication.js">
-      <publishTime>09/18/2026 18:31:33</publishTime>
+      <publishTime>10/07/2026 15:51:44</publishTime>
     </File>
     <File Include="Scripts/Factorys/FactoryChat.js">
       <publishTime>10/01/2026 16:36:57</publishTime>
@@ -2135,10 +2138,10 @@
       <publishTime>09/21/2026 20:34:59</publishTime>
     </File>
     <File Include="Scripts/Models/Authentication/Authentication.js">
-      <publishTime>09/18/2026 18:31:00</publishTime>
+      <publishTime>10/07/2026 15:51:44</publishTime>
     </File>
     <File Include="Scripts/Models/Chat/Chat.js">
-      <publishTime>10/01/2026 17:03:30</publishTime>
+      <publishTime>10/07/2026 14:28:40</publishTime>
     </File>
     <File Include="Scripts/Models/Feed/Feed.js">
       <publishTime>09/21/2026 20:31:09</publishTime>
@@ -2150,7 +2153,7 @@
       <publishTime>09/21/2026 20:30:25</publishTime>
     </File>
     <File Include="Scripts/Sammy/Main.Sammy.js">
-      <publishTime>09/22/2026 00:39:25</publishTime>
+      <publishTime>10/07/2026 15:47:34</publishTime>
     </File>
     <File Include="Scripts/Site/site.js">
       <publishTime>09/17/2026 02:41:34</publishTime>
@@ -4424,13 +4427,13 @@
       <publishTime>09/16/2026 13:43:22</publishTime>
     </File>
     <File Include="Views/Authentication/Authentication.cshtml">
-      <publishTime>09/17/2026 02:41:34</publishTime>
+      <publishTime>10/07/2026 15:51:44</publishTime>
     </File>
     <File Include="Views/Authentication/NotLoggin.cshtml">
       <publishTime>09/25/2026 05:16:15</publishTime>
     </File>
     <File Include="Views/Chats/chats.cshtml">
-      <publishTime>10/01/2026 14:36:59</publishTime>
+      <publishTime>10/07/2026 14:28:29</publishTime>
     </File>
     <File Include="Views/Error/Error.cshtml">
       <publishTime>09/16/2026 13:43:22</publishTime>
@@ -4466,7 +4469,7 @@
       <publishTime>09/16/2026 13:43:22</publishTime>
     </File>
     <File Include="Views/Shared/_Header.cshtml">
-      <publishTime>09/21/2026 19:10:57</publishTime>
+      <publishTime>10/07/2026 14:29:10</publishTime>
     </File>
     <File Include="Views/Shared/_Loading.cshtml">
       <publishTime>09/21/2026 23:01:34</publishTime>
@@ -4475,7 +4478,7 @@
       <publishTime>09/16/2026 13:43:22</publishTime>
     </File>
     <File Include="Views/Shared/_MenuIzquierda.cshtml">
-      <publishTime>09/21/2026 19:05:51</publishTime>
+      <publishTime>10/07/2026 14:29:02</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>09/17/2026 02:41:34</publishTime>
@@ -4484,10 +4487,10 @@
       <publishTime>09/21/2026 19:07:13</publishTime>
     </File>
     <File Include="Views/_BaseFrameLayout.cshtml">
-      <publishTime>09/21/2026 22:16:47</publishTime>
+      <publishTime>10/08/2026 12:38:28</publishTime>
     </File>
     <File Include="Views/_BaseLayout.cshtml">
-      <publishTime>10/02/2026 03:08:43</publishTime>
+      <publishTime>10/08/2026 12:38:28</publishTime>
     </File>
     <File Include="Views/_LoginLayout.cshtml">
       <publishTime>09/21/2026 22:35:42</publishTime>
@@ -4496,7 +4499,7 @@
       <publishTime>09/16/2026 13:43:22</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>10/02/2026 03:20:22</publishTime>
+      <publishTime>10/08/2026 14:11:32</publishTime>
     </File>
     <File Include="Webfonts/fa-brands-400.eot">
       <publishTime>09/16/2026 13:43:22</publishTime>

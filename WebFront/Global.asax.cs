@@ -23,20 +23,9 @@ namespace WebFront
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            ValidateSessionState();
-        }
-
-        protected void Application_AcquireRequestState(object sender, EventArgs e)
-        {
-            ValidateSessionState();
-        }
-
         protected void Session_Start(object sender, EventArgs e)
         {
             Session.Timeout = 525600;
-            ValidateSessionState();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -147,42 +136,6 @@ namespace WebFront
 
         protected void Application_End(object sender, EventArgs e)
         {
-        }
-
-        private void ValidateSessionState()
-        {
-            try
-            {
-                string lcReqPath = Request.Path.ToLower();
-
-                if (!lcReqPath.Contains("/authentication") && !lcReqPath.Contains("/error") && !lcReqPath.Contains("/go") )
-                {
-                    if (Context.Session != null)
-                    {
-                    
-                        if (Session.IsNewSession)
-                        {
-                            HttpCookie newSessionIdCookie = Request.Cookies["ASP.NET_SessionId"];
-
-                            if (newSessionIdCookie != null)
-                            {
-                                string newSessionIdCookieValue = newSessionIdCookie.Value;
-
-                                if (newSessionIdCookieValue != string.Empty)
-                                {
-
-                                    Response.Redirect("/Authentication/Authentication");
-
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
         }
     }
 }

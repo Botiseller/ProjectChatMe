@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Deploys\Chatme\Middleware</_PublishTargetUrl>
-    <History>True|2026-10-07T13:15:21.9275699Z||;True|2026-10-02T03:19:52.8835076+00:00||;True|2026-10-02T03:18:10.5148354+00:00||;True|2026-10-01T20:34:23.6003009+00:00||;</History>
+    <History>True|2026-10-08T14:11:20.9518516Z||;True|2026-10-07T18:04:00.8165886+00:00||;True|2026-10-07T13:15:21.9275699+00:00||;True|2026-10-02T03:19:52.8835076+00:00||;True|2026-10-02T03:18:10.5148354+00:00||;True|2026-10-01T20:34:23.6003009+00:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -28,59 +28,62 @@
     <File Include="bin/AWSSDK.S3.dll">
       <publishTime>09/14/2026 19:13:04</publishTime>
     </File>
+    <File Include="bin/AWSSDK.SimpleNotificationService.dll">
+      <publishTime>09/17/2026 18:34:44</publishTime>
+    </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 18:05:32</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.dll.config">
       <publishTime>09/22/2026 14:37:16</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Business.Contracts.dll">
-      <publishTime>10/01/2026 20:34:12</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Business.Contracts.dll.config">
       <publishTime>09/16/2026 13:43:16</publishTime>
     </File>
     <File Include="bin/Business.Contracts.pdb">
-      <publishTime>10/01/2026 20:34:12</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Business.dll">
-      <publishTime>10/07/2026 13:15:13</publishTime>
+      <publishTime>10/08/2026 14:11:12</publishTime>
     </File>
     <File Include="bin/Business.dll.config">
       <publishTime>09/22/2026 14:37:14</publishTime>
     </File>
     <File Include="bin/Business.Dto.dll">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Dto.pdb">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Entities.dll">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Entities.pdb">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.pdb">
-      <publishTime>10/07/2026 13:15:13</publishTime>
+      <publishTime>10/08/2026 14:11:12</publishTime>
     </File>
     <File Include="bin/Castle.Core.dll">
       <publishTime>03/09/2025 21:05:48</publishTime>
     </File>
     <File Include="bin/ChatbotDesarrollo.Core.dll">
-      <publishTime>10/07/2026 13:15:12</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/ChatbotDesarrollo.Core.dll.config">
       <publishTime>09/22/2026 14:37:14</publishTime>
     </File>
     <File Include="bin/ChatbotDesarrollo.Core.pdb">
-      <publishTime>10/07/2026 13:15:12</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Common.BusinessException.dll">
       <publishTime>10/01/2026 20:31:04</publishTime>
@@ -89,34 +92,34 @@
       <publishTime>10/01/2026 20:31:04</publishTime>
     </File>
     <File Include="bin/Common.CallApi.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Common.CallApi.dll.config">
       <publishTime>09/22/2026 14:37:15</publishTime>
     </File>
     <File Include="bin/Common.CallApi.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Common.Services.Interceptor.dll">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Services.Interceptor.pdb">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Utility.dll">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Utility.dll.config">
       <publishTime>09/22/2026 14:37:13</publishTime>
     </File>
     <File Include="bin/Common.Utility.pdb">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Websocket.dll">
-      <publishTime>10/07/2026 13:15:11</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Common.Websocket.pdb">
-      <publishTime>10/07/2026 13:15:11</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/CommonServiceLocator.dll">
       <publishTime>02/22/2023 01:41:06</publishTime>
@@ -137,13 +140,13 @@
       <publishTime>08/28/2022 12:12:16</publishTime>
     </File>
     <File Include="bin/Framework.Core.dll">
-      <publishTime>10/01/2026 20:34:12</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Framework.Core.dll.config">
       <publishTime>09/22/2026 14:37:14</publishTime>
     </File>
     <File Include="bin/Framework.Core.pdb">
-      <publishTime>10/01/2026 20:34:12</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/grpc_csharp_ext.x64.dll">
       <publishTime>01/11/2023 00:19:06</publishTime>
@@ -257,13 +260,13 @@
       <publishTime>04/11/2022 19:09:46</publishTime>
     </File>
     <File Include="bin/ModelChatbotDesarrollo.Core.dll">
-      <publishTime>10/01/2026 20:34:12</publishTime>
+      <publishTime>10/07/2026 18:03:50</publishTime>
     </File>
     <File Include="bin/ModelChatbotDesarrollo.Core.dll.config">
       <publishTime>09/16/2026 13:43:16</publishTime>
     </File>
     <File Include="bin/ModelChatbotDesarrollo.Core.pdb">
-      <publishTime>10/01/2026 20:34:12</publishTime>
+      <publishTime>10/07/2026 18:03:50</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.Bson.dll">
       <publishTime>11/04/2024 23:51:46</publishTime>
@@ -285,6 +288,9 @@
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>11/13/2012 12:19:34</publishTime>
+    </File>
+    <File Include="bin/PhoneNumbers.dll">
+      <publishTime>09/24/2026 13:33:28</publishTime>
     </File>
     <File Include="bin/RESPite.dll">
       <publishTime>09/13/2026 14:41:04</publishTime>
@@ -512,10 +518,10 @@
       <publishTime>10/05/2016 13:11:52</publishTime>
     </File>
     <File Include="bin/WebApiMiddelware.dll">
-      <publishTime>10/07/2026 13:15:21</publishTime>
+      <publishTime>10/08/2026 14:11:20</publishTime>
     </File>
     <File Include="bin/WebApiMiddelware.pdb">
-      <publishTime>10/07/2026 13:15:21</publishTime>
+      <publishTime>10/08/2026 14:11:20</publishTime>
     </File>
     <File Include="Global.asax">
       <publishTime>09/16/2026 13:43:16</publishTime>
@@ -527,7 +533,7 @@
       <publishTime>10/01/2026 03:01:09</publishTime>
     </File>
     <File Include="Unity.config">
-      <publishTime>09/19/2026 13:56:45</publishTime>
+      <publishTime>10/08/2026 13:48:50</publishTime>
     </File>
   </ItemGroup>
 </Project>

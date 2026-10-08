@@ -16,10 +16,16 @@ namespace WebAPI.Models.Message
 
         public MessageContactRequest To { get; set; }
         public MessageDataRequest Data { get; set; }
+        public MessageProviderRequest Provider { get; set; }
 
         public SendMessageDto parse(int shopId) {
             //1. conseguiruserid por externo
-            var user = middleware.user.SearchProvider(To.Id, shopId);
+
+            var p = middleware.authentication.getProvider(Provider.Code);
+            if (p == null)
+                throw new Exception("Provider not found");
+
+            var user = middleware.user.SearchProvider(To.Id, p.Id);
 
             if (user == null)
                 throw new Exception("User dont exist");
@@ -123,6 +129,9 @@ namespace WebAPI.Models.Message
 
     }
 
-
+    public class MessageProviderRequest {
+        public string Code { get; set; }
+       
+    }
 
 }

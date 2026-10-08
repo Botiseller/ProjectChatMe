@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Deploys\Chatme\WebAPI</_PublishTargetUrl>
-    <History>True|2026-10-07T13:15:43.4900767Z||;True|2026-10-02T03:20:10.6091540+00:00||;True|2026-10-01T20:33:27.6430675+00:00||;</History>
+    <History>True|2026-10-08T14:11:52.5157538Z||;True|2026-10-07T13:15:43.4900767+00:00||;True|2026-10-02T03:20:10.6091540+00:00||;True|2026-10-01T20:33:27.6430675+00:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -82,29 +82,32 @@
     <File Include="bin/AWSSDK.S3.dll">
       <publishTime>09/14/2026 19:13:04</publishTime>
     </File>
+    <File Include="bin/AWSSDK.SimpleNotificationService.dll">
+      <publishTime>09/17/2026 18:34:44</publishTime>
+    </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>12/08/2020 18:05:32</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.dll.config">
       <publishTime>09/22/2026 14:37:16</publishTime>
     </File>
     <File Include="bin/Business.CallAPI.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:11</publishTime>
     </File>
     <File Include="bin/Business.Dto.dll">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Dto.pdb">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Entities.dll">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Business.Entities.pdb">
-      <publishTime>10/01/2026 20:31:04</publishTime>
+      <publishTime>10/07/2026 18:03:27</publishTime>
     </File>
     <File Include="bin/Common.BusinessException.dll">
       <publishTime>10/01/2026 20:31:04</publishTime>
@@ -113,28 +116,28 @@
       <publishTime>10/01/2026 20:31:04</publishTime>
     </File>
     <File Include="bin/Common.CallApi.dll">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Common.CallApi.dll.config">
       <publishTime>09/22/2026 14:37:15</publishTime>
     </File>
     <File Include="bin/Common.CallApi.pdb">
-      <publishTime>10/07/2026 13:14:44</publishTime>
+      <publishTime>10/08/2026 14:11:10</publishTime>
     </File>
     <File Include="bin/Common.Services.Interceptor.dll">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Services.Interceptor.pdb">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Utility.dll">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/Common.Utility.dll.config">
       <publishTime>09/22/2026 14:37:13</publishTime>
     </File>
     <File Include="bin/Common.Utility.pdb">
-      <publishTime>10/07/2026 13:14:43</publishTime>
+      <publishTime>10/08/2026 14:11:09</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>03/18/2026 18:35:06</publishTime>
@@ -428,13 +431,13 @@
       <publishTime>08/22/2026 07:59:40</publishTime>
     </File>
     <File Include="bin/WebAPI.dll">
-      <publishTime>10/07/2026 13:15:42</publishTime>
+      <publishTime>10/08/2026 14:11:51</publishTime>
     </File>
     <File Include="bin/WebAPI.pdb">
-      <publishTime>10/07/2026 13:15:42</publishTime>
+      <publishTime>10/08/2026 14:11:51</publishTime>
     </File>
     <File Include="bin/WebAPI.xml">
-      <publishTime>10/07/2026 13:15:42</publishTime>
+      <publishTime>10/08/2026 14:11:51</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>

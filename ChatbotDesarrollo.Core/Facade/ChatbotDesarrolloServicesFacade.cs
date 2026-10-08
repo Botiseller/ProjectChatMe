@@ -19,6 +19,14 @@ namespace ChatbotDesarrollo.Core.Facade
         {
             get { return UnityFactoryClass.Resolve<UserServices>(); }
         }
+        public static SmsCodeServices SmsCodeServices
+        {
+            get { return UnityFactoryClass.Resolve<SmsCodeServices>(); }
+        }
+        public static ProviderServices ProviderServices
+        {
+            get { return UnityFactoryClass.Resolve<ProviderServices>(); }
+        }
     }
 }
 

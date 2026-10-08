@@ -18,8 +18,23 @@ namespace Business.Service
         //Tope de caracteres del texto de un mensaje; tiene que ser igual al maxlength del campo en Views/Chats/chats.cshtml.
         private const int MessageMaxLength = 4000;
 
+        //Al entrar desde el chatbot llega el historial entero. Al proveedor se le avisa solo por el ultimo mensaje, y
+        //solo si lo escribio el usuario (uno del bot volveria al mismo proveedor que lo mando) y si todavia no estaba
+        //guardado: lo que ya estaba es una entrada repetida con el mismo historial. Sin externalId no hay forma de saber
+        //si ya estaba, asi que tampoco se avisa. El chequeo va antes de guardar, porque despues ya estaria.
         public Chat create(Chat chat) {
-            return ChatbotDesarrolloServicesFacade.ChatServices.create(chat);
+            var ultimo = chat.Messages?.LastOrDefault();
+            var avisar = ultimo != null
+                      && ultimo.From?.From == MensajeEnviadoPor.Usuario
+                      && !string.IsNullOrEmpty(ultimo.externalId)
+                      && ChatbotDesarrolloServicesFacade.ChatServices.GetMessageIdByExternalId(ultimo.externalId) == null;
+
+            var saved = ChatbotDesarrolloServicesFacade.ChatServices.create(chat);
+
+            if (avisar)
+                SendWebhook(saved, "MESSAGE", ultimo.Detail, ChatbotDesarrolloServicesFacade.ChatServices.GetMessageIdByExternalId(ultimo.externalId).Value, null);
+
+            return saved;
         }
 
         public List<Chat> GetLote(int lote)
@@ -42,13 +57,20 @@ namespace Business.Service
         }
 
         //Deja marcados como leidos los mensajes del chat que todavia no lo estaban, y devuelve cuantos cambio.
-        //Todavia no la llama nadie: queda disponible en Chat/MarkAsRead para cuando se decida desde donde se dispara.
+        //Que el usuario entre al chat ya es haber leido la conversacion, asi que al proveedor le alcanza con saber
+        //quien leyo: va sin mensaje. Solo se avisa si habia algo sin leer, porque el front la llama cada vez que se
+        //abre el chat y sin eso le llegaria un aviso repetido por cada entrada.
         public int MarkAsRead(int chatId)
         {
             if (chatId <= 0)
                 throw new ArgumentException("Falta la conversación.");
 
-            return ChatbotDesarrolloServicesFacade.ChatServices.MarkAsRead(chatId);
+            var marcados = ChatbotDesarrolloServicesFacade.ChatServices.MarkAsRead(chatId);
+
+            if (marcados > 0)
+                SendWebhook(GetChat(chatId), "MESSAGE_READ", null, 0, null);
+
+            return marcados;
         }
 
         //Unico camino para mandar un mensaje: solo texto, solo archivo, o los dos juntos. El archivo llega como
@@ -142,12 +164,24 @@ namespace Business.Service
                 });
         }
 
+        //Firma de SendMessage: el chat sale de la conversacion del request y el boton es el que toco el usuario. Solo
+        //arma eso; el aviso lo hace la de abajo, que es la unica que llama al webhook.
+        private void SendWebhook(SendMessageDto request, MessageDetail detail, int messageId)
+        {
+            SendWebhook(GetChat(request.ChatId), "MESSAGE", detail, messageId, request.Button);
+        }
+
         //Arma el aviso y lo deja encolado. El payload se arma en este hilo a proposito: necesita la base y el usuario
         //de la sesion, que ya no estan disponibles una vez que el request termino. Al fondo va solo el POST.
-        private void SendWebhook(SendMessageDto chat, MessageDetail detail, int messageId) {
-            var c = GetChat(chat.ChatId);
-            var ExternalUser = new UserBusinessService().getExternalId(c.User.UsuarioId, c.Shop.Id);
+        //Recibe el chat ya armado (con negocio, proveedor y usuario): create lo tiene de lo que acaba de guardar, sin
+        //depender de la sesion, y SendMessage llega por la sobrecarga de arriba. button solo existe cuando el mensaje
+        //sale de la pantalla.
+        //field es el evento que se avisa: MESSAGE para un mensaje nuevo, MESSAGE_READ cuando el usuario leyo el chat.
+        //Un evento sin contenido (la lectura) llega sin detail, y entonces el aviso va sin Message.
+        private void SendWebhook(Chat c, string field, MessageDetail detail, int messageId, SendMessageButtonDto button) {
             if (c?.Shop?.Provider?.Applications != null) {
+                //Adentro del if: un negocio sin proveedor no tiene a quien avisar, y afuera rompia por Provider null.
+                var ExternalUser = new UserBusinessService().getExternalId(c.User.UsuarioId, c.Shop.Provider.Id);
                 foreach (var app in c.Shop.Provider.Applications.Where(x => x.Available).ToList())
                 {
                     var url = app.WebhookUrl;
@@ -167,20 +201,20 @@ namespace Business.Service
                         },
                         Data = new WebhookMessageDataDto()
                         {
-                            Field = "MESSAGE",
-                            Message = new WebhookMessageDataMessageDto()
+                            Field = field,
+                            Message = detail == null ? null : new WebhookMessageDataMessageDto()
                             {
                                 Id = MessageIdExterno.Formatear(messageId),
-                                Text = chat.Text,
+                                Text = detail.Text,
                                 //Solo uno de los cuatro va a estar cargado: un mensaje lleva un adjunto o ninguno.
                                 Image = detail.Image,
                                 Video = detail.Video,
                                 Audio = detail.Audio,
                                 File = detail.File,
-                                Button = chat.Button != null ? new WebhookMessageButtonDto()
+                                Button = button != null ? new WebhookMessageButtonDto()
                                 {
-                                    Text = chat.Button.Text,
-                                    Payload = chat.Button.Payload
+                                    Text = button.Text,
+                                    Payload = button.Payload
                                 } : null
                             }
                         }

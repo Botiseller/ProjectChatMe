@@ -54,6 +54,13 @@ namespace ChatbotDesarrollo.Core.Manager
         }
 
 
+        //Id del mensaje guardado con ese ExternalId, o null si todavia no esta. Es la misma clave con la que create
+        //decide que mensajes del historial ya estaban.
+        public int? GetMessageIdByExternalId(string externalId)
+        {
+            return Context.Mensajes.Where(m => m.ExternalId == externalId).Select(m => (int?)m.MensajeId).FirstOrDefault();
+        }
+
         public Chat Get(int shopId, int userId) {
             Chat chat = null;
             Chats c = Context.Chats.Include(x => x.Mensajes).Where(x => x.Negocios.NegocioId == shopId && x.Usuarios.UsuarioId == userId).FirstOrDefault();

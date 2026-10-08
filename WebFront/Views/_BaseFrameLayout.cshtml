@@ -99,8 +99,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         //}
 
         @{
-            var sessionData = Session["SessionData"];
-            var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(sessionData);
+            //Del ticket de la cookie de login, igual que en _BaseLayout: la sesion en memoria no sobrevive a un reinicio.
+            var identity = User.Identity as System.Web.Security.FormsIdentity;
+            var serializedData = identity == null ? "null" : Common.Utility.Helper.DecodeBase64String(identity.Ticket.UserData);
         }
 
         var sessionData = @Html.Raw(serializedData);

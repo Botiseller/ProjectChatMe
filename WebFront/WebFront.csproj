@@ -1593,6 +1593,10 @@
       <Project>{1ad07fc4-0783-401b-8538-a6d00698923d}</Project>
       <Name>Business.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common.BusinessException\Common.BusinessException.csproj">
+      <Project>{782bba9a-5b56-4110-bc1b-79b5ae1eb24c}</Project>
+      <Name>Common.BusinessException</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common.Services.Interceptor\Common.Services.Interceptor.csproj">
       <Project>{a7bc81f5-8047-43ca-98e2-694d8033cfdd}</Project>
       <Name>Common.Services.Interceptor</Name>

@@ -7,7 +7,9 @@ namespace Business.Contracts.Service
     {
         User search(string param);
         User search(string userid, int providerId);
+        User searchByPhone(string phone);
         User create(User user);
+        User update(User user);
 
     }
 }

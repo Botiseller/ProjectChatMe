@@ -19,9 +19,19 @@ namespace Business.Service
             return ChatbotDesarrolloServicesFacade.UserServices.search(userid, providerId);
         }
 
+        public User searchByPhone(string phone)
+        {
+            return ChatbotDesarrolloServicesFacade.UserServices.searchByPhone(phone);
+        }
+
         public User get(int id)
         {
             return ChatbotDesarrolloServicesFacade.UserServices.get(id);
+        }
+
+        public User update(User user)
+        {
+            return ChatbotDesarrolloServicesFacade.UserServices.update(user);
         }
 
         public string getExternalId(int id,int providerId)

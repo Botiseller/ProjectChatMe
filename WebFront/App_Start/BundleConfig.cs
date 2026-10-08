@@ -102,13 +102,6 @@ namespace WebFront
             ));
             /* Fin Base JS y CSS */
 
-
-
-
-
-
-
-
             /* Knockout */
             bundles.Add(new ScriptBundle("~/javascripts/knockout").Include(
                         "~/Js/knockout/knockout-3.4.2.js",

@@ -28,7 +28,6 @@ namespace Business.Dto.Dtos.Chats
         public string Field { get; set; }
         public WebhookMessageDataMessageDto Message { get; set; }
 
-
     }
 
     public class WebhookMessageDataMessageDto

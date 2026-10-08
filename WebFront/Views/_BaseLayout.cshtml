@@ -99,8 +99,11 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         }
 
         @{
-            var sessionData = Session["SessionData"];
-            var serializedData = Newtonsoft.Json.JsonConvert.SerializeObject(sessionData);
+            //La sesion sale del ticket de la cookie de login y no de Session["SessionData"]: la sesion en memoria se
+            //pierde con cada reinicio del sitio y la cookie dura 30 dias. UserData ya es Base64(JSON(Session)), el mismo
+            //formato que el X-ClientCode, asi que sirve tal cual como clientCode.
+            var identity = User.Identity as System.Web.Security.FormsIdentity;
+            var serializedData = identity == null ? "null" : Common.Utility.Helper.DecodeBase64String(identity.Ticket.UserData);
 
             //Lo que necesita el websocket para conectarse (ver Scripts/Entities/Websocket.js): a donde, y con que
             //sesion. El clientCode es el mismo base64 que viaja como header X-ClientCode en las llamadas al API; el
@@ -110,9 +113,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
             //Vacia = mismo origen, que es como queda en produccion con /signalr detras del proxy; en desarrollo lleva
             //el host del middleware, que corre en otro puerto.
             var urlWebsocket = Common.Utility.Helper.GetWebSetingValue("WebsocketUrlChatMe");
-            var clientCode = sessionData == null
-                ? string.Empty
-                : Common.Utility.Helper.Base64Encode(Common.Utility.Helper.SerializeObjectSimple(sessionData));
+            var clientCode = identity == null ? string.Empty : identity.Ticket.UserData;
         }
 
         var sessionData = @Html.Raw(serializedData);

@@ -93,6 +93,9 @@
     <Compile Include="Rubros.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>
+    <Compile Include="SmsCodes.cs">
+      <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
+    </Compile>
     <Compile Include="SubRubros.cs">
       <DependentUpon>ModelChatbotDesarrollo.tt</DependentUpon>
     </Compile>

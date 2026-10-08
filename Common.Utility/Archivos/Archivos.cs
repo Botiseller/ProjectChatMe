@@ -18,7 +18,7 @@ namespace Common.Utility.Archivos
         //mantener los mismos valores repetidos en los tres era mas facil de desincronizar que de sostener.
         //El bucket y la region van en claro: no son secretos y el bucket forma parte de la URL publica de cada archivo.
         private const string Bucket = "chatme-storage-174638372206-us-east-1-an";
-        private const string Region = "us-east-1";
+        internal const string Region = "us-east-1";
 
         //Las credenciales van cifradas con CryptoHelper (TripleDES, salida en hex) y se descifran al cargar la clase,
         //que es el unico lugar que las necesita. Para cambiarlas hay que cifrar el valor nuevo con
@@ -26,8 +26,9 @@ namespace Common.Utility.Archivos
         private const string AccessKeyEncrypted = "78B192AD4D5AA1436DFAC9F38A014579332D9ED20C515971";
         private const string SecretKeyEncrypted = "9C7FC7115B91ABC1A649483065EE9626A60C0F3FC3CF87AB8B6FBEABBDEC8CC7EDAA468465E25FF45BB5E8AFB0CE9B76";
 
-        private static readonly string AccessKey = CryptoHelper.DecryptStringToString(AccessKeyEncrypted);
-        private static readonly string SecretKey = CryptoHelper.DecryptStringToString(SecretKeyEncrypted);
+        //Internas porque Common.Utility.Sms usa el mismo usuario IAM: una sola copia de las credenciales para rotar.
+        internal static readonly string AccessKey = CryptoHelper.DecryptStringToString(AccessKeyEncrypted);
+        internal static readonly string SecretKey = CryptoHelper.DecryptStringToString(SecretKeyEncrypted);
 
         private const string PublicPrefix = "public";
 

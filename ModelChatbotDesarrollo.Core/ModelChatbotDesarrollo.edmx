@@ -70,6 +70,18 @@
           <Property Name="Nombre" Type="varchar" MaxLength="100" />
           <Property Name="Icono" Type="varchar" MaxLength="30" />
         </EntityType>
+        <EntityType Name="SmsCodes">
+          <Key>
+            <PropertyRef Name="SmsCodeId" />
+          </Key>
+          <Property Name="SmsCodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaAlta" Type="datetime" Nullable="false" />
+          <Property Name="FechaVence" Type="datetime" Nullable="false" />
+          <Property Name="FechaUso" Type="datetime" />
+          <Property Name="Intentos" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SubRubros">
           <Key>
             <PropertyRef Name="SubRubroId" />
@@ -213,6 +225,7 @@
           <EntitySet Name="Negocios" EntityType="Self.Negocios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rubros" EntityType="Self.Rubros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SmsCodes" EntityType="Self.SmsCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubRubros" EntityType="Self.SubRubros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioProveedor" EntityType="Self.UsuarioProveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
@@ -303,6 +316,7 @@
             <End Role="Negocios" EntitySet="Negocios" />
             <End Role="NegocioAuthentication" EntitySet="NegocioAuthentication" />
           </AssociationSet>
+          <EntitySet Name="SmsCodes" EntityType="Chatbot_DesarrolloModel.SmsCodes" />
           </EntityContainer>
         <EntityType Name="Chats">
           <Key>
@@ -460,6 +474,18 @@
           <End Type="Chatbot_DesarrolloModel.Negocios" Role="Negocios" Multiplicity="1" />
           <End Type="Chatbot_DesarrolloModel.NegocioAuthentication" Role="NegocioAuthentication" Multiplicity="*" />
         </Association>
+        <EntityType Name="SmsCodes">
+          <Key>
+            <PropertyRef Name="SmsCodeId" />
+          </Key>
+          <Property Name="SmsCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaVence" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaUso" Type="DateTime" Precision="3" />
+          <Property Name="Intentos" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -617,6 +643,19 @@
               <ScalarProperty Name="NegocioId" ColumnName="NegocioId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="SmsCodes">
+            <EntityTypeMapping TypeName="Chatbot_DesarrolloModel.SmsCodes">
+              <MappingFragment StoreEntitySet="SmsCodes">
+                <ScalarProperty Name="Intentos" ColumnName="Intentos" />
+                <ScalarProperty Name="FechaUso" ColumnName="FechaUso" />
+                <ScalarProperty Name="FechaVence" ColumnName="FechaVence" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="SmsCodeId" ColumnName="SmsCodeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -39,6 +39,11 @@ namespace ChatbotDesarrollo.Core.Services
             return DefaultLogic.MarkAsRead(chatId);
         }
 
+        public int? GetMessageIdByExternalId(string externalId)
+        {
+            return DefaultLogic.DefaultManager.GetMessageIdByExternalId(externalId);
+        }
+
         public Chat Get(int shopId, int userId) {
             return DefaultLogic.DefaultManager.Get(shopId, userId);
         }

@@ -34,5 +34,6 @@ namespace ModelChatbotDesarrollo.Core
         public virtual DbSet<Proveedores> Proveedores { get; set; }
         public virtual DbSet<UsuarioProveedor> UsuarioProveedor { get; set; }
         public virtual DbSet<NegocioAuthentication> NegocioAuthentication { get; set; }
+        public virtual DbSet<SmsCodes> SmsCodes { get; set; }
     }
 }

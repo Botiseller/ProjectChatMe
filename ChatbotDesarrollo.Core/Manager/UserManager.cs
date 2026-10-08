@@ -33,6 +33,37 @@ namespace ChatbotDesarrollo.Core.Manager
             return user;
         }
 
+        //Busqueda del login: solo por telefono y por igualdad. search(param) de arriba tambien compara contra Nombre
+        //y Mail con Contains, que para entrar al sistema es peligroso - un telefono podria caer dentro del nombre de
+        //otro usuario y devolver una cuenta ajena.
+        internal User searchByPhone(string phone)
+        {
+            var normalizado = (phone ?? string.Empty).Replace("-", "").Replace("+", "").Replace(" ", "");
+
+            var u = Context.Usuarios
+                           .Where(x => x.Telefono.Replace("-", "").Replace("+", "").Replace(" ", "") == normalizado)
+                           .FirstOrDefault();
+
+            return u == null ? null : get(u.UsuarioId);
+        }
+
+        //Guarda los datos que el usuario completa al entrar por primera vez. Las columnas y el JSON de Usuarios.Usuario
+        //se escriben juntos porque los dos se leen despues: get() toma el nombre de la columna y el resto del JSON.
+        internal User update(User user)
+        {
+            var u = Context.Usuarios.Where(x => x.UsuarioId == user.UsuarioId).FirstOrDefault();
+            if (u == null) return null;
+
+            u.Nombre = user.Nombre;
+            u.Mail = user.Mail;
+            u.Telefono = user.Telefono;
+            u.Usuario = Common.Utility.Helper.SerializeObject(user);
+
+            SaveChanges();
+
+            return user;
+        }
+
         public User search(string userId, int providerId)
         {
             var up = Context.UsuarioProveedor

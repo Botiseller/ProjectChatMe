@@ -21,9 +21,19 @@ namespace ChatbotDesarrollo.Core.Services
             return DefaultLogic.DefaultManager.search(userid, providerId);
         }
 
+        public User searchByPhone(string phone)
+        {
+            return DefaultLogic.DefaultManager.searchByPhone(phone);
+        }
+
         public User get(int id)
         {
             return DefaultLogic.DefaultManager.get(id);
+        }
+
+        public User update(User user)
+        {
+            return DefaultLogic.DefaultManager.update(user);
         }
 
         public string getExternalId(int id, int providerId)

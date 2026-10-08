@@ -4772,6 +4772,195 @@ body,
 }
 
 /* ==========================================================================
+   Login por telefono (Views/Authentication/Authentication.cshtml)
+   Pensado para el celular primero: una sola columna, campos grandes y el boton
+   abajo al alcance del pulgar. En pantalla grande la tarjeta se centra y deja
+   de estirarse, que es el unico cambio entre los dos tamanos.
+   ========================================================================== */
+.login-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-5) 16px calc(env(safe-area-inset-bottom, 0px) + var(--space-5));
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.login-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.login-brand__word {
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+}
+
+    .login-brand__word b {
+        font-weight: 800;
+    }
+
+.login-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.login-title {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+}
+
+.login-hint {
+    margin: -10px 0 0;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--color-text-tertiary);
+}
+
+.login-hint--small {
+    margin-top: -8px;
+    font-size: 12.5px;
+}
+
+/* Pais y numero en la misma fila: son un dato solo partido en dos, y separarlos
+   en dos renglones hace parecer que se piden dos cosas distintas. */
+.login-phone {
+    display: flex;
+    gap: 10px;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.login-field--country {
+    flex: 0 0 38%;
+}
+
+.login-field--number {
+    flex: 1;
+}
+
+    .login-field label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--color-text-tertiary);
+    }
+
+    .login-field input,
+    .login-field select {
+        width: 100%;
+        /* 16px o mas: abajo de eso Safari en iPhone hace zoom al enfocar el campo
+           y deja la pantalla corrida. */
+        font-size: 16px;
+        padding: 13px 14px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        color: var(--color-text);
+    }
+
+        .login-field input:focus,
+        .login-field select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-tint);
+        }
+
+/* El codigo se lee de un vistazo: grande, espaciado y centrado. */
+.login-code {
+    width: 100%;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+    text-align: center;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+    .login-code:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px var(--color-primary-tint);
+    }
+
+.login-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 15.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+    .login-button:disabled {
+        opacity: 0.45;
+        cursor: default;
+    }
+
+.login-link,
+.login-back {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px;
+}
+
+    .login-link:disabled {
+        color: var(--color-text-tertiary);
+        cursor: default;
+    }
+
+/* Volver a cambiar el numero va arriba de todo y alineado a la izquierda, donde
+   se espera un "atras", no mezclado con los botones de accion. */
+.login-back {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: -6px;
+    color: var(--color-text-tertiary);
+}
+
+.login-error {
+    padding: 11px 13px;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+    color: var(--color-danger);
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
    Mobile: una pantalla a la vez
    El split de lista + conversacion recien entra en el bloque min-width: 900px
    de arriba. En un telefono las dos no caben: se ve la lista, al elegir un chat

@@ -46,6 +46,46 @@ namespace Business.CallAPI.Services
             }
 
 
+            //Los tres pasos del login por SMS van con AnonymousType.WithoutCredential: son anteriores al login, no hay
+            //sesion en el hilo, y sin identidad HttpClientMessageHandnler no manda el X-ClientCode. El API lo necesita
+            //igual aunque venga vacio, porque de ese header sale la conexion a la base (ver InternalHeaderFactory).
+            public void requestCode(RequestCodeDto request)
+            {
+                webApiChatMe.CallPost<object>(() => new MethodParameters
+                {
+                    Action = "RequestCode",
+                    Controller = "Security",
+                    Params = request,
+                    Anonymous = AnonymousType.WithoutCredential
+                });
+
+            }
+
+            public LoginResult verifyCode(VerifyCodeDto request)
+            {
+                return webApiChatMe.CallPost<LoginResult>(() => new MethodParameters
+                {
+                    Action = "VerifyCode",
+                    Controller = "Security",
+                    Params = request,
+                    Anonymous = AnonymousType.WithoutCredential
+                });
+
+            }
+
+            public LoginResult completeProfile(CompleteProfileDto request)
+            {
+                return webApiChatMe.CallPost<LoginResult>(() => new MethodParameters
+                {
+                    Action = "CompleteProfile",
+                    Controller = "Security",
+                    Params = request,
+                    Anonymous = AnonymousType.WithoutCredential
+                });
+
+            }
+
+
             public Authentication getToken(string code, string secret, string tokenProveedor)
             {
                 return webApiChatMe.Call<Authentication>(() => new MethodParameters
@@ -53,6 +93,18 @@ namespace Business.CallAPI.Services
                     Action = "Token",
                     Controller = "Security",
                     Params = new { code, secret, tokenProveedor },
+                    Anonymous = AnonymousType.None
+                });
+
+            }
+
+            public Provider getProvider(string code)
+            {
+                return webApiChatMe.Call<Provider>(() => new MethodParameters
+                {
+                    Action = "Provider",
+                    Controller = "Security",
+                    Params = new { code },
                     Anonymous = AnonymousType.None
                 });
 
@@ -90,6 +142,17 @@ namespace Business.CallAPI.Services
                     Action = "Get",
                     Controller = "Shop",
                     Params = new { Id }
+                });
+
+            }
+
+            public Shop get(string code)
+            {
+                return webApiChatMe.Call<Shop>(() => new MethodParameters
+                {
+                    Action = "GetByCode",
+                    Controller = "Shop",
+                    Params = new { code }
                 });
 
             }

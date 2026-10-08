@@ -6,6 +6,7 @@ using System.Web.Security;
 using Business.Dto.Dtos.Authentication;
 using Business.Entities;
 using Business.Entities.Security;
+using Common.BusinessException;
 using Newtonsoft.Json;
 
 namespace WebFront.Controllers
@@ -17,6 +18,11 @@ namespace WebFront.Controllers
         [AllowAnonymous]
         public ActionResult Authentication()
         {
+            //Quien ya tiene la cookie de login no tiene nada que hacer aca: entra por un acceso directo o un link viejo
+            //a /login y tiene que caer en sus chats, no volver a pedir un SMS.
+            if (Request.IsAuthenticated)
+                return RedirectToRoute("chats");
+
             return View("Authentication");
         }
 
@@ -25,6 +31,74 @@ namespace WebFront.Controllers
         public ActionResult NotLoggin()
         {
             return View();
+        }
+
+        //Los tres pasos del login por telefono. Devuelven JSON porque los llama la pantalla por ajax
+        //(Scripts/Factorys/FactoryAuthentication.js) y los errores son mensajes para mostrarle al usuario:
+        //el codigo no coincide, vencio, se acabaron los intentos. Por eso no se dejan explotar.
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult RequestCode(RequestCodeDto request)
+        {
+            try
+            {
+                middlewareChatMeService.authentication.requestCode(request);
+                return Json(new { ok = true });
+            }
+            catch (APIException ex)
+            {
+                return Json(new { ok = false, error = ex.getErrorMessage() });
+            }
+            catch (Exception)
+            {
+                return Json(new { ok = false, error = "No pudimos enviarte el código. Probá de nuevo." });
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult VerifyCode(VerifyCodeDto request)
+        {
+            try
+            {
+                var result = middlewareChatMeService.authentication.verifyCode(request);
+
+                //Si todavia falta completar el perfil no hay sesion que guardar: la pantalla pide nombre y mail y
+                //vuelve por CompleteProfile con el mismo codigo.
+                if (!result.NeedsProfile)
+                    CreateState(result.Session);
+
+                return Json(new { ok = true, needsProfile = result.NeedsProfile, name = result.Usuario?.Nombre, mail = result.Usuario?.Mail });
+            }
+            catch (APIException ex)
+            {
+                return Json(new { ok = false, error = ex.getErrorMessage() });
+            }
+            catch (Exception)
+            {
+                return Json(new { ok = false, error = "No pudimos validar el código. Probá de nuevo." });
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult CompleteProfile(CompleteProfileDto request)
+        {
+            try
+            {
+                var result = middlewareChatMeService.authentication.completeProfile(request);
+                CreateState(result.Session);
+
+                return Json(new { ok = true });
+            }
+            catch (APIException ex)
+            {
+                return Json(new { ok = false, error = ex.getErrorMessage() });
+            }
+            catch (Exception)
+            {
+                return Json(new { ok = false, error = "No pudimos guardar tus datos. Probá de nuevo." });
+            }
         }
 
         [HttpGet]
@@ -62,7 +136,7 @@ namespace WebFront.Controllers
                             Date = DateTime.UtcNow,
                             From = new FromMessage()
                             {
-                                From = h.from.type == "user" ? MensajeEnviadoPor.Usuario : MensajeEnviadoPor.Negocio,
+                                From = h.from.type.ToUpper() == "USER" ? MensajeEnviadoPor.Usuario : MensajeEnviadoPor.Negocio,
                                 Name = h.from.name,
                                 Picture = h.from.pictureUrl
                             },
@@ -126,8 +200,6 @@ namespace WebFront.Controllers
 
         private void CreateState(Session sessionData) {
 
-            Session["SessionData"] = sessionData;
-
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                               1,
                               string.Empty,
@@ -139,9 +211,12 @@ namespace WebFront.Controllers
 
             string hash = FormsAuthentication.Encrypt(ticket);
 
+            //Sin Expires la cookie es de sesion del navegador y se borra al cerrarlo (en el celular, cada vez que el
+            //sistema cierra la app), aunque el ticket diga 30 dias.
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash)
             {
-                HttpOnly = true // cookie not available in javascript.
+                HttpOnly = true, // cookie not available in javascript.
+                Expires = ticket.Expiration
             };
 
             Response.Cookies.Add(cookie);

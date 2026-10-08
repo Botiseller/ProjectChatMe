@@ -13,6 +13,12 @@ namespace WebFront
                 defaults: new { controller = "Authentication", action = "Go" }
             );
 
+            //La raiz es el dominio que se comparte: con sesion muestra los chats y sin sesion el <deny users="?" />
+            //del Web.config la manda al login, igual que /chats.
+            routes.MapRoute(name: "root", url: "",
+                defaults: new { controller = "chats", action = "chats" }
+            );
+
             routes.MapRoute(name: "chats", url: "chats",
                 defaults: new { controller = "chats", action = "chats" }
             );
@@ -27,6 +33,10 @@ namespace WebFront
 
             routes.MapRoute(name: "NotLoggin", url: "NotLoggin",
                 defaults: new { controller = "Authentication", action = "NotLoggin" }
+            );
+
+            routes.MapRoute(name: "login", url: "login",
+                defaults: new { controller = "Authentication", action = "Authentication" }
             );
 
             routes.MapRoute(name: "ChatGetLote", url: "Chats/GetLote",
